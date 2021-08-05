@@ -1,0 +1,29 @@
+.title{
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 4rem;
+  padding: 1rem;
+  font-size: 25px;
+  vertical-align: center;
+  font-style: medium;
+  text-align: center;
+}
+
+.subTitle{
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 6rem;
+  padding: 1px;
+  font-size: 8px;
+  vertical-align: center;
+  font-style: medium;
+  text-align: center;
+}
+
+.button{
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 2px;
+  padding: 1px;
+  font-size: 8px;
+  vertical-align: center;
+  font-style: medium;
+  text-align: center;
+}
