@@ -1,3 +1,6 @@
+--USE CRUD;
+--DROP DATABASE DBPSPPLUS;
+
 CREATE DATABASE DBPSPPLUS;
 GO
 USE DBPSPPLUS;
@@ -21,6 +24,8 @@ CREATE TABLE EquipoDesarrollo(
 	descripcion			varchar(100) NOT NULL,
 );
 GO
+Insert into EquipoDesarrollo (nombre, descripcion) Values ('Equipo 1', 'Desarrollo m√≥vil');
+GO
 CREATE TABLE Usuario(
 	idUsuario			int  IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	nombres				varchar(100) NOT NULL,
@@ -28,12 +33,18 @@ CREATE TABLE Usuario(
 	email				varchar(100) NOT NULL,
 	clave				varchar(100) NOT NULL,
 	fechaNacimiento		date NOT NULL,
+	rol					varchar(50) NOT NULL,
 	idEquipoDesarrollo	int NOT NULL,
 	CONSTRAINT FK_USUARIO_EQUIPODESARROLLO FOREIGN KEY(idEquipoDesarrollo) 
 		REFERENCES EquipoDesarrollo(idEquipoDesarrollo)
 );
 GO
-CREATE TABLE UsuarioProyecto( -- Varios desarrolladores podr·n tener varios proyectos
+INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
+	values('admin', 'admin', 'admin@admin.com', '12345', '2001/09/14', 1, 'administrador');
+INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
+	values('dev', 'dev', 'dev@dev.com', '12345', '2001/10/14', 1, 'desarrollador');
+GO
+CREATE TABLE UsuarioProyecto( -- Varios desarrolladores podr√°n tener varios proyectos
 	idUsuario		int NOT NULL,
 	idProyecto		int NOT NULL,
 	PRIMARY KEY(idUsuario,idProyecto),
@@ -83,7 +94,7 @@ CREATE TABLE Recordatorios(
 	idUsuario			int NOT NULL,
 	tipoRecordatorio	int NOT NULL, -- Puede ser:  1,2,3,4
 	idProyecto			int, -- Obligatorio para Tipo 2 y 3
-	estado				varchar(MAX) DEFAULT('No LeÌdo'), -- ” LeÌdo
+	estado				varchar(MAX) DEFAULT('No Le√≠do'), -- √ì Le√≠do
 
 	-- Recordatorio Tipo 1
 	fechaHoraRecordatorio	date,
@@ -91,10 +102,10 @@ CREATE TABLE Recordatorios(
 	-- Recordatorio Tipo 2 | Tiempo total de horas ingresadas de un proyecto
 	horasAlerta				decimal(8,2),
 
-	-- Recordatorio Tipo 3 | Si no se han ingresado actividades de alg˙n proyecto
+	-- Recordatorio Tipo 3 | Si no se han ingresado actividades de alg√∫n proyecto
 	-- Llenara el campo "fechaHoraRecordatorio" y "idProyecto"
 
-	-- Recordatorio Tipo 4 | Si ya se ha excedido un tiempo (fecha) m·ximo de un proyecto en alg˙n dÌa.
+	-- Recordatorio Tipo 4 | Si ya se ha excedido un tiempo (fecha) m√°ximo de un proyecto en alg√∫n d√≠a.
 	-- Llenara el campo "idProyecto"
 	
 	CONSTRAINT FK_Recordatorios_PROYECTO FOREIGN KEY(idProyecto) 
@@ -171,3 +182,6 @@ as begin
 	update Proyectos set fechaInicioReal=(@fechaMinimaSaliente), fechaFinalReal=(@fechaMaximaSaliente), totalHorasTrabajadas=(totalHorasTrabajadas - @horas_borrar)
 		where idProyecto=@id_proyectoAnterior;
 end
+
+select * from Usuario
+delete  from Usuario
