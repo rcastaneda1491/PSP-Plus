@@ -41,7 +41,7 @@ namespace PSP_.Models
             modelBuilder.Entity<EquipoDesarrollo>(entity =>
             {
                 entity.HasKey(e => e.IdEquipoDesarrollo)
-                    .HasName("PK__EquipoDe__C3028438830E4616");
+                    .HasName("PK__EquipoDe__C302843867E62A7F");
 
                 entity.ToTable("EquipoDesarrollo");
 
@@ -63,7 +63,7 @@ namespace PSP_.Models
             modelBuilder.Entity<ErroresPsp>(entity =>
             {
                 entity.HasKey(e => e.IdErrorPsp)
-                    .HasName("PK__ErroresP__9CDF13FAC4915144");
+                    .HasName("PK__ErroresP__9CDF13FA855DD4D1");
 
                 entity.ToTable("ErroresPSP");
 
@@ -140,7 +140,7 @@ namespace PSP_.Models
             modelBuilder.Entity<Proyecto>(entity =>
             {
                 entity.HasKey(e => e.IdProyecto)
-                    .HasName("PK__Proyecto__D0AF4CB40749F3D4");
+                    .HasName("PK__Proyecto__D0AF4CB48DBDDBA3");
 
                 entity.Property(e => e.IdProyecto).HasColumnName("idProyecto");
 
@@ -192,7 +192,7 @@ namespace PSP_.Models
             modelBuilder.Entity<Recordatorio>(entity =>
             {
                 entity.HasKey(e => e.IdRecordatorios)
-                    .HasName("PK__Recordat__3EC6A121BB9E3EA7");
+                    .HasName("PK__Recordat__3EC6A1214E52FCF7");
 
                 entity.Property(e => e.IdRecordatorios).HasColumnName("idRecordatorios");
 
@@ -235,7 +235,7 @@ namespace PSP_.Models
             modelBuilder.Entity<TiemposPsp>(entity =>
             {
                 entity.HasKey(e => e.IdTiempoPsp)
-                    .HasName("PK__TiemposP__08E1CCE5AEBA6AFE");
+                    .HasName("PK__TiemposP__08E1CCE5EF03A66C");
 
                 entity.ToTable("TiemposPSP");
 
@@ -273,7 +273,7 @@ namespace PSP_.Models
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__645723A6E11B51EA");
+                    .HasName("PK__Usuario__645723A6BB20897B");
 
                 entity.ToTable("Usuario");
 
@@ -309,6 +309,12 @@ namespace PSP_.Models
                     .IsUnicode(false)
                     .HasColumnName("nombres");
 
+                entity.Property(e => e.Rol)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("rol");
+
                 entity.HasOne(d => d.IdEquipoDesarrolloNavigation)
                     .WithMany(p => p.Usuarios)
                     .HasForeignKey(d => d.IdEquipoDesarrollo)
@@ -319,7 +325,7 @@ namespace PSP_.Models
             modelBuilder.Entity<UsuarioProyecto>(entity =>
             {
                 entity.HasKey(e => new { e.IdUsuario, e.IdProyecto })
-                    .HasName("PK__UsuarioP__395DD76D1319C3CA");
+                    .HasName("PK__UsuarioP__395DD76D1345A62D");
 
                 entity.ToTable("UsuarioProyecto");
 
