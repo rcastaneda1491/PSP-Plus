@@ -1,0 +1,83 @@
+const inputNombre = document.querySelector('#nombre');
+const inputDescripcion = document.querySelector('#descripcion');
+const inputCliente = document.querySelector('#cliente');
+const inputFechaInicioEsperada = document.querySelector('#fechainicioesperada');
+const inputFechaFinalEsperada = document.querySelector('#fechafinalesperada');
+const inputDev = document.querySelector('#dev');
+const inputidUsuario = document.querySelector('#idusuario')
+const inputidProyecto = document.querySelector('#idproyecto')
+
+
+const alerta = document.querySelector('#alert');
+const exitoso = document.querySelector('#guardado');
+
+
+async function agregarProyecto() {
+    const url = `https://localhost:44368/api/ProyectoDesarrollador?nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
+
+    await fetch(url, {
+            method: 'POST',
+            headers: new Headers({
+                //'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+        .then(respuesta => {
+            
+            const url2 = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=1`;
+
+            fetch(url2, {
+                    method: 'POST',
+                    headers: new Headers({
+                        //'Authorization': 'Bearer ' + stringJWT
+                    })
+                })  
+                .then(respuesta => respuesta)
+
+        })
+
+        
+
+}
+
+//async function agregarProyecto2() {
+   // const url = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=${1.value}&idproyecto=${inputidProyecto.value}`;
+
+   // await fetch(url, {
+        //  method: 'POST',
+        //    headers: new Headers({
+                //'Authorization': 'Bearer ' + stringJWT
+      //      })
+    //    })  
+  //      .then(respuesta => respuesta)
+
+//} 
+
+
+function validar() {
+    if (inputNombre.value == "" || inputDescripcion.value == "" || inputCliente.value == "" || inputFechaInicioEsperada.value == "" || inputFechaFinalEsperada.value == "" || inputDev.value == "") {
+        alerta.style.display = 'block';
+
+        setTimeout(() => {
+            alerta.style.display = 'none';
+        }, 3000);
+
+        return;
+    } else {
+
+        agregarProyecto();
+        exitoso.style.display = 'block';
+        inputNombre.value = "";
+        inputDescripcion.value = "";
+        inputCliente.value = "";
+        inputFechaInicioEsperada.value = "";
+        inputFechaFinalEsperada.value = "";
+        inputDev.value = "";
+
+        setTimeout(() => {
+            exitoso.style.display = 'none';
+        }, 3000);
+
+        //window.location.href = (`./ProyectoDesarrolladorindex.html`);
+    }
+
+}
