@@ -5,7 +5,7 @@ window.onload = () => {
 }
 
 async function getdatos() {
-    const url = `https://localhost:44368/api/ProyectoAdmin`;
+    const url = `https://localhost:44368/api/ProyectoDesarrollador?idUsuario=1`;
 
     await fetch(url, {
             headers: new Headers({
@@ -83,7 +83,7 @@ function modificarProyecto(e) {
     const proyecto = e.target.parentElement.parentElement;
     const proyectoid = proyecto.querySelector('a').getAttribute('data-id');
 
-    window.location.href = (`./ProyectoAdmin-Editar.html?proyectoId=${proyectoid}`);
+    window.location.href = (`./ProyectoDesarrollador-Editar.html?proyectoId=${proyectoid}`);
 }
 
 async function eliminarProyecto(e) {
@@ -92,7 +92,7 @@ async function eliminarProyecto(e) {
     const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
-        const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+        const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
         await fetch(url, {
                 method: 'DELETE',

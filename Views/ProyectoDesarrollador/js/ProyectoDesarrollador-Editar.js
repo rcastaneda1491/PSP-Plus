@@ -67,7 +67,7 @@ function validar() {
 }
 
 async function editProyecto() {
-    const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${idProyecto}&nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
+    const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${idProyecto}&nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
 
     await fetch(url, {
             method: 'PUT',

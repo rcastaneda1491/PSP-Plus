@@ -4,13 +4,16 @@ const inputCliente = document.querySelector('#cliente');
 const inputFechaInicioEsperada = document.querySelector('#fechainicioesperada');
 const inputFechaFinalEsperada = document.querySelector('#fechafinalesperada');
 const inputDev = document.querySelector('#dev');
+const inputidUsuario = document.querySelector('#idusuario')
+const inputidProyecto = document.querySelector('#idproyecto')
+
 
 const alerta = document.querySelector('#alert');
 const exitoso = document.querySelector('#guardado');
 
 
 async function agregarProyecto() {
-    const url = `https://localhost:44368/api/ProyectoAdmin?nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
+    const url = `https://localhost:44368/api/ProyectoDesarrollador?nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
 
     await fetch(url, {
             method: 'POST',
@@ -18,9 +21,37 @@ async function agregarProyecto() {
                 //'Authorization': 'Bearer ' + stringJWT
             })
         })
-        .then(respuesta => respuesta)
+        .then(respuesta => {
+            
+            const url2 = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=1`;
+
+            fetch(url2, {
+                    method: 'POST',
+                    headers: new Headers({
+                        //'Authorization': 'Bearer ' + stringJWT
+                    })
+                })  
+                .then(respuesta => respuesta)
+
+        })
+
+        
 
 }
+
+//async function agregarProyecto2() {
+   // const url = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=${1.value}&idproyecto=${inputidProyecto.value}`;
+
+   // await fetch(url, {
+        //  method: 'POST',
+        //    headers: new Headers({
+                //'Authorization': 'Bearer ' + stringJWT
+      //      })
+    //    })  
+  //      .then(respuesta => respuesta)
+
+//} 
+
 
 function validar() {
     if (inputNombre.value == "" || inputDescripcion.value == "" || inputCliente.value == "" || inputFechaInicioEsperada.value == "" || inputFechaFinalEsperada.value == "" || inputDev.value == "") {
@@ -46,7 +77,7 @@ function validar() {
             exitoso.style.display = 'none';
         }, 3000);
 
-        window.location.href = (`./ProyectoDesarrolladorindex.html`);
+        //window.location.href = (`./ProyectoDesarrolladorindex.html`);
     }
 
 }
