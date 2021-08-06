@@ -29,5 +29,42 @@ namespace PSP_.Controllers
 
             return Ok("El usuario se añadio correctamente a un proyecto");
         }
+
+
+        [HttpGet("{id}")]
+        public ActionResult Get(int id)
+        {
+            using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
+            {
+                var query = db.UsuarioProyectos.Select(usuario => new
+                {
+                    IdProyecto = usuario.IdProyecto,
+                    Nombre = usuario.IdUsuarioNavigation.Nombres,
+                    Apellido = usuario.IdUsuarioNavigation.Apellidos,
+                    Correo = usuario.IdUsuarioNavigation.Email
+
+                }).Where(usuario => usuario.IdProyecto == id).ToList();
+
+                return Ok(query);
+
+            }
+        }
+
+        [HttpDelete]
+        public ActionResult Delete([FromBody] Models.UsuarioProyecto modelo)
+        {
+            using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
+            {
+                Models.UsuarioProyecto usuario = db.UsuarioProyectos.Find(modelo.IdUsuario, modelo.IdProyecto);
+
+
+                db.UsuarioProyectos.Remove(usuario);
+                db.SaveChanges();
+
+            }
+            return Ok("El desarrollador ha sido eliminado del proyecto con éxito");
+        }
+
+
     }
 }

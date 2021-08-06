@@ -1,32 +1,23 @@
-.title{
-    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  margin: 4rem;
-  padding: 1rem;
-  font-size: 25px;
-  vertical-align: center;
-  font-style: medium;
-  text-align: center;
-}
-.image{
-    
-  margin: 4rem;
-  padding: 1rem;
-  font-size: 25px;
-  vertical-align: center;
-  font-style: medium;
-  text-align: center;
+.form-container {
+  font-family: Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.selector{
-    color: #cacacac9;
+.title {
+  font-size: 25px;
+  font-weight: bolder;
 }
 
-.button{
-    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  margin: 15px;
-  padding: 1px;
-  font-size: 8px;
-  vertical-align: center;
-  font-style: medium;
-  text-align: center;
+.form-select {
+  background-color: #cacacac9 !important;
+  width: 20em;
+}
+
+.button {
+  width: 8em;
+  font-size: 1.5em;
+  background: #3D9BE9 !important;
+  border-radius: 25px;
 }
