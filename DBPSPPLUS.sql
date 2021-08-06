@@ -1,3 +1,6 @@
+--USE CRUD;
+--DROP DATABASE DBPSPPLUS;
+
 CREATE DATABASE DBPSPPLUS;
 GO
 USE DBPSPPLUS;
@@ -21,6 +24,8 @@ CREATE TABLE EquipoDesarrollo(
 	descripcion			varchar(100) NOT NULL,
 );
 GO
+Insert into EquipoDesarrollo (nombre, descripcion) Values ('Equipo 1', 'Desarrollo móvil');
+GO
 CREATE TABLE Usuario(
 	idUsuario			int  IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	nombres				varchar(100) NOT NULL,
@@ -28,10 +33,16 @@ CREATE TABLE Usuario(
 	email				varchar(100) NOT NULL,
 	clave				varchar(100) NOT NULL,
 	fechaNacimiento		date NOT NULL,
+	rol					varchar(50) NOT NULL,
 	idEquipoDesarrollo	int NOT NULL,
 	CONSTRAINT FK_USUARIO_EQUIPODESARROLLO FOREIGN KEY(idEquipoDesarrollo) 
 		REFERENCES EquipoDesarrollo(idEquipoDesarrollo)
 );
+GO
+INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
+	values('admin', 'admin', 'admin@admin.com', '12345', '2001/09/14', 1, 'administrador');
+INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
+	values('dev', 'dev', 'dev@dev.com', '12345', '2001/10/14', 1, 'desarrollador');
 GO
 CREATE TABLE UsuarioProyecto( -- Varios desarrolladores podrán tener varios proyectos
 	idUsuario		int NOT NULL,
@@ -102,3 +113,6 @@ CREATE TABLE Recordatorios(
 	CONSTRAINT FK_Recordatorios_USUARIO FOREIGN KEY(idUsuario) 
 		REFERENCES Usuario(idUsuario)
 );
+
+select * from Usuario
+delete  from Usuario
