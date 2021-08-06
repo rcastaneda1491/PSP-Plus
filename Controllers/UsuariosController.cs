@@ -15,7 +15,7 @@ namespace PSP_.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("permitir")]
-    //[Authorize]
+    [Authorize]
     public class UsuariosController : ControllerBase
     {
         private readonly IJwtAuthenticationManager jwtAuthenticationManager;

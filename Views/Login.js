@@ -36,9 +36,7 @@ const signIn = async (e) => {
         const data = await response.text();
         emailInput.value = '';
         passwordInput.value = '';
-        alert(data);
         Cookies.set('jwt', data);
-        debugger;
         const stringJWT = Cookies.get('jwt');
         let jwt;
 
@@ -55,9 +53,9 @@ const signIn = async (e) => {
             e.preventDefault()
         } else {
             if (jwt.rol == "administrador") {
-                window.location.href = "../../Menu_Estudiante/index.html";
+                window.location.href = "./MenuPrincipa-Admin/index.html";
             } else if (jwt.rol == "desarrollador") {
-                window.location.href = "../../InstructoresMenuPrincipal/menuPrincipalInstructor.html";
+                window.location.href = "./ActividadesPSP/MenuActividades.html";
             }
         }
     } catch (err) {

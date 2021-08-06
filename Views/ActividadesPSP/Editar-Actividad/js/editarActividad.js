@@ -1,7 +1,7 @@
 // DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021 
 
 // ---------------------------------- Funciones cookies ----------------------------------
-/*function parseJwt(token) {
+function parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -22,7 +22,7 @@ function CerrarSesion() {
     Cookies.remove('jwt');
 };
 
-const idUsuario = jwt.sub;*/
+const idUsuario = jwt.sub;
 // ---------------------------------- FIN Funciones cookies ----------------------------------
 // ------------------- FUNCION Para obtener datos De la URL ----------------------------------
 function getParameterByName(name) {
@@ -34,7 +34,7 @@ function getParameterByName(name) {
 // ------------------- FIN FUNCION Para obtener datos De la URL ----------------------------------
 
 let url = 'https://localhost:44368';
-const idUsuario = 1;
+
 
 let idTiempoPSP = getParameterByName('actividad');
 
@@ -53,42 +53,50 @@ window.onload = () => {
     obtenerProyectos();
 }
 
-async function obtenerProyectos(){
+async function obtenerProyectos() {
 
     mostrarSpinner();
 
     const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
-    await fetch(direccion)
+    await fetch(direccion, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
         .then(respuesta => respuesta.json())
-        .then( resultado => resultado)
-        .then( proyectos => selectProyecto(proyectos));
+        .then(resultado => resultado)
+        .then(proyectos => selectProyecto(proyectos));
 }
 
 function selectProyecto(proyectos) {
-    proyectos.forEach( proyecto => {
-       const { nombre, idProyecto } = proyecto;
+    proyectos.forEach(proyecto => {
+        const { nombre, idProyecto } = proyecto;
 
-       const option = document.createElement('option');
-       option.value = idProyecto;
-       option.textContent = nombre;
-       proyectosSelect.appendChild(option);
+        const option = document.createElement('option');
+        option.value = idProyecto;
+        option.textContent = nombre;
+        proyectosSelect.appendChild(option);
 
     })
 
     obtenerDatosActividad();
 }
 
-async function obtenerDatosActividad(){
+async function obtenerDatosActividad() {
     const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&idTiempoPSP=${idTiempoPSP}`;
 
-    await fetch(direccion)
+    await fetch(direccion, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
         .then(respuesta => respuesta.json())
-        .then( resultado => resultado)
-        .then( proyectos => llenarCampos(proyectos))
+        .then(resultado => resultado)
+        .then(proyectos => llenarCampos(proyectos))
 }
 
-function llenarCampos(actividad){
+function llenarCampos(actividad) {
 
     eliminarSpinner();
 
@@ -96,16 +104,16 @@ function llenarCampos(actividad){
     fechaHoraInicioInput.value = actividad[0].fechaHoraInicio;
     fechaHoraFinalInput.value = actividad[0].fechaHoraFinal;
 
-    if(actividad[0].idProyecto != null){
+    if (actividad[0].idProyecto != null) {
         proyectosSelect.value = actividad[0].idProyecto;
-    }else{
+    } else {
         proyectosSelect.value = 0;
     }
 }
 
-function validarDatos(){
-    if(descripcionInput.value == '' || fechaHoraInicioInput.value == '' || fechaHoraFinalInput.value == '' || proyectosSelect.value == ''){
-        
+function validarDatos() {
+    if (descripcionInput.value == '' || fechaHoraInicioInput.value == '' || fechaHoraFinalInput.value == '' || proyectosSelect.value == '') {
+
         alerta.style.display = 'block';
 
         setTimeout(() => {
@@ -115,7 +123,7 @@ function validarDatos(){
         return;
     }
 
-    if(fechaHoraInicioInput.value > fechaHoraFinalInput.value){
+    if (fechaHoraInicioInput.value > fechaHoraFinalInput.value) {
         alertaFechasIncorrectas.style.display = 'block';
 
         setTimeout(() => {
@@ -128,20 +136,24 @@ function validarDatos(){
     actualizarActividad();
 }
 
-async function actualizarActividad(){
-    
+async function actualizarActividad() {
+
     mostrarSpinner();
 
     let direccion;
 
-    if(proyectosSelect.value == '0'){
+    if (proyectosSelect.value == '0') {
         direccion = `${url}/api/ActividadesPSP?idTiempoPSP=${idTiempoPSP}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}`;
-    }else{
+    } else {
         direccion = `${url}/api/ActividadesPSP?idTiempoPSP=${idTiempoPSP}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}&idProyecto=${proyectosSelect.value}`;
     }
 
-    await fetch(direccion,{
-        method: 'PUT'})
+    await fetch(direccion, {
+        method: 'PUT',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
         .then(respuesta => respuesta)
         .then(resultado => {
         })
@@ -151,7 +163,7 @@ async function actualizarActividad(){
 }
 
 
-function mostrarSpinner(){
+function mostrarSpinner() {
 
     const spinner = document.createElement('div');
     spinner.classList.add('spinner');
@@ -165,7 +177,7 @@ function mostrarSpinner(){
     formulario.appendChild(spinner);
 }
 
-function eliminarSpinner(){
+function eliminarSpinner() {
     const spinner = document.querySelector('.spinner');
 
     formulario.removeChild(spinner);

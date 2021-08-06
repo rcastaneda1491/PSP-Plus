@@ -1,7 +1,7 @@
 // DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021 
 
 // ---------------------------------- Funciones cookies ----------------------------------
-/*function parseJwt(token) {
+function parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
@@ -22,10 +22,10 @@ function CerrarSesion() {
     Cookies.remove('jwt');
 };
 
-const idUsuario = jwt.sub;*/
+const idUsuario = jwt.sub;
 // ---------------------------------- FIN Funciones cookies ----------------------------------
+
 let url = 'https://localhost:44368';
-const idUsuario = 1;
 
 // SELECTORES
 const formulario = document.querySelector('#formulario');
@@ -46,99 +46,111 @@ window.onload = () => {
     obtenerProyectos();
 }
 
-function filtrarActividades(){
-    
+function filtrarActividades() {
+
     eliminarActividades();
 
-    if(proyectosSelect.value == '0'){
+    if (proyectosSelect.value == '0') {
         tituloProyecto.textContent = 'Proyecto: -------';
         alerta.style.display = 'none';
         cargarActividades();
-    }else{
+    } else {
 
-        if(proyectosSelect.value == 'SinProyecto'){
+        if (proyectosSelect.value == 'SinProyecto') {
             tituloProyecto.textContent = 'Ningún Proyecto relacionado';
             alerta.style.display = 'none';
             cargarActividadesFiltrado();
-        }else{
-            tituloProyecto.textContent = 'Proyecto: '+proyectosSelect.options[proyectosSelect.selectedIndex].textContent;
+        } else {
+            tituloProyecto.textContent = 'Proyecto: ' + proyectosSelect.options[proyectosSelect.selectedIndex].textContent;
             alerta.style.display = 'none';
             cargarActividadesFiltrado();
         }
-    } 
+    }
 }
 
-async function cargarActividadesFiltrado(){
+async function cargarActividadesFiltrado() {
 
     mostrarSpinner();
 
     let direccion;
 
-    if(proyectosSelect.value == 'SinProyecto'){
+    if (proyectosSelect.value == 'SinProyecto') {
         direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&actividadesSinProyecto=1`;
-    }else{
+    } else {
         direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&idProyecto=${proyectosSelect.value}`;
     }
 
-    await fetch(direccion)
+    await fetch(direccion, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
         .then(respuesta => respuesta.json())
-        .then( resultado => resultado)
-        .then( actividades => imprimirActividades(actividades))
+        .then(resultado => resultado)
+        .then(actividades => imprimirActividades(actividades))
 }
 
-function eliminarActividades(){
+function eliminarActividades() {
     const actividades = document.querySelector('#actividades');
 
     while (actividades.firstChild) {
         actividades.removeChild(actividades.firstChild);
-    }  
+    }
 }
 
-async function obtenerProyectos(){
+async function obtenerProyectos() {
 
     mostrarSpinner();
 
     const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
-    await fetch(direccion)
+    await fetch(direccion, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
         .then(respuesta => respuesta.json())
-        .then( resultado => resultado)
-        .then( proyectos => selectProyecto(proyectos))
+        .then(resultado => resultado)
+        .then(proyectos => selectProyecto(proyectos))
 }
 
 function selectProyecto(proyectos) {
 
     eliminarSpinner();
 
-    proyectos.forEach( proyecto => {
-       const { nombre, idProyecto } = proyecto;
+    proyectos.forEach(proyecto => {
+        const { nombre, idProyecto } = proyecto;
 
-       const option = document.createElement('option');
-       option.value = idProyecto;
-       option.textContent = nombre;
-       proyectosSelect.appendChild(option);
+        const option = document.createElement('option');
+        option.value = idProyecto;
+        option.textContent = nombre;
+        proyectosSelect.appendChild(option);
 
     });
 
     cargarActividades();
 }
 
-async function cargarActividades(){
+async function cargarActividades() {
     mostrarSpinner();
 
     const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}`;
 
-    await fetch(direccion)
+    await fetch(direccion, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
         .then(respuesta => respuesta.json())
-        .then( resultado => resultado)
-        .then( actividades => imprimirActividades(actividades))
+        .then(resultado => resultado)
+        .then(actividades => imprimirActividades(actividades))
 }
 
-function imprimirActividades(actividades){
+function imprimirActividades(actividades) {
 
-    if(actividades.length == 0){
+    if (actividades.length == 0) {
         alerta.style.display = 'block';
-    }else{
+    } else {
         alerta.style.display = 'none';
     }
 
@@ -157,16 +169,16 @@ function imprimirActividades(actividades){
         var HoraFinalSplit = fechaFinalSplit[1].split(":00");
         let horaFinal = HoraFinalSplit[0];
 
-        if(horaInicio.indexOf(':') == -1){
-            horaInicio = horaInicio+':00';
+        if (horaInicio.indexOf(':') == -1) {
+            horaInicio = horaInicio + ':00';
         };
 
-        if(horaFinal.indexOf(':') == -1){
-            horaFinal = horaFinal+':00';
+        if (horaFinal.indexOf(':') == -1) {
+            horaFinal = horaFinal + ':00';
         };
 
-        restarHoras(fechaHoraInicio,fechaHoraFinal);
-        
+        restarHoras(fechaHoraInicio, fechaHoraFinal);
+
         actividadesForm.innerHTML += `
         <div class="actividad">
             <img src="./img/separadorActividad.png">
@@ -187,17 +199,17 @@ function imprimirActividades(actividades){
 
 }
 
-function calcularHoras(){
+function calcularHoras() {
     let totalHoras = (Number(sumaDeMinutos) / 60).toFixed(2);
-   
-    tiempoProyecto.textContent = 'Tiempo Invertido: '+totalHoras+' hrs';
+
+    tiempoProyecto.textContent = 'Tiempo Invertido: ' + totalHoras + ' hrs';
 
     sumaDeMinutos = 0;
 }
 
 let sumaDeMinutos = 0;
 
-function restarHoras(horaInicio, horaFinal){
+function restarHoras(horaInicio, horaFinal) {
 
     let a = moment(horaFinal);//now
     let b = moment(horaInicio);
@@ -206,31 +218,35 @@ function restarHoras(horaInicio, horaFinal){
 
 }
 
-async function eliminarActividad(idActividad){
+async function eliminarActividad(idActividad) {
     const confirmar = confirm('¿ Desea eliminar la actividad ?');
 
-    if(confirmar){
+    if (confirmar) {
 
         const direccion = `${url}/api/ActividadesPSP?idTiempoPSP=${idActividad}`;
 
-        await fetch(direccion,{
-            method: 'DELETE'})
+        await fetch(direccion, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
             .then(respuesta => respuesta)
             .then(resultado => {
-        })
+            })
 
         alert('Elimando Exitosamente');
-    
+
     }
 
     location.reload();
 }
 
-function crearActividad(){
+function crearActividad() {
     window.location.href = ('./Agregar-Actividad/AgregarActividad.html');
 }
 
-function mostrarSpinner(){
+function mostrarSpinner() {
 
     const spinner = document.createElement('div');
     spinner.classList.add('spinner');
@@ -244,7 +260,7 @@ function mostrarSpinner(){
     formulario.appendChild(spinner);
 }
 
-function eliminarSpinner(){
+function eliminarSpinner() {
     const spinner = document.querySelector('.spinner');
 
     formulario.removeChild(spinner);

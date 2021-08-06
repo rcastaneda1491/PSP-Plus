@@ -20,32 +20,47 @@ window.onload = () => {
 
 }
 
-function validacion(){
-    if(val == 1){
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+const stringJWT = Cookies.get('jwt');
+let jwt;
+if (stringJWT) {
+    jwt = parseJwt(stringJWT);
+}
+
+function validacion() {
+    if (val == 1) {
 
         exitoso.textContent = "Usuario Agregado Correctamente"
         exitoso.style.display = 'block';
         setTimeout(() => {
             exitoso.style.display = 'none';
         }, 3000);
-
-
-    }else if(val == 2){
+    } else if (val == 2) {
         exitoso2.textContent = "Usuario Actualizado Correctamente"
         exitoso2.style.display = 'block';
         setTimeout(() => {
             exitoso2.style.display = 'none';
         }, 3000);
 
-
-    }else if(val == null){
+    } else if (val == null) {
         return;
     }
+    setTimeout(() => {
+        window.location.href = "./List-User.html";
+    }, 3000);
 }
 
 
 async function GetDatos() {
-    if(eliminar == 1){
+    if (eliminar == 1) {
 
         exitoso3.textContent = "Usuario Eliminado Correctamente"
         exitoso3.style.display = 'block';
@@ -59,7 +74,7 @@ async function GetDatos() {
 
     await fetch(url, {
         headers: new Headers({
-            //'Authorization': 'Bearer ' + stringJWT
+            'Authorization': 'Bearer ' + stringJWT
         })
     })
         .then(respuesta => respuesta.json())
@@ -115,54 +130,54 @@ async function eliminarUsuario(e) {
     const user = e.target.parentElement.parentElement;
     const userid = user.querySelector('button').getAttribute('data-id');
     const confirmar = confirm('¿Desea Eliminar Usuario?');
-        if (confirmar) {
-           
-            const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+    if (confirmar) {
 
-            await fetch(urlActualizarUsuario, {
-                method: 'DELETE',
-                headers: new Headers({
-                    //'Authorization': 'Bearer ' + stringJWT
-                })
+        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+
+        await fetch(urlActualizarUsuario, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
             })
-                .then(respuesta => respuesta)
+        })
+            .then(respuesta => respuesta)
 
-            eliminar = 1;
-            GetDatos();
+        eliminar = 1;
+        GetDatos();
 
-        } else {
+    } else {
 
-            return;
+        return;
 
-        }
+    }
 
 }
 
 
-async function searchCursos(){
+async function searchCursos() {
     document.getElementById('alert').style.display = 'none';
     if (inpuntsearch.value == "") {
-      document.getElementById("lista-usuarios").innerHTML = "";
-      GetDatos();
+        document.getElementById("lista-usuarios").innerHTML = "";
+        GetDatos();
     }
     else {
-      document.getElementById("lista-usuarios").innerHTML = "";
+        document.getElementById("lista-usuarios").innerHTML = "";
         const url = `https://localhost:44368/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
-            await fetch(url, {
+        await fetch(url, {
             headers: new Headers({
-            //'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
-            })
-
-        .then(respuesta => respuesta.json())
-        .then(resultado => {
-          mostrarDatos(resultado);
-          if (Object.keys(resultado).length == 0) {
-            document.getElementById('alert').style.display = 'block';
-          } else {
-  
-            document.getElementById('alert').style.display = 'none';
-          }
         })
+
+            .then(respuesta => respuesta.json())
+            .then(resultado => {
+                mostrarDatos(resultado);
+                if (Object.keys(resultado).length == 0) {
+                    document.getElementById('alert').style.display = 'block';
+                } else {
+
+                    document.getElementById('alert').style.display = 'none';
+                }
+            })
     }
 }
