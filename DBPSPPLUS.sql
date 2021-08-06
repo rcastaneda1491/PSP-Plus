@@ -113,7 +113,7 @@ CREATE TABLE Recordatorios(
 	CONSTRAINT FK_Recordatorios_USUARIO FOREIGN KEY(idUsuario) 
 		REFERENCES Usuario(idUsuario)
 );
-
+GO
 ----- Erick Echeverria/Debora Chacach 06/08/2021
 create trigger TR_HoraInicioReal
 on TiemposPSP after insert
@@ -132,6 +132,7 @@ as begin
 		where idProyecto=@id_proyecto
 end
 go
+
 create trigger TR_HoraInicioRealEliminar
 on TiemposPSP after delete
 as begin
@@ -185,3 +186,4 @@ end
 
 select * from Usuario
 delete  from Usuario
+

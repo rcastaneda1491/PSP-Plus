@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded',() => {
        
       </div>
       <div >
-      <a class="nav-link" href="#">Nombre del Logeado</a>
+      
 
       <a class="nav-link" href="#"><img src="../Navbar/Vector.png"></a>
       </li>
@@ -96,7 +96,6 @@ document.addEventListener('DOMContentLoaded',() => {
        
       </div>
       <div >
-      <a class="nav-link" href="#">Nombre del Logeado</a>
 
       <a class="nav-link" href="#"><img src="../Navbar/Vector.png"></a>
       </li>
