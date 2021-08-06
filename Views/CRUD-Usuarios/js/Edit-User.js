@@ -10,26 +10,16 @@ const inputEquipo = document.querySelector('#equipo');
 const alerta = document.querySelector('#alert');
 
 
-const array = ["---Seleccione una opcion---"];
-const array2 = [0];
+const urlParams = new URLSearchParams(window.location.search);
+const idUsuario = urlParams.get('Userid');
 
-let cantidadCorreos = false;
+const array = [];
+const array2 = [];
 
-var validado = 0;
+var editar = 0;
 
 window.onload = () =>{
     getEquipos();
-}
-
-function validarCorreos(usuarios){
-
-    usuarios.forEach(usuario => {
-   
-        if(inputEmail.value == usuario.email){
-            cantidadCorreos = true;
-        }
-        
-    })
 }
 
 async function getEquipos(){
@@ -65,44 +55,43 @@ function cargar(){
         option.text = array[i];
         select.appendChild(option);
      }
+
+     getUser();
 }
 
 
-async function agregarUser(){
-
-
-    const usarios = `https://localhost:44368/api/EquipoDesarrolloNombre`;
-
-    await fetch(usarios)
-        .then(respuesta => respuesta.json())
-        .then(resultado => {
-            validarCorreos(resultado);
-        })
-
-
-
-    if(cantidadCorreos == true){
-        alert('Correo ya existente, por favor intentelo nuevamente');
-
-        inputEmail.value = '';
-        cantidadCorreos = false;
-        return;
-    }
-
-    const url = `https://localhost:44368/api/AgregarUsuarios?nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}`;
+async function getUser(){
+    const url = `https://localhost:44368/api/EquipoDesarrolloNombre?idUsuario=${idUsuario}`;
 
     await fetch(url, {
-        method: 'POST',
         headers: new Headers({
             //'Authorization': 'Bearer ' + stringJWT
         })
     })
-        .then(respuesta => respuesta)
+        .then(respuesta => respuesta.json())
+        .then(resultado => {
+            mostrarDatos(resultado);
+        })
+}
 
-    validado = 1;
-    
-    window.location.href = (`./List-User.html?validar=${validado}`);
-    
+function mostrarDatos(datos){
+    datos.forEach(usuario =>{
+        var fechaSplit = usuario.fechaNacimiento.split("T");
+        var fecha = fechaSplit[0];
+
+        inputNombre.value = usuario.nombres;
+        inputApellido.value = usuario.apellidos; 
+        inputEmail.value = usuario.email;
+        inputClave.value = usuario.clave; 
+        inputFecha.value = fecha; 
+
+        for(var i = 0; i < inputEquipo.options.length; i++){
+            if(inputEquipo.options[i].value == usuario.idEquipoDesarrollo){
+                inputEquipo.options[i].selected = true;
+            }
+        }
+
+    })
 }
 
 function validar(){
@@ -116,13 +105,28 @@ function validar(){
         return;
     }else{
         
-        agregarUser();
-    }
+        editUser();
 
+
+    }
 }
 
+async function editUser(){
+    const url = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${idUsuario}&nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}`;
+
+    await fetch(url, {
+        method: 'PUT',
+        headers: new Headers({
+            //'Authorization': 'Bearer ' + stringJWT
+        })
+    })
+        .then(respuesta => respuesta)
 
 
+    editar = 2;
+    window.location.href = (`./List-User.html?validar=${editar}`);
+ 
+}
 
 
 

@@ -46,5 +46,44 @@ namespace PSP_.Controllers
             return Ok("El usuario se añadio correctamente");
         }
 
+        [HttpPut]
+        public ActionResult Put(int? idUsuario,string nombre, string apellido, string email, string clave, DateTime fechaNacimiento, int idEquipo)
+        {
+            using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
+            {
+                Models.Usuario datos = db.Usuarios.Find(idUsuario);
+
+                datos.Nombres = nombre;
+                datos.Apellidos = apellido;
+                datos.Email = email;
+                datos.Clave = clave;
+                datos.FechaNacimiento = fechaNacimiento;
+                datos.IdEquipoDesarrollo = idEquipo;
+
+                db.Entry(datos).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok("Datos Actualizados Correctamente");
+
+            }
+        }
+
+
+        [HttpDelete]
+        public ActionResult Delete(int? idUsuario)
+        {
+            using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
+            {
+                Models.Usuario usuario = db.Usuarios.Find(idUsuario);
+
+
+                db.Usuarios.Remove(usuario);
+                db.SaveChanges();
+
+                return Ok("El Usuario se elimino correctamente");
+
+            }
+        }
+
     }
 }

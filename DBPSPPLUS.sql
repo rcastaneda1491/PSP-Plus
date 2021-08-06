@@ -102,3 +102,6 @@ CREATE TABLE Recordatorios(
 	CONSTRAINT FK_Recordatorios_USUARIO FOREIGN KEY(idUsuario) 
 		REFERENCES Usuario(idUsuario)
 );
+
+select * from Usuario
+delete  from Usuario

@@ -12,7 +12,7 @@
     margin-top: 125px;
 }
 
-.titulo,img{
+.titulo{
     margin-bottom: 45px;
 }
 
@@ -20,15 +20,15 @@
     color: #000000 !important;
 }
 
-input, select{
-    background-color: #CACACA !important;
+#search{
+    border-radius: 30px !important;
+    background-color: #D8D8D8 !important;
 }
 
-.btn{
+.createuser{
     border-radius: 8px;
     background-color: #3D9BE9;
     color: #F3F3F3;
     width: 187px;
-    height: 50px;
-   
+    height: 45px;
 }
