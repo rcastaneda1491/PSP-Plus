@@ -1,0 +1,23 @@
+.form-container {
+  font-family: Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.form-select {
+  background-color: #cacacac9 !important;
+  width: 20em;
+}
+
+.button {
+  width: 8em;
+  font-size: 1.5em;
+  background: #3D9BE9 !important;
+  border-radius: 25px;
+}

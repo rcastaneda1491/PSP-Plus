@@ -21,6 +21,7 @@ namespace PSP_.Models
         public string Email { get; set; }
         public string Clave { get; set; }
         public DateTime FechaNacimiento { get; set; }
+        public string Rol { get; set; }
         public int IdEquipoDesarrollo { get; set; }
 
         public virtual EquipoDesarrollo IdEquipoDesarrolloNavigation { get; set; }
