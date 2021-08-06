@@ -6,6 +6,7 @@ const inputEmail = document.querySelector('#email');
 const inputClave = document.querySelector('#clave');
 const inputFecha = document.querySelector('#fecha');
 const inputEquipo = document.querySelector('#equipo');
+const inputRol = document.querySelector('#rol');
 
 const alerta = document.querySelector('#alert');
 
@@ -89,7 +90,7 @@ async function agregarUser(){
         return;
     }
 
-    const url = `https://localhost:44368/api/AgregarUsuarios?nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}`;
+    const url = `https://localhost:44368/api/AgregarUsuarios?nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}&rol=${inputRol.value}`;
 
     await fetch(url, {
         method: 'POST',
@@ -106,7 +107,7 @@ async function agregarUser(){
 }
 
 function validar(){
-    if(inputNombre.value == ""||inputApellido.value == ""|| inputEmail.value == ""|| inputClave.value == ""|| inputFecha.value == "" || inputEquipo.value == 0){
+    if(inputNombre.value == ""||inputApellido.value == ""|| inputEmail.value == ""|| inputClave.value == ""|| inputFecha.value == "" || inputEquipo.value == 0 || inputRol.value == ""){
         alerta.style.display = 'block';
 
         setTimeout(() => {

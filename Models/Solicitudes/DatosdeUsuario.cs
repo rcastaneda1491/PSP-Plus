@@ -12,6 +12,7 @@ namespace PSP_.Models.Solicitudes
         public string Apellidos { get; set; }
         public string Email { get; set; }
         public string Clave { get; set; }
+        public string Rol { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public int IdEquipoDesarrollo { get; set; }
         public string NombreEquipo { get; set; }

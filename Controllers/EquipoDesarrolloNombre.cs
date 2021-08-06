@@ -37,7 +37,7 @@ namespace PSP_.Controllers
                     foreach (var item in usuario)
                     {
                         var equipo = db.EquipoDesarrollos.Find(item.IdEquipoDesarrollo);
-                        equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre });
+                        equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre, Rol = item.Rol });
                     }
                 }
                 else if(idUsuario != 0 && correo == null)
@@ -48,7 +48,7 @@ namespace PSP_.Controllers
                     foreach (var item in usuario)
                     {
                         var equipo = db.EquipoDesarrollos.Find(item.IdEquipoDesarrollo);
-                        equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre });
+                        equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre, Rol = item.Rol });
                     }
 
                 }else if(idUsuario == 0 && correo != null)
@@ -59,7 +59,7 @@ namespace PSP_.Controllers
                     foreach (var item in usuario)
                     {
                         var equipo = db.EquipoDesarrollos.Find(item.IdEquipoDesarrollo);
-                        equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre });
+                        equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre, Rol = item.Rol });
                     }
                 }
                 

@@ -82,6 +82,7 @@ function mostrarDatos(datos) {
               <td>${usuario.email}</td>
               <td>${fecha}</td>
               <td>${usuario.nombreEquipo}</td>
+              <td>${usuario.rol}</td>
               <td><button class="btn edit" id="detalle" data-id="${usuario.idUsuario}" style="background-color: #4F73CF; color:white;"> Editar </button></td>
               <td><button class="btn delete" id="detalle" data-id="${usuario.idUsuario}" style="background-color: #09254F; color:white;"> Eliminar </button></td>
             </tr>

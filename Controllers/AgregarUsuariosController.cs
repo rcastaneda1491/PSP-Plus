@@ -25,7 +25,7 @@ namespace PSP_.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(string nombre, string apellido, string email, string clave,DateTime fechaNacimiento,int idEquipo)
+        public ActionResult Post(string nombre, string apellido, string email, string clave,DateTime fechaNacimiento,int idEquipo, string rol)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
@@ -37,6 +37,7 @@ namespace PSP_.Controllers
                 usuario.Clave = clave;
                 usuario.FechaNacimiento = fechaNacimiento;
                 usuario.IdEquipoDesarrollo = idEquipo;
+                usuario.Rol = rol;
 
                 db.Usuarios.Add(usuario);
                 db.SaveChanges();
