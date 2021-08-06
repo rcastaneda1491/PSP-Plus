@@ -29,13 +29,6 @@ const guardarUsuario = () => {
   usuariosProyectoService.saveUsuariosProyecto(usuarioP);
 };
 
-const setUsuarios = async () => {
- ListElement.innerHTML = "";
-  const dataUsuarios = await usuariosProyectoService.getusuariosProyecto();
-  usarios = dataUsuarios;
-  usarios.forEach((usario, index) => insertPersonaIntoDom(persona, index));
-};
-
 
 const onLoaded = () => {
     fillSelect();

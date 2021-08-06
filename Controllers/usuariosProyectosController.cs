@@ -38,12 +38,13 @@ namespace PSP_.Controllers
             {
                 var query = db.UsuarioProyectos.Select(usuario => new
                 {
-                    IdProyecto = usuario.IdProyecto,
+                    idProyecto = usuario.IdProyecto,
+                    idUsuario = usuario.IdUsuario,
                     Nombre = usuario.IdUsuarioNavigation.Nombres,
                     Apellido = usuario.IdUsuarioNavigation.Apellidos,
                     Correo = usuario.IdUsuarioNavigation.Email
 
-                }).Where(usuario => usuario.IdProyecto == id).ToList();
+                }).Where(usuario => usuario.idProyecto == id).ToList();
 
                 return Ok(query);
 

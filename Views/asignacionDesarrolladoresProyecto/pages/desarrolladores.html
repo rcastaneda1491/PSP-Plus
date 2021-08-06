@@ -18,9 +18,25 @@
       <form class="project mt-5 d-flex flex-column align-items-center">
         <h1 class="project__title">Desarrolladores</h1>
         <h2 id="subtitle" class="project__subtitle">Proyecto:</h2>
-        <button class="project__button mt-5 btn btn-primary"> ➕ Agregar</button>
-        <section class="list"></section>
+        <a href="./agregarDesarrolladores.html" class="project__button mt-5 btn btn-primary">Agregar</a>
+        <section class="list col-md-12">
+          <div class="table-responsive">
+            <table class="table table-light table-bordered" style="text-align: center;">
+                <thead class="table" style="background-color: #021329; color: white;">
+                    <th>Nombre Completo</th>
+                    <th>Correo</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody id="lista-usuarios" style="background-color: D8D8D8; color: #000;">
+                </tbody>
+            </table>
+        </div>
+        </section>
       </form>
     </main>
   </body>
+  <script src="/asignacionDesarrolladoresProyecto/js/utils/globals.js"></script>
+  <script src="/asignacionDesarrolladoresProyecto/js/Servicios/usuariosProyectoServicio.js"></script>
+  <script src="/asignacionDesarrolladoresProyecto/js/controlador/desarrolladores.js"></script>
 </html>

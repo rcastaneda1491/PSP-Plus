@@ -1,16 +1,16 @@
 const request = `${URL}/usuariosProyectos`
 
 const usuariosProyectoService = {
-  getusuariosProyecto() {
-    return fetch(request, {
+  getusuariosProyecto(idProyecto) {
+    return fetch(`${request}/${idProyecto}`, {
       method: "GET",
-    }).then((response) => response.json());
+    }).then((response) => console.log(response));
   },
-  deleteUsuariosProyecto(idEmpresa) {
+  deleteUsuariosProyecto(body) {
     return fetch(request, {
       method: "DELETE",
       headers,
-      body: JSON.stringify({idEmpresa: idEmpresa})
+      body: JSON.stringify(body)
     }).then((response) => response.json());
   },
   saveUsuariosProyecto(body) {
@@ -22,3 +22,15 @@ const usuariosProyectoService = {
     }).then((response) => response.json());
   },
 };
+
+
+ const obtenerUsuarios = async idProyecto => {
+  try {
+    const resultado = await fetch(`${request}/${idProyecto}`);
+    const usuario = await resultado.json();
+    //console.log(usuario);
+    return usuario;
+  } catch (error) {
+    console.log(error);
+  }
+}
