@@ -41,6 +41,8 @@ CREATE TABLE Usuario(
 GO
 INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
 	values('admin', 'admin', 'admin@admin.com', '12345', '2001/09/14', 1, 'administrador');
+INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
+	values('dev', 'dev', 'dev@dev.com', '12345', '2001/10/14', 1, 'desarrollador');
 GO
 CREATE TABLE UsuarioProyecto( -- Varios desarrolladores podrán tener varios proyectos
 	idUsuario		int NOT NULL,
