@@ -55,7 +55,7 @@ const signIn = async (e) => {
             if (jwt.rol == "administrador") {
                 window.location.href = "./MenuPrincipa-Admin/index.html";
             } else if (jwt.rol == "desarrollador") {
-                window.location.href = "./ActividadesPSP/MenuActividades.html";
+                window.location.href = "./MenuPrincipal/Menu.html";
             }
         }
     } catch (err) {

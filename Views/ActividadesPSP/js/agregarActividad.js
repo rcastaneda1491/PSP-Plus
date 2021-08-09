@@ -115,7 +115,7 @@ async function agregarActividad() {
         })
 
     alert('Agregado Exitosamente');
-    window.location.href = (`../MenuActividades.html`);
+    window.location.href = (`./MenuActividades.html`);
 }
 
 function mostrarSpinner() {

@@ -4,12 +4,17 @@ const usuariosProyectoService = {
   getusuariosProyecto(idProyecto) {
     return fetch(`${request}/${idProyecto}`, {
       method: "GET",
+      headers: new Headers({
+        'Authorization': 'Bearer ' + stringJWT
+    })
     }).then((response) => console.log(response));
   },
   deleteUsuariosProyecto(body) {
     return fetch(request, {
       method: "DELETE",
-      headers,
+      headers: new Headers({
+        'Authorization': 'Bearer ' + stringJWT
+    }),
       body: JSON.stringify(body)
     }).then((response) => response.json());
   },
@@ -17,7 +22,9 @@ const usuariosProyectoService = {
     console.info(body);
     return fetch(request, {
       method: "POST",
-      headers,
+      headers: new Headers({
+        'Authorization': 'Bearer ' + stringJWT
+    }),
       body: JSON.stringify(body),
     }).then((response) => response.json());
   },

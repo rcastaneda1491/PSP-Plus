@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class usuariosProyectosController : ControllerBase
     {
         [HttpPost]

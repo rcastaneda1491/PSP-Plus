@@ -12,6 +12,21 @@ const exitoso = document.querySelector('#guardado');
 const urlParam = new URLSearchParams(window.location.search);
 const idProyecto = urlParam.get('proyectoId');
 
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+const stringJWT = Cookies.get('jwt');
+let jwt;
+if (stringJWT) {
+    jwt = parseJwt(stringJWT);
+}
+
 window.onload = () => {
     getProyecto();
 }
@@ -21,7 +36,7 @@ async function getProyecto() {
 
     await fetch(url, {
             headers: new Headers({
-                //'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
         })
         .then(respuesta => respuesta.json())
@@ -31,7 +46,6 @@ async function getProyecto() {
 }
 
 function mostrarDatos(datos) {
-    debugger;
     datos.forEach(proyecto => {
         var fechaSplit1 = proyecto.fechaInicioEsperada.split("T");
         var fechainicioesperada = fechaSplit1[0];
@@ -72,7 +86,7 @@ async function editProyecto() {
     await fetch(url, {
             method: 'PUT',
             headers: new Headers({
-                //'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
         })
         .then(respuesta => respuesta)

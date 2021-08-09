@@ -159,7 +159,7 @@ async function actualizarActividad() {
         })
 
     alert('Editado Exitosamente');
-    window.location.href = (`../MenuActividades.html`);
+    window.location.href = (`./MenuActividades.html`);
 }
 
 

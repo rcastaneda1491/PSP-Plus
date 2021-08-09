@@ -6,6 +6,16 @@
     box-sizing: border-box;
 }
 
+html{
+    min-height: 100%;
+    position: relative;
+}
+
+body{
+    margin: 0;
+    margin-bottom: 100px;
+}
+
 .form-control {
     background-color: #CACACA;
 }
@@ -16,7 +26,7 @@
 
 .container {
     text-align: center;
-    margin-top: 125px;
+    margin-top: 20px;
 }
 
 .btn {
@@ -74,3 +84,16 @@ p {
 #descripcionn {
     text-align: justify !important;
 }
+
+
+footer {
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

@@ -6,7 +6,7 @@
         listado.addEventListener('click', confirmacionEliminacion);
 
         async function mostrarUsuarios(){
-            const usuarios = await obtenerUsuarios(5);
+            const usuarios = await obtenerUsuarios(idProyect);
             console.info(usuarios);
 
             usuarios.forEach( element => {
@@ -37,9 +37,9 @@
          }
 
          const onLoaded = () => {
-            mostrarUsuarios();
             const parametrosURL = new URLSearchParams(window.location.search);
             idProyect = parametrosURL.get('idProyecto');
+            mostrarUsuarios();
         }
         document.addEventListener("DOMContentLoaded", onLoaded);
 })();

@@ -184,7 +184,7 @@ function imprimirActividades(actividades) {
             <img src="./img/separadorActividad.png">
             <h3>${descripcion}</h3>
             <a onclick="eliminarActividad(${idTiempoPsp})" ><img id="eliminar" src="./img/eliminar.png"></a>
-            <a href="./Editar-Actividad/EditarActividad.html?actividad=${idTiempoPsp}"><img id="editar" src="./img/editar.png"></a>
+            <a href="./EditarActividad.html?actividad=${idTiempoPsp}"><img id="editar" src="./img/editar.png"></a>
             <h5>${horaFinal}</h5>
             <h4>${fechaFinal}</h4>
             <h4>a</h4>
@@ -243,7 +243,7 @@ async function eliminarActividad(idActividad) {
 }
 
 function crearActividad() {
-    window.location.href = ('./Agregar-Actividad/AgregarActividad.html');
+    window.location.href = ('./AgregarActividad.html');
 }
 
 function mostrarSpinner() {

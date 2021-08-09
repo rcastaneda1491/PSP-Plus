@@ -24,7 +24,9 @@ CREATE TABLE EquipoDesarrollo(
 	descripcion			varchar(100) NOT NULL,
 );
 GO
-Insert into EquipoDesarrollo (nombre, descripcion) Values ('Equipo 1', 'Desarrollo móvil');
+Insert into EquipoDesarrollo (nombre, descripcion) Values ('Desarrollo Móvil', 'Desarrollo Móvil');
+Insert into EquipoDesarrollo (nombre, descripcion) Values ('Desarrollo Web', 'Desarrollo Web');
+Insert into EquipoDesarrollo (nombre, descripcion) Values ('Desarrollo Escritorio', 'Desarrollo Escritorio');
 GO
 CREATE TABLE Usuario(
 	idUsuario			int  IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -184,6 +186,5 @@ as begin
 		where idProyecto=@id_proyectoAnterior;
 end
 
-select * from Usuario
-delete  from Usuario
-
+select * from Usuario;
+select * from Proyectos;

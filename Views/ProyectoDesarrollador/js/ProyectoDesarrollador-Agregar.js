@@ -11,6 +11,21 @@ const inputidProyecto = document.querySelector('#idproyecto')
 const alerta = document.querySelector('#alert');
 const exitoso = document.querySelector('#guardado');
 
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+const stringJWT = Cookies.get('jwt');
+let jwt;
+if (stringJWT) {
+    jwt = parseJwt(stringJWT);
+}
+
 
 async function agregarProyecto() {
     const url = `https://localhost:44368/api/ProyectoDesarrollador?nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
@@ -18,17 +33,17 @@ async function agregarProyecto() {
     await fetch(url, {
             method: 'POST',
             headers: new Headers({
-                //'Authorization': 'Bearer ' + stringJWT
+               'Authorization': 'Bearer ' + stringJWT
             })
         })
         .then(respuesta => {
             
-            const url2 = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=1`;
+            const url2 = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=${jwt.sub}`;
 
             fetch(url2, {
                     method: 'POST',
                     headers: new Headers({
-                        //'Authorization': 'Bearer ' + stringJWT
+                        'Authorization': 'Bearer ' + stringJWT
                     })
                 })  
                 .then(respuesta => respuesta)

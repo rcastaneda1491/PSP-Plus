@@ -2,6 +2,8 @@ const select = document.getElementById("select");
 const btnAgregar = document.getElementById("agregar");
 const form = document.getElementById("form");
 let idProyecto;
+
+
 const setSelectOptions = (usuarios) => {
   select.innerHTML = "";
   let selectHtml =
@@ -31,9 +33,9 @@ const guardarUsuario = () => {
 
 
 const onLoaded = () => {
-    fillSelect();
     const parametrosURL = new URLSearchParams(window.location.search);
     idProyecto = parametrosURL.get('idProyecto');
+    fillSelect();
 }
 document.addEventListener("DOMContentLoaded", onLoaded);
 btnAgregar.addEventListener("click", guardarUsuario);

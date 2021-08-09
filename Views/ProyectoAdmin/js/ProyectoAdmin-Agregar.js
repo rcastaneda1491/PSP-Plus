@@ -15,7 +15,7 @@ async function agregarProyecto() {
     await fetch(url, {
             method: 'POST',
             headers: new Headers({
-                //'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
         })
         .then(respuesta => respuesta)

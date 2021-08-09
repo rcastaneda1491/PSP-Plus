@@ -21,7 +21,7 @@ async function getProyecto() {
 
     await fetch(url, {
             headers: new Headers({
-                //'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
         })
         .then(respuesta => respuesta.json())
@@ -72,7 +72,7 @@ async function editProyecto() {
     await fetch(url, {
             method: 'PUT',
             headers: new Headers({
-                //'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
         })
         .then(respuesta => respuesta)

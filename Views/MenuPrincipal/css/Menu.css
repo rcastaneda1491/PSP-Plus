@@ -6,6 +6,16 @@
     margin: 40px 0 40px 0;
 }
 
+html{
+    min-height: 100%;
+    position: relative;
+}
+
+body{
+    margin: 0;
+    margin-bottom: 100px;
+}
+
 .div-card {
     background-color: #3D9BE9;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -51,6 +61,14 @@
     margin-bottom: 10px;
 }
 
-body {
-    margin-top: 125px;
-}
+footer {
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

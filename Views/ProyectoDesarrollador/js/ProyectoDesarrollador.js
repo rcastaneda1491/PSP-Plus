@@ -1,15 +1,30 @@
 const cardlistelement = document.getElementById("lista-proyectos");
 
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+const stringJWT = Cookies.get('jwt');
+let jwt;
+if (stringJWT) {
+    jwt = parseJwt(stringJWT);
+}
+
 window.onload = () => {
     getdatos();
 }
 
 async function getdatos() {
-    const url = `https://localhost:44368/api/ProyectoDesarrollador?idUsuario=1`;
+    const url = `https://localhost:44368/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
 
     await fetch(url, {
             headers: new Headers({
-                //'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
         })
         .then(respuesta => respuesta.json())
@@ -77,6 +92,19 @@ function mostrardatos(datos) {
     for (var i = 0; i < elements2.length; i++) {
         elements2[i].addEventListener('click', eliminarProyecto);
     }
+
+    var elements2 = document.getElementsByClassName("desarrollador");
+
+    for (var i = 0; i < elements2.length; i++) {
+        elements2[i].addEventListener('click', verDesarrollador);
+    }
+}
+
+function verDesarrollador(e) {
+    const proyecto = e.target.parentElement.parentElement;
+    const proyectoid = proyecto.querySelector('a').getAttribute('data-id');
+
+    window.location.href = (`../asignacionDesarrolladoresProyecto/desarrolladores.html?idProyecto=${proyectoid}`);
 }
 
 function modificarProyecto(e) {
@@ -97,7 +125,7 @@ async function eliminarProyecto(e) {
         await fetch(url, {
                 method: 'DELETE',
                 headers: new Headers({
-                    //'Authorization': 'Bearer ' + stringJWT
+                    'Authorization': 'Bearer ' + stringJWT
                 })
             })
             .then(respuesta => respuesta)

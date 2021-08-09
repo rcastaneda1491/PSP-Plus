@@ -6,6 +6,16 @@
   font-weight: 700;
 }
 
+html{
+  min-height: 100%;
+  position: relative;
+}
+
+body{
+  margin: 0;
+  margin-bottom: 100px;
+}
+
 .project__subtitle {
   font-size: 1.3em;
   color: gray;
@@ -19,3 +29,14 @@
 }
 
 
+footer {
+  background-color: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

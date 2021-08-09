@@ -77,6 +77,19 @@ function mostrardatos(datos) {
     for (var i = 0; i < elements2.length; i++) {
         elements2[i].addEventListener('click', eliminarProyecto);
     }
+
+    var elements2 = document.getElementsByClassName("desarrollador");
+
+    for (var i = 0; i < elements2.length; i++) {
+        elements2[i].addEventListener('click', verDesarrollador);
+    }
+}
+
+function verDesarrollador(e) {
+    const proyecto = e.target.parentElement.parentElement;
+    const proyectoid = proyecto.querySelector('a').getAttribute('data-id');
+
+    window.location.href = (`../asignacionDesarrolladoresProyecto/desarrolladores.html?idProyecto=${proyectoid}`);
 }
 
 function modificarProyecto(e) {
@@ -97,7 +110,7 @@ async function eliminarProyecto(e) {
         await fetch(url, {
                 method: 'DELETE',
                 headers: new Headers({
-                    //'Authorization': 'Bearer ' + stringJWT
+                    'Authorization': 'Bearer ' + stringJWT
                 })
             })
             .then(respuesta => respuesta)
