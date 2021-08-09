@@ -1,9 +1,11 @@
 (function(){
 
         const listado = document.getElementById('lista-usuarios');
+        const addButton = document.getElementById('buttonAdd');
         let idProyect;
         
         listado.addEventListener('click', confirmacionEliminacion);
+        addButton.addEventListener('click', addView);
 
         async function mostrarUsuarios(){
             const usuarios = await obtenerUsuarios(idProyect);
@@ -21,6 +23,10 @@
               listado.appendChild(row);
 
             });
+        }
+
+        function addView(){
+            window.location.href = `./agregarDesarrolladores.html?idProyecto=${idProyect}`;
         }
 
         function confirmacionEliminacion(e){

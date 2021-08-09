@@ -23,12 +23,14 @@ const fillSelect = () => {
     .catch(() => alert("No se pueden obtener usuarios"));
 };
 
-const guardarUsuario = () => {
+const guardarUsuario = (e) => {
+  e.preventDefault();
   const usuarioP = {
     idUsuario: Number(select.value),
     idProyecto,
   };
   usuariosProyectoService.saveUsuariosProyecto(usuarioP);
+  window.location.href = `./desarrolladores.html?idProyecto=${idProyect}`;
 };
 
 
