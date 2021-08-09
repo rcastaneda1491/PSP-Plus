@@ -40,6 +40,7 @@
             }
 
             usuariosProyectoService.deleteUsuariosProyecto(user);
+            window.location.href = `./desarrolladores.html?idProyecto=${idProyect}`;
          }
 
          const onLoaded = () => {
