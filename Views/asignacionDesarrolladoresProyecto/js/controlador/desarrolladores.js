@@ -29,8 +29,8 @@
             window.location.href = `./agregarDesarrolladores.html?idProyecto=${idProyect}`;
         }
 
-        function confirmacionEliminacion(e){
-
+        function confirmacionEliminacion(e){    
+            e.preventDefault();
             const idU = e.target.dataset.id;
             const idP = e.target.dataset.usuario;
 
