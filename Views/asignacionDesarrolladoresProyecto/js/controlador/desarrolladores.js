@@ -2,6 +2,7 @@
 
         const listado = document.getElementById('lista-usuarios');
         const addButton = document.getElementById('buttonAdd');
+        const alerta = document.getElementById('eliminado');
         let idProyect;
         
         listado.addEventListener('click', confirmacionEliminacion);
@@ -29,6 +30,14 @@
             window.location.href = `./agregarDesarrolladores.html?idProyecto=${idProyect}`;
         }
 
+        const alertaEliminado = () => {
+            alerta.textContent = "Usuario Eliminado Correctamente"
+            alerta.style.display = 'block';
+            setTimeout(() => {
+                alerta.style.display = 'none';
+            }, 3000);
+        }
+
         function confirmacionEliminacion(e){    
             e.preventDefault();
             const idU = e.target.dataset.id;
@@ -39,8 +48,13 @@
                     idProyecto: idP,
             }
 
-            usuariosProyectoService.deleteUsuariosProyecto(user);
-            window.location.href = `./desarrolladores.html?idProyecto=${idProyect}`;
+            const confirmar = confirm("¿Desea eliminar el usuario?")
+            if(confirmar){
+                
+                 usuariosProyectoService.deleteUsuariosProyecto(user);
+                 window.location.href = `./desarrolladores.html?idProyecto=${idProyect}`;
+                 alertaEliminado();
+            }
          }
 
          const onLoaded = () => {

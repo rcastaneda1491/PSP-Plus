@@ -12,6 +12,8 @@ namespace PSP_.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
+
+    //lourdes
     public class usuariosProyectosController : ControllerBase
     {
         [HttpPost]
