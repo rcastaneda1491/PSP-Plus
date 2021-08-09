@@ -2,7 +2,7 @@
     Desarrollador: Rogelio Raúl Castañeda Flores
 */
 
-const URL = `https://localhost:44368/api/Usuarios/SignIn`;
+const URL = `https://localhost:5001/api/Usuarios/SignIn`;
 const emailInput = document.getElementById("inputEmail");
 const passwordInput = document.getElementById("inputPassword");
 const form = document.getElementById('signin-form');
