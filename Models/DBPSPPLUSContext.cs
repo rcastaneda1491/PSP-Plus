@@ -30,7 +30,12 @@ namespace PSP_.Models
             if (!optionsBuilder.IsConfigured)
             {
                 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+<<<<<<< HEAD
                 optionsBuilder.UseSqlServer("Server=DESKTOP-IFKEU1D\\SQLEXPRESS;DATABASE=DBPSPPLUS;user=sa;password=albin123");
+=======
+                optionsBuilder.UseSqlServer("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345");
+
+>>>>>>> 0a3d5bf32c5d0eda3ae0356d7c08e0b0d6360b09
                 //optionsBuilder.UseSqlServer("Server=LAPTOP-AA3NT37P;DATABASE=DBPSPPLUS;user=Usuario1;password=Usuario1");
 
             }
