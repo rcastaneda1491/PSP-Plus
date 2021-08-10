@@ -36,7 +36,7 @@ namespace PSP_.Controllers
 
 
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public ActionResult GetUsuarios(int id)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
