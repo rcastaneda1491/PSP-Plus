@@ -39,9 +39,15 @@ const proyectosSelect = document.querySelector('#proyectos-listado');
 const tituloProyecto = document.querySelector('.tituloProyecto');
 const tiempoProyecto = document.querySelector('#tiempoProyecto');
 
+const fechaInicioFiltrado = document.querySelector('#fechaInicio');
+const fechaFinalFiltrado = document.querySelector('#fechaFinal');
+
 window.onload = () => {
     btnAgregarActividad.addEventListener('click', crearActividad);
     proyectosSelect.addEventListener('change', filtrarActividades);
+
+    fechaInicioFiltrado.addEventListener('change', filtrarActividades);
+    fechaFinalFiltrado.addEventListener('change', filtrarActividades);
 
     obtenerProyectos();
 }
@@ -51,7 +57,6 @@ function filtrarActividades() {
     eliminarActividades();
 
     if (proyectosSelect.value == '0') {
-        tituloProyecto.textContent = 'Proyecto: -------';
         alerta.style.display = 'none';
         cargarActividades();
     } else {
@@ -61,7 +66,12 @@ function filtrarActividades() {
             alerta.style.display = 'none';
             cargarActividadesFiltrado();
         } else {
-            tituloProyecto.textContent = 'Proyecto: ' + proyectosSelect.options[proyectosSelect.selectedIndex].textContent;
+
+            if(proyectosSelect.value == ''){
+                tituloProyecto.textContent = 'Tiempos PSP';
+            }else{
+                tituloProyecto.textContent = 'Proyecto: ' + proyectosSelect.options[proyectosSelect.selectedIndex].textContent;
+            }
             alerta.style.display = 'none';
             cargarActividadesFiltrado();
         }
@@ -75,9 +85,9 @@ async function cargarActividadesFiltrado() {
     let direccion;
 
     if (proyectosSelect.value == 'SinProyecto') {
-        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&actividadesSinProyecto=1`;
+        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&actividadesSinProyecto=1&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
     } else {
-        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&idProyecto=${proyectosSelect.value}`;
+        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&idProyecto=${proyectosSelect.value}&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
     }
 
     await fetch(direccion, {
@@ -134,7 +144,15 @@ function selectProyecto(proyectos) {
 async function cargarActividades() {
     mostrarSpinner();
 
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}`;
+    let direccion;
+
+    if(fechaFinalFiltrado.value == ''){
+        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}`;
+    }else{
+        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
+    }
+
+    tituloProyecto.textContent = 'Tiempos PSP';
 
     await fetch(direccion, {
         headers: new Headers({
@@ -193,6 +211,15 @@ function imprimirActividades(actividades) {
             
         </div>
         `;
+
+        if(fechaInicioFiltrado.value == '' || fechaInicioFiltrado.value > fechaInicioSplit[0]){
+            fechaInicioFiltrado.value = fechaInicioSplit[0];
+        }
+        
+        if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
+            fechaFinalFiltrado.value = fechaFinalSplit[0];;
+        }
+        
     })
 
     calcularHoras();
@@ -211,10 +238,10 @@ let sumaDeMinutos = 0;
 
 function restarHoras(horaInicio, horaFinal) {
 
-    let a = moment(horaFinal);//now
+    let a = moment(horaFinal);
     let b = moment(horaInicio);
 
-    sumaDeMinutos = sumaDeMinutos + parseInt(a.diff(b, 'minutes')); // 44700
+    sumaDeMinutos = sumaDeMinutos + parseInt(a.diff(b, 'minutes'));
 
 }
 

@@ -16,11 +16,11 @@ namespace PSP_.Controllers
     public class ActividadesPSPController : ControllerBase
     {
         [HttpGet]
-        public ActionResult Get(int idUsuario, int? idProyecto, int? buscarProyecto, int? idTiempoPSP, int? actividadesSinProyecto)
+        public ActionResult Get(int idUsuario, int? idProyecto, int? buscarProyecto, int? idTiempoPSP, int? actividadesSinProyecto, DateTime? fechaInicioFiltrado, DateTime? fechaFinalFiltrado)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                if(idTiempoPSP != null)
+                if(idTiempoPSP != null) // Datos para editar la actividad PSP
                 {
                     var actividades = (from d in db.TiemposPsps
                                        select d).Where(d => d.IdTiempoPsp == idTiempoPSP).Where(d => d.IdUsuario == idUsuario).ToList();
@@ -28,33 +28,45 @@ namespace PSP_.Controllers
                     return Ok(actividades);
                 }
 
-                if (actividadesSinProyecto != null)
+                if (actividadesSinProyecto != null) // Obtendra los tiempos PSP sin ningún proyecto relacionado
                 {
                     var actividades = (from d in db.TiemposPsps
-                                       select d).Where(d => d.IdProyecto == null).ToList();
+                                       select d).Where(d => d.IdProyecto == null).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
                     return Ok(actividades);
                 }
 
-                if (idProyecto == null && buscarProyecto == null)
+                if (idProyecto == null && buscarProyecto == null) //Obtendra los tiempos PSP al cargar sin ningún filtrado
                 {
-                    var actividades = (from d in db.TiemposPsps
-                                            select d).Where(d => d.IdUsuario == idUsuario).OrderBy(d => d.FechaHoraInicio).ToList();
-
-                    return Ok(actividades);
-                }
-                else
-                {
-                    if (buscarProyecto == null)
+                    if(fechaInicioFiltrado == null)
                     {
                         var actividades = (from d in db.TiemposPsps
-                                           select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.IdProyecto == idProyecto).OrderBy(d => d.FechaHoraInicio).ToList();
+                                           select d).Where(d => d.IdUsuario == idUsuario).OrderBy(d => d.FechaHoraInicio).ToList();
 
                         return Ok(actividades);
                     }
                     else
                     {
+                        var actividades = (from d in db.TiemposPsps
+                                           select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
+                        return Ok(actividades);
+                    }
+ 
+                }
+                else
+                {
+                    if (buscarProyecto == null)
+                    {
+                        // Buscara por filtrado
+                        var actividades = (from d in db.TiemposPsps
+                                           select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.IdProyecto == idProyecto).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
+
+                        return Ok(actividades);
+                    }
+                    else
+                    {
+                        // Obtiene los proyectos el cual es usuario este relacionado
                         var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto where d.IdUsuario == idUsuario select p).ToList();
 
 
