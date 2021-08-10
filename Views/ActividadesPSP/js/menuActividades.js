@@ -34,6 +34,7 @@ const actividadesForm = document.querySelector('#actividades');
 const alerta = document.querySelector('#alert');
 
 const btnAgregarActividad = document.querySelector('.boton-agregarActividad');
+const btnAgregarError = document.querySelector('.boton-agregarError');
 const proyectosSelect = document.querySelector('#proyectos-listado');
 
 const tituloProyecto = document.querySelector('.tituloProyecto');
@@ -44,6 +45,7 @@ const fechaFinalFiltrado = document.querySelector('#fechaFinal');
 
 window.onload = () => {
     btnAgregarActividad.addEventListener('click', crearActividad);
+    btnAgregarError.addEventListener('click', crearError);
     proyectosSelect.addEventListener('change', filtrarActividades);
 
     fechaInicioFiltrado.addEventListener('change', filtrarActividades);
@@ -271,6 +273,10 @@ async function eliminarActividad(idActividad) {
 
 function crearActividad() {
     window.location.href = ('./AgregarActividad.html');
+}
+
+function crearError(){
+    window.location.href = ('../ErroresPSP/AgregarError.html');
 }
 
 function mostrarSpinner() {

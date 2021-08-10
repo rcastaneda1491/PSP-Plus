@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021 
+// DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021
+// DOCUMENTO ACTUALIZADO POR: Erick Eduardo Echeverría Garrido (EE) 10/08/2021 
 
 namespace PSP_.Controllers
 {
