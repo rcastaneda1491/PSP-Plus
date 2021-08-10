@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="#">Equipos de trabajo</a>
           </li>     
           <li class="nav-item">
-            <a class="nav-link" href="#">Reportes</a>
+            <a class="nav-link" href="../MenuReportes/Reporteria.html">Reportes</a>
           </li>          
         </ul>
        
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="#">Recordatorios</a>
           </li>
             <li class="nav-item">
-            <a class="nav-link" href="#">Reportes</a>
+            <a class="nav-link" href="../MenuReportes/Reporteria.html">Reportes</a>
           </li>  
         </ul>
        
