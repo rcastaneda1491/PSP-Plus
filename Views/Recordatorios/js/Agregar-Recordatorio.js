@@ -245,7 +245,18 @@ async function validar() {
 
 function sendEmail() {
 
-var mensaje = `<h1>Recordatorio: ${inputDescripcion.value}</h1>`;
+    
+
+
+
+var mensaje = `<div class="card">
+ 
+  <div>
+    <h2>Recordatorio</h2>
+    <p>${inputDescripcion.value}</p>
+    
+  </div>
+</div>`;
 var correo = jwt.email;
 
     Email.send({
