@@ -209,7 +209,7 @@ namespace PSP_.Models
                     .HasDefaultValueSql("('No Leído')");
 
                 entity.Property(e => e.FechaHoraRecordatorio)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("fechaHoraRecordatorio");
 
                 entity.Property(e => e.HorasAlerta)

@@ -19,31 +19,16 @@ body{
 }
 
 .container{
-    text-align: center;
     margin-top: 20px;
-} 
-
-.titulo,.div{
-    margin-bottom: 45px;
 }
 
-::placeholder{
-    color: #000000 !important;
-}
 
-input, select{
-    background-color: #CACACA !important;
-    
-
-}
-
-.btn{
+.create{
     border-radius: 8px;
     background-color: #3D9BE9;
     color: #F3F3F3;
     width: 187px;
-    height: 50px;
-   
+    height: 45px;
 }
 
 footer {
@@ -56,4 +41,30 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .col{
+    display: flex ;
+    text-align: center ;
+  }
+  
+  .row{
+    background-color: #D8D8D8;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .reloj{
+     width: 30px;
+  }
+
+  p{    
+    margin: 0;
+    padding-top: 8px;
+    padding-left: 8px;
+  }
+
+  .delete:hover{
+    cursor: pointer;
   }
