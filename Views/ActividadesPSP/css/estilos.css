@@ -154,56 +154,68 @@ body{
     padding-inline: 25px;
     padding-top: 5px;
     padding-block-end: 5px;
-    background-color: #009846;
+    background-color: #3D9BE9;
     color: #F3F3F3;
     border: none;
     border-radius: 10px;
+}
+
+.fechaHora{
+    display: inline;
+}
+
+.acciones{
+    display: inline;
 }
 
 
 /* ------ ------------------- --------------------- */
 /* ------  Responsive Menu Actividades PSP -------- */
 /* ------ ------------------ ---------------------- */
-@media screen and (max-width: 943px){
+@media screen and (max-width: 950px){
 
-    .tituloProyecto{
-        color: black;
-        font-size: 41px;
+    .tituloActividad{
+        display: inline-flex;
+        width: 205px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        
+    }
+
+    .actividad{
+        margin-top: 18px;
+        padding: 5px;
+        border-radius: 15px;
+        background-color: #DBDBDB;
+    }
+
+    .fechaHora{
+        display: inline;
+    }
+
+    .acciones{
         display: inline;
     }
     
-    .boton-agregarActividad{
-        background-color: #09254F;
-        color: #fff;
-        float: right;
-        padding-inline: 50px;
-        padding-top: 7px;
-        padding-block-end: 7px;
-        border-radius: 15px;
-        cursor:pointer;
+  }
+
+  @media screen and (max-width: 768px){
+
+    .tituloActividad{
+        display: inline-flex;
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin-block-end: 10px;
+
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+       
     }
-    
-    .boton-agregarError{
-        background-color: #3D9BE9;
-        color: #fff;
-        float: right;
-        padding-inline: 65px;
-        padding-top: 7px;
-        padding-block-end: 7px;
-        border-radius: 15px;
-        cursor:pointer;
-    }
-    
-    .tiempoProyecto{
-        color: #515151;
-        margin-top: 50px;
-    }
-    
-    #lista-proyectos{
-        background-color: rgb(238, 237, 237);
-        margin-top: 15px;
-    }
-    
+
     .actividad{
         margin-top: 18px;
         padding: 5px;
@@ -211,44 +223,47 @@ body{
         background-color: #DBDBDB;
     }
     
-    .actividad h3{
-        font-size: 17px;
-        display: inline;
+    .acciones{
+        display: flex;
+        justify-content: center;
     }
-    
-    .actividad h4,h5,h6{
-        float: right;
-        font-size: 18px;
-        display: inline;
-        margin-top: 5px;
-        margin-left: 8px;
+
+    .fechaHora{
+        display: flex;
+        justify-content: center;
     }
-    
-    .actividad h5{
-        color: #3D9BE9;
-        text-shadow: olivedrab;
-    }
-    
-    .actividad #editar{
-        float: right;
-        width: 30px;
-        margin-left: 8px;
-        cursor:pointer;
-    }
-    
-    .actividad #eliminar{
-        float: right;
-        width: 30px;
-        margin-left: 5px;
-        cursor:pointer;
-    }
-    
+
     .actividad #ver{
         float: right;
         width: 30px;
-        margin-left: 50px;
+        margin-left: 10px;
         cursor:pointer;
+    }  
+  }
+
+  @media screen and (max-width: 351px){
+    .tituloProyecto{
+        color: black;
+        font-size: 41px;
+        display: inline;
+
     }
+    
+    .boton-agregarActividad{
+        margin-top: 20px;
+        float:unset;
+    }
+    
+    .boton-agregarError{
+        margin-top: -15px;
+        float:unset;
+    }
+    
+    .tiempoProyecto{
+        margin-top: 25px;
+        color: #515151;
+    }
+    
   }
 
 
