@@ -7,7 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 // DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021
-// DOCUMENTO ACTUALIZADO POR: Erick Eduardo Echeverría Garrido (EE) 10/08/2021 
+// DOCUMENTO ACTUALIZADO POR: Erick Eduardo Echeverría Garrido (EE) 10/08/2021
+
+// --- IMPORTANTE >>>> El "GET" de -ErroresController- se encuentra funcionando en este archivo
 
 namespace PSP_.Controllers
 {
@@ -34,7 +36,10 @@ namespace PSP_.Controllers
                     var actividades = (from d in db.TiemposPsps
                                        select d).Where(d => d.IdProyecto == null).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
-                    return Ok(actividades);
+                    var errores = (from d in db.ErroresPsps
+                                   select d).Where(d => d.IdProyecto == null).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
+
+                    return Ok(new { actividades, errores });
                 }
 
                 if (idProyecto == null && buscarProyecto == null) //Obtendra los tiempos PSP al cargar sin ningún filtrado
@@ -44,14 +49,20 @@ namespace PSP_.Controllers
                         var actividades = (from d in db.TiemposPsps
                                            select d).Where(d => d.IdUsuario == idUsuario).OrderBy(d => d.FechaHoraInicio).ToList();
 
-                        return Ok(actividades);
+                        var errores = (from d in db.ErroresPsps
+                                           select d).Where(d => d.IdUsuario == idUsuario).OrderBy(d => d.FechaHoraInicio).ToList();
+
+                        return Ok( new { actividades, errores });
                     }
                     else
                     {
                         var actividades = (from d in db.TiemposPsps
                                            select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
-                        return Ok(actividades);
+                        var errores = (from d in db.ErroresPsps
+                                            select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
+
+                        return Ok(new { actividades, errores });
                     }
  
                 }
@@ -63,7 +74,10 @@ namespace PSP_.Controllers
                         var actividades = (from d in db.TiemposPsps
                                            select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.IdProyecto == idProyecto).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
-                        return Ok(actividades);
+                        var errores = (from d in db.ErroresPsps
+                                            select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.IdProyecto == idProyecto).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
+
+                        return Ok(new { actividades, errores });
                     }
                     else
                     {

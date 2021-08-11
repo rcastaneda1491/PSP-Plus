@@ -72,7 +72,7 @@ function filtrarActividades() {
             if(proyectosSelect.value == ''){
                 tituloProyecto.textContent = 'Tiempos PSP';
             }else{
-                tituloProyecto.textContent = 'Proyecto: ' + proyectosSelect.options[proyectosSelect.selectedIndex].textContent;
+                tituloProyecto.textContent = proyectosSelect.options[proyectosSelect.selectedIndex].textContent;
             }
             alerta.style.display = 'none';
             cargarActividadesFiltrado();
@@ -153,7 +153,7 @@ async function cargarActividades() {
     }else{
         direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
     }
-
+    
     tituloProyecto.textContent = 'Tiempos PSP';
 
     await fetch(direccion, {
@@ -168,6 +168,8 @@ async function cargarActividades() {
 
 function imprimirActividades(actividades) {
 
+    console.log(actividades)
+
     if (actividades.length == 0) {
         alerta.style.display = 'block';
     } else {
@@ -176,7 +178,7 @@ function imprimirActividades(actividades) {
 
     eliminarSpinner();
 
-    actividades.forEach(actividad => {
+    actividades.actividades.forEach(actividad => {
         const { idTiempoPsp, fechaHoraInicio, fechaHoraFinal, descripcion, idProyecto, idUsuario } = actividad;
 
         var fechaInicioSplit = fechaHoraInicio.split("T");
@@ -202,9 +204,12 @@ function imprimirActividades(actividades) {
         actividadesForm.innerHTML += `
         <div class="actividad">
             <img src="./img/separadorActividad.png">
-            <h3>${descripcion}</h3>
+            <div class="tituloActividad">
+                <h3>${descripcion}</h3>
+            </div>
             <a onclick="eliminarActividad(${idTiempoPsp})" ><img id="eliminar" src="./img/eliminar.png"></a>
             <a href="./EditarActividad.html?actividad=${idTiempoPsp}"><img id="editar" src="./img/editar.png"></a>
+            <a href="./VerActividad.html?actividad=${idTiempoPsp}"><img id="ver" src="./img/ver.png"></a>
             <h5>${horaFinal}</h5>
             <h4>${fechaFinal}</h4>
             <h4>a</h4>
@@ -222,7 +227,58 @@ function imprimirActividades(actividades) {
             fechaFinalFiltrado.value = fechaFinalSplit[0];;
         }
         
-    })
+    });
+
+    actividades.errores.forEach(errores => {
+        const { correlativo, descripcion, fechaHoraInicio, fechaHoraFinal, idErrorPsp, tipoError } = errores;
+
+        var fechaInicioSplit = fechaHoraInicio.split("T");
+        let fechaInicio = fechaInicioSplit[0];
+        var HoraInicioSplit = fechaInicioSplit[1].split(":00");
+        let horaInicio = HoraInicioSplit[0];
+
+        var fechaFinalSplit = fechaHoraFinal.split("T");
+        let fechaFinal = fechaFinalSplit[0];
+        var HoraFinalSplit = fechaFinalSplit[1].split(":00");
+        let horaFinal = HoraFinalSplit[0];
+
+        if (horaInicio.indexOf(':') == -1) {
+            horaInicio = horaInicio + ':00';
+        };
+
+        if (horaFinal.indexOf(':') == -1) {
+            horaFinal = horaFinal + ':00';
+        };
+
+        restarHoras(fechaHoraInicio, fechaHoraFinal);
+
+        actividadesForm.innerHTML += `
+        <div class="actividad">
+            <img src="./img/separadorActividadError.png">
+            <div class="tituloActividad">
+                <h3>${descripcion}</h3>
+            </div>
+            <a onclick="eliminarError(${idErrorPsp})" ><img id="eliminar" src="./img/eliminar.png"></a>
+            <a href="../ErroresPSP/EditarError.html?error=${idErrorPsp}"><img id="editar" src="./img/editar.png"></a>
+            <a href="../ErroresPSP/VerError.html?error=${idErrorPsp}"><img id="ver" src="./img/ver.png"></a>
+            <h5>${horaFinal}</h5>
+            <h4>${fechaFinal}</h4>
+            <h4>a</h4>
+            <h5>${horaInicio}</h5>
+            <h4>${fechaInicio}</h4>
+            
+        </div>
+        `;
+
+        if(fechaInicioFiltrado.value == '' || fechaInicioFiltrado.value > fechaInicioSplit[0]){
+            fechaInicioFiltrado.value = fechaInicioSplit[0];
+        }
+        
+        if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
+            fechaFinalFiltrado.value = fechaFinalSplit[0];;
+        }
+        
+    });
 
     calcularHoras();
 
@@ -266,10 +322,38 @@ async function eliminarActividad(idActividad) {
 
         alert('Elimando Exitosamente');
 
+    }else{
+        return;
     }
 
     location.reload();
 }
+
+async function eliminarError(idErrorPSP){
+
+    const confirmar = confirm('¿ Desea eliminar el error registrado ?');
+
+    if(confirmar){
+        const direccion = `${url}/api/Errores?idErrorPSP=${idErrorPSP}`;
+
+        await fetch(direccion, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+            .then(resultado => {
+            })
+
+        alert('Elimando Exitosamente');
+    }else{
+        return;
+    }
+
+    location.reload();
+}
+
 
 function crearActividad() {
     window.location.href = ('./AgregarActividad.html');
