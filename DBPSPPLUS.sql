@@ -189,7 +189,7 @@ end
 select * from Usuario;
 select * from Proyectos;
 
-delete from Recordatorios
+
 select * from Recordatorios;
 
  

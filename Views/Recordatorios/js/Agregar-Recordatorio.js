@@ -20,6 +20,23 @@ const arrayoption = ["---Seleccione una Condicion---","Fecha","Total de horas de
 const arrayoptionvalue = [0,1,2,3,4];
 
 let validado = 0;
+
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+const stringJWT = Cookies.get('jwt');
+let jwt;
+if (stringJWT) {
+    jwt = parseJwt(stringJWT);
+}
+
+
 window.onload = () => {
     getEquipos();
 }
@@ -29,7 +46,7 @@ async function getEquipos() {
 
     await fetch(url, {
         headers: new Headers({
-            //'Authorization': 'Bearer ' + stringJWT
+            'Authorization': 'Bearer ' + stringJWT
         })
     })
         .then(respuesta => respuesta.json())
@@ -126,15 +143,17 @@ async function validar() {
                 return;
             } else {
         
-                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=2&tipoRecordatorio=${inputCondicion.value}&fechaHoraRecordatorio=${inputFechayHora.value}`;
+                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&fechaHoraRecordatorio=${inputFechayHora.value}`;
 
                 await fetch(url, {
                     method: 'POST',
                     headers: new Headers({
-                        //'Authorization': 'Bearer ' + stringJWT
+                        'Authorization': 'Bearer ' + stringJWT
                     })
                 })
                     .then(respuesta => respuesta)
+
+                    sendEmail();
 
             }
             break;
@@ -149,15 +168,17 @@ async function validar() {
                 return;
             } else {
         
-                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=2&tipoRecordatorio=${inputCondicion.value}&idProyecto=${inputProyecto.value}&horasAlerta=${inputHoraTotal.value}`;
+                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&idProyecto=${inputProyecto.value}&horasAlerta=${inputHoraTotal.value}`;
 
                 await fetch(url, {
                     method: 'POST',
                     headers: new Headers({
-                        //'Authorization': 'Bearer ' + stringJWT
+                        'Authorization': 'Bearer ' + stringJWT
                     })
                 })
                     .then(respuesta => respuesta)
+
+                    sendEmail();
 
             }
             break;
@@ -172,15 +193,17 @@ async function validar() {
                 return;
             } else {
         
-                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=2&tipoRecordatorio=${inputCondicion.value}&fechaHoraRecordatorio=${inputFechayHora.value}&idProyecto=${inputProyecto.value}`;
+                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&fechaHoraRecordatorio=${inputFechayHora.value}&idProyecto=${inputProyecto.value}`;
 
                 await fetch(url, {
                     method: 'POST',
                     headers: new Headers({
-                        //'Authorization': 'Bearer ' + stringJWT
+                        'Authorization': 'Bearer ' + stringJWT
                     })
                 })
                     .then(respuesta => respuesta)
+
+                    sendEmail();
 
             }
             break;
@@ -195,15 +218,17 @@ async function validar() {
                     return;
                 } else {
             
-                    const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=2&tipoRecordatorio=${inputCondicion.value}&idProyecto=${inputProyecto.value}`;
+                    const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&idProyecto=${inputProyecto.value}`;
 
                     await fetch(url, {
                         method: 'POST',
                         headers: new Headers({
-                            //'Authorization': 'Bearer ' + stringJWT
+                            'Authorization': 'Bearer ' + stringJWT
                         })
                     })
                         .then(respuesta => respuesta)
+
+                        sendEmail();
 
                 }
                 break;
@@ -217,3 +242,20 @@ async function validar() {
 
 
 
+
+function sendEmail() {
+
+var mensaje = `<h1>Recordatorio: ${inputDescripcion.value}</h1>`;
+var correo = jwt.email;
+
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "pspplusti@gmail.com",
+      Password: "PruebaProyecto1914",
+      To: `${correo}`,
+      From: "pspplusti@gmail.com",
+      Subject: "Recordatorio PSP+",
+      Body: `${mensaje}`,
+    })
+
+  }

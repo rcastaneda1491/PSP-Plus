@@ -25,7 +25,8 @@ namespace PSP_
             {
                 Subject = new ClaimsIdentity(new Claim[] {
                     new Claim("sub", usuario.IdUsuario.ToString()),
-                    new Claim("rol", usuario.Rol.ToString())
+                    new Claim("rol", usuario.Rol.ToString()),
+                    new Claim("email", usuario.Email.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)

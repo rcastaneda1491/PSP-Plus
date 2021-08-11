@@ -105,6 +105,24 @@ namespace PSP_.Controllers
         }
 
 
+        [HttpPut]
+        public ActionResult Put(int idRecordatorio, string estado)
+        {
+            using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
+            {
+                Models.Recordatorio recordatorio = db.Recordatorios.Find(idRecordatorio);
+
+                recordatorio.Estado = estado;
+
+                db.Entry(recordatorio).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok("El estado se actualizo Correctamente");
+
+            }
+        }
+
+
         [HttpDelete]
         public ActionResult Delete(int? idRecordatorio)
         {
