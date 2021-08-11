@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../ProyectoAdmin/ProyectoAdminindex.html">Proyectos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Equipos de trabajo</a>
+            <a class="nav-link" href="../EquiposDeTrabajo/equiposList.html">Equipos de trabajo</a>
           </li>     
           <li class="nav-item">
             <a class="nav-link" href="../MenuReportes/Reporteria.html">Reportes</a>
