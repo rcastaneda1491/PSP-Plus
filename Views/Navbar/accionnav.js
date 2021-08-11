@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../MenuPrincipa-Admin/index.html">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Perfil</a>
+            <a class="nav-link" href="../Perfil/Perfil.html">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../CRUD-Usuarios/List-User.html">Usuarios</a>
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../MenuPrincipal/Menu.html">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Perfil</a>
+            <a class="nav-link" href="../Perfil/Perfil.html">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../ActividadesPSP/MenuActividades.html">Actividades</a>
