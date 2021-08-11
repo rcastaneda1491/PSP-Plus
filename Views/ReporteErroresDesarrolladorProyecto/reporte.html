@@ -20,8 +20,21 @@
 
     <div class="container">
 
-        <h1>Reporte</h1>
-        <h3 class="titulo">Errores por desarrollador y proyecto</h3>
+        <h1 style="margin-bottom: 20px;">Reporte</h1>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div id="button-container">
+                <div class="div button-export" >
+                    <button type="button" class="btn export-btn" id="export-excel"
+                        onclick="">Exportar Excel</button>
+        
+                </div>
+                <div class="div button-export">
+                    <button type="button" class="btn export-btn" id="export-pdf"
+                        onclick="">Exportar PDF</button>
+        
+                </div>
+            </div>
+        </div> 
 
         <div class="input-group rounded" id="input-container" style="display: flex; justify-content: center; align-items: center;">
             <div style="padding: 10px;" class="combo-container">
@@ -55,6 +68,7 @@
 
 
         <div class="table-responsive" style="margin-top: 25px;">
+            <h3 class="titulo">Errores por desarrollador y proyecto</h3>
             <table class="table table-light table-bordered" style="text-align: center;">
                 <thead class="table" style="background-color: #021329; color: white;">
                     <th>Id</th>

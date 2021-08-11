@@ -34,9 +34,17 @@ body {
   background-color: #d8d8d8 !important;
 }
 
-.createuser {
+#export-pdf {
   border-radius: 8px;
   background-color: #3d9be9;
+  color: #f3f3f3;
+  width: 187px;
+  height: 45px;
+}
+
+#export-excel {
+  border-radius: 8px;
+  background-color: #09254f;
   color: #f3f3f3;
   width: 187px;
   height: 45px;
@@ -58,18 +66,48 @@ footer {
   cursor: pointer;
 }
 
-.combo-container{
-    width: 40%;
+.combo-container {
+  width: 40%;
+}
+
+.button-export {
+  text-align: center;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+#button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
 }
 
 @media (max-width: 768px) {
-    #input-container {
-      flex-direction: column;
-    }
-    .combo{
-        width: 100% !important;
-    }
-    .combo-container{
-        width: 80%;
-    }
+  #input-container {
+    flex-direction: column;
+  }
+  #button-container {
+    flex-direction: column;
+  }
+
+  .button-export {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .combo {
+    width: 100% !important;
+  }
+  .combo-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 1250px) {
+  #button-container {
+    width: 60%;
+  }
 }
