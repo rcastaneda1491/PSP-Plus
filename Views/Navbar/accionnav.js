@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../MenuPrincipa-Admin/index.html">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">Perfil</a>
+            <a class="nav-link" href="../Perfil/Perfil.html">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../CRUD-Usuarios/List-User.html">Usuarios</a>
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../ProyectoAdmin/ProyectoAdminindex.html">Proyectos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Equipos de trabajo</a>
+            <a class="nav-link" href="../EquiposDeTrabajo/equiposList.html">Equipos de trabajo</a>
           </li>     
           <li class="nav-item">
             <a class="nav-link" href="../MenuReportes/Reporteria.html">Reportes</a>
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../MenuPrincipal/Menu.html">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Perfil</a>
+            <a class="nav-link" href="../Perfil/Perfil.html">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../ActividadesPSP/MenuActividades.html">Actividades</a>
