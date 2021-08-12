@@ -168,117 +168,129 @@ async function cargarActividades() {
 
 function imprimirActividades(actividades) {
 
-    console.log(actividades)
-
-    if (actividades.length == 0) {
+    if (actividades.actividades.length == 0 && actividades.errores.length == 0) {
         alerta.style.display = 'block';
     } else {
         alerta.style.display = 'none';
     }
 
+    var actividadesJuntas = actividades.actividades;
+
+    actividadesJuntas = actividadesJuntas.concat(actividades.errores);
+
+    actividadesJuntas = actividadesJuntas.sort((a, b) => new Date(a.fechaHoraInicio).getTime() - new Date(b.fechaHoraFinal).getTime());
+    
     eliminarSpinner();
 
-    actividades.actividades.forEach(actividad => {
-        const { idTiempoPsp, fechaHoraInicio, fechaHoraFinal, descripcion, idProyecto, idUsuario } = actividad;
+    actividadesJuntas.forEach(actividad => { 
 
-        var fechaInicioSplit = fechaHoraInicio.split("T");
-        let fechaInicio = fechaInicioSplit[0];
-        var HoraInicioSplit = fechaInicioSplit[1].split(":00");
-        let horaInicio = HoraInicioSplit[0];
+        if(actividad.correlativo){
+            const { correlativo, descripcion, fechaHoraInicio, fechaHoraFinal, idErrorPsp, tipoError } = actividad;
 
-        var fechaFinalSplit = fechaHoraFinal.split("T");
-        let fechaFinal = fechaFinalSplit[0];
-        var HoraFinalSplit = fechaFinalSplit[1].split(":00");
-        let horaFinal = HoraFinalSplit[0];
+            var fechaInicioSplit = fechaHoraInicio.split("T");
+            let fechaInicio = fechaInicioSplit[0];
+            var HoraInicioSplit = fechaInicioSplit[1].split(":00");
+            let horaInicio = HoraInicioSplit[0];
 
-        if (horaInicio.indexOf(':') == -1) {
-            horaInicio = horaInicio + ':00';
-        };
+            var fechaFinalSplit = fechaHoraFinal.split("T");
+            let fechaFinal = fechaFinalSplit[0];
+            var HoraFinalSplit = fechaFinalSplit[1].split(":00");
+            let horaFinal = HoraFinalSplit[0];
 
-        if (horaFinal.indexOf(':') == -1) {
-            horaFinal = horaFinal + ':00';
-        };
+            if (horaInicio.indexOf(':') == -1) {
+                horaInicio = horaInicio + ':00';
+            };
 
-        restarHoras(fechaHoraInicio, fechaHoraFinal);
+            if (horaFinal.indexOf(':') == -1) {
+                horaFinal = horaFinal + ':00';
+            };
 
-        actividadesForm.innerHTML += `
-        <div class="actividad">
-            <img src="./img/separadorActividad.png">
-            <div class="tituloActividad">
-                <h3>${descripcion}</h3>
+            restarHoras(fechaHoraInicio, fechaHoraFinal);
+
+            actividadesForm.innerHTML += `
+            <div class="actividad">
+                <img src="./img/separadorActividadErrors.svg">
+                <div class="tituloActividad">
+                    <h3>${descripcion}</h3>
+                </div>
+                <div class="acciones">
+                    <a onclick="eliminarError(${idErrorPsp})" ><img id="eliminar" src="./img/eliminars.svg"></a>
+                    <a href="../ErroresPSP/EditarError.html?error=${idErrorPsp}"><img id="editar" src="./img/editars.svg"></a>
+                    <a href="../ErroresPSP/VerError.html?error=${idErrorPsp}"><img id="ver" src="./img/vers.svg"></a>
+                </div>
+                 <div class="fechaHora">
+                    <h5>${horaFinal}</h5>
+                    <h4>${fechaFinal}</h4>
+                    <h4>a</h4>
+                    <h5>${horaInicio}</h5>
+                    <h4>${fechaInicio}</h4>
+                </div>  
+                
             </div>
-            <a onclick="eliminarActividad(${idTiempoPsp})" ><img id="eliminar" src="./img/eliminar.png"></a>
-            <a href="./EditarActividad.html?actividad=${idTiempoPsp}"><img id="editar" src="./img/editar.png"></a>
-            <a href="./VerActividad.html?actividad=${idTiempoPsp}"><img id="ver" src="./img/ver.png"></a>
-            <h5>${horaFinal}</h5>
-            <h4>${fechaFinal}</h4>
-            <h4>a</h4>
-            <h5>${horaInicio}</h5>
-            <h4>${fechaInicio}</h4>
+            `;
+
+            if(fechaInicioFiltrado.value == '' || fechaInicioFiltrado.value > fechaInicioSplit[0]){
+                fechaInicioFiltrado.value = fechaInicioSplit[0];
+            }
             
-        </div>
-        `;
+            if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
+                fechaFinalFiltrado.value = fechaFinalSplit[0];;
+            }
+        }else{
+            const { idTiempoPsp, fechaHoraInicio, fechaHoraFinal, descripcion, idProyecto, idUsuario } = actividad;
 
-        if(fechaInicioFiltrado.value == '' || fechaInicioFiltrado.value > fechaInicioSplit[0]){
-            fechaInicioFiltrado.value = fechaInicioSplit[0];
-        }
-        
-        if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
-            fechaFinalFiltrado.value = fechaFinalSplit[0];;
-        }
-        
-    });
-
-    actividades.errores.forEach(errores => {
-        const { correlativo, descripcion, fechaHoraInicio, fechaHoraFinal, idErrorPsp, tipoError } = errores;
-
-        var fechaInicioSplit = fechaHoraInicio.split("T");
-        let fechaInicio = fechaInicioSplit[0];
-        var HoraInicioSplit = fechaInicioSplit[1].split(":00");
-        let horaInicio = HoraInicioSplit[0];
-
-        var fechaFinalSplit = fechaHoraFinal.split("T");
-        let fechaFinal = fechaFinalSplit[0];
-        var HoraFinalSplit = fechaFinalSplit[1].split(":00");
-        let horaFinal = HoraFinalSplit[0];
-
-        if (horaInicio.indexOf(':') == -1) {
-            horaInicio = horaInicio + ':00';
-        };
-
-        if (horaFinal.indexOf(':') == -1) {
-            horaFinal = horaFinal + ':00';
-        };
-
-        restarHoras(fechaHoraInicio, fechaHoraFinal);
-
-        actividadesForm.innerHTML += `
-        <div class="actividad">
-            <img src="./img/separadorActividadError.png">
-            <div class="tituloActividad">
-                <h3>${descripcion}</h3>
+            var fechaInicioSplit = fechaHoraInicio.split("T");
+            let fechaInicio = fechaInicioSplit[0];
+            var HoraInicioSplit = fechaInicioSplit[1].split(":00");
+            let horaInicio = HoraInicioSplit[0];
+    
+            var fechaFinalSplit = fechaHoraFinal.split("T");
+            let fechaFinal = fechaFinalSplit[0];
+            var HoraFinalSplit = fechaFinalSplit[1].split(":00");
+            let horaFinal = HoraFinalSplit[0];
+    
+            if (horaInicio.indexOf(':') == -1) {
+                horaInicio = horaInicio + ':00';
+            };
+    
+            if (horaFinal.indexOf(':') == -1) {
+                horaFinal = horaFinal + ':00';
+            };
+    
+            restarHoras(fechaHoraInicio, fechaHoraFinal);
+    
+            actividadesForm.innerHTML += `
+            <div class="actividad">
+                <img src="./img/separadorActividads.svg">
+                <div class="tituloActividad">
+                    <h3>${descripcion}</h3>
+                </div>
+                <div class="acciones">
+                    <a onclick="eliminarActividad(${idTiempoPsp})" ><img id="eliminar" src="./img/eliminars.svg"></a>
+                    <a href="./EditarActividad.html?actividad=${idTiempoPsp}"><img id="editar" src="./img/editars.svg"></a>
+                    <a href="./VerActividad.html?actividad=${idTiempoPsp}"><img id="ver" src="./img/vers.svg"></a>
+                </div>
+                <div class="fechaHora">
+                    <h5>${horaFinal}</h5>
+                    <h4>${fechaFinal}</h4>
+                    <h4>a</h4>
+                    <h5>${horaInicio}</h5>
+                    <h4>${fechaInicio}</h4>
+                </div>
+                
             </div>
-            <a onclick="eliminarError(${idErrorPsp})" ><img id="eliminar" src="./img/eliminar.png"></a>
-            <a href="../ErroresPSP/EditarError.html?error=${idErrorPsp}"><img id="editar" src="./img/editar.png"></a>
-            <a href="../ErroresPSP/VerError.html?error=${idErrorPsp}"><img id="ver" src="./img/ver.png"></a>
-            <h5>${horaFinal}</h5>
-            <h4>${fechaFinal}</h4>
-            <h4>a</h4>
-            <h5>${horaInicio}</h5>
-            <h4>${fechaInicio}</h4>
+            `;
+    
+            if(fechaInicioFiltrado.value == '' || fechaInicioFiltrado.value > fechaInicioSplit[0]){
+                fechaInicioFiltrado.value = fechaInicioSplit[0];
+            }
             
-        </div>
-        `;
+            if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
+                fechaFinalFiltrado.value = fechaFinalSplit[0];;
+            }
+        }
 
-        if(fechaInicioFiltrado.value == '' || fechaInicioFiltrado.value > fechaInicioSplit[0]){
-            fechaInicioFiltrado.value = fechaInicioSplit[0];
-        }
-        
-        if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
-            fechaFinalFiltrado.value = fechaFinalSplit[0];;
-        }
-        
-    });
+    })
 
     calcularHoras();
 
