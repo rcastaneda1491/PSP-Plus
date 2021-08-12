@@ -1,12 +1,40 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    -webkit-box-sizing:border-box;
+    -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
-
-#export-pdf {
+  }
+  
+  html {
+    min-height: 100%;
+    position: relative;
+  }
+  
+  body {
+    margin: 0;
+    margin-bottom: 120px;
+  }
+  
+  .container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .titulo {
+    margin-bottom: 45px;
+  }
+  
+  ::placeholder {
+    color: #000000 !important;
+  }
+  
+  #search {
+    border-radius: 30px !important;
+    background-color: #d8d8d8 !important;
+  }
+  
+  #export-pdf {
     border-radius: 8px;
     background-color: #3d9be9;
     color: #f3f3f3;
@@ -21,39 +49,8 @@
     width: 187px;
     height: 45px;
   }
-html{
-    min-height: 100%;
-    position: relative;
-}
-
-body{
-    margin: 0;
-    margin-bottom: 120px;
-}
-
-.container{
-    text-align: center;
-    margin-top: 20px;
-}
-
-.titulo{
-    margin-bottom: 45px;
-}
-
-::placeholder{
-    color: #000000 !important;
-}
-
-#search{
-    border-radius: 30px !important;
-    background-color: #D8D8D8 !important;
-}
-
-#editar:hover{
-    cursor: pointer;
-}
-
-footer {
+  
+  footer {
     background-color: black;
     position: absolute;
     bottom: 0;
@@ -64,9 +61,16 @@ footer {
     justify-content: center;
     align-items: center;
   }
-
   
-.button-export {
+  #editar:hover {
+    cursor: pointer;
+  }
+  
+  .combo-container {
+    width: 40%;
+  }
+  
+  .button-export {
     text-align: center;
     width: 50%;
     display: flex;

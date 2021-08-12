@@ -1,4 +1,4 @@
-// DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021 
+/// DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021 
 
 // ---------------------------------- Funciones cookies ----------------------------------
 function parseJwt(token) {
