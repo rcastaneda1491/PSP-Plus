@@ -280,10 +280,7 @@ function imprimirActividades(actividades) {
                 
             </div>
             `;
-    
-            if(fechaInicioFiltrado.value == '' || fechaInicioFiltrado.value > fechaInicioSplit[0]){
-                fechaInicioFiltrado.value = fechaInicioSplit[0];
-            }
+ 
             
             if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
                 fechaFinalFiltrado.value = fechaFinalSplit[0];;
@@ -314,6 +311,7 @@ function restarHoras(horaInicio, horaFinal) {
     sumaDeMinutos = sumaDeMinutos + parseInt(a.diff(b, 'minutes'));
 
 }
+
 
 async function eliminarActividad(idActividad) {
     const confirmar = confirm('¿ Desea eliminar la actividad ?');
