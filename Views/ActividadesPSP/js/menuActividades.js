@@ -218,7 +218,7 @@ function imprimirActividades(actividades) {
                     <a href="../ErroresPSP/EditarError.html?error=${idErrorPsp}"><img id="editar" src="./img/editars.svg"></a>
                     <a href="../ErroresPSP/VerError.html?error=${idErrorPsp}"><img id="ver" src="./img/vers.svg"></a>
                 </div>
-                 <div class="fechaHora">
+                 <div class="fechaHora d-flex">
                     <h5>${horaFinal}</h5>
                     <h4>${fechaFinal}</h4>
                     <h4>a</h4>
@@ -270,7 +270,7 @@ function imprimirActividades(actividades) {
                     <a href="./EditarActividad.html?actividad=${idTiempoPsp}"><img id="editar" src="./img/editars.svg"></a>
                     <a href="./VerActividad.html?actividad=${idTiempoPsp}"><img id="ver" src="./img/vers.svg"></a>
                 </div>
-                <div class="fechaHora">
+                <div class="fechaHora d-flex">
                     <h5>${horaFinal}</h5>
                     <h4>${fechaFinal}</h4>
                     <h4>a</h4>
