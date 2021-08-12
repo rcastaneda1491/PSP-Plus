@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+/*
+    Desarrollador: Julio César García Ockelmann
+*/
+
 namespace PSP_.Controllers
 {
     [Route("api/[controller]")]

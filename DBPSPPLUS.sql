@@ -99,7 +99,7 @@ CREATE TABLE Recordatorios(
 	estado				varchar(MAX) DEFAULT('No Leído'), -- Ó Leído
 
 	-- Recordatorio Tipo 1
-	fechaHoraRecordatorio	date,
+	fechaHoraRecordatorio	datetime,
 
 	-- Recordatorio Tipo 2 | Tiempo total de horas ingresadas de un proyecto
 	horasAlerta				decimal(8,2),
@@ -190,3 +190,7 @@ select * from Usuario;
 select * from Proyectos;
 select * from EquipoDesarrollo
 
+
+select * from Recordatorios;
+
+ 
