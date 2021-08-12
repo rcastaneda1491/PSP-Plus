@@ -22,7 +22,18 @@
     <div class="container">
 
         <h1 class="titulo">Errores por Proyecto</h1>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div id="button-container">
+                <div class="div button-export">
+                    <button type="button" class="btn export-btn" id="export-excel" onclick="">Exportar Excel</button>
 
+                </div>
+                <div class="div button-export">
+                    <button type="button" class="btn export-btn" id="export-pdf" onclick="">Exportar PDF</button>
+
+                </div>
+            </div>
+        </div>
 
         <div class="input-group rounded" style="padding-left: 30%; padding-right: 30%; padding-bottom: 3%;">
 
@@ -35,12 +46,12 @@
         </div>
 
 
-        <div class="alert alert-danger" id="alert" role="alert" style="display: none;">
+        <div class="alert alert-danger" id="alert" role="alert" style="display: none;" >
             No se encontraron resultados, elija un proyecto
         </div>
 
 
-        <div class="table-responsive">
+        <div class="table-responsive" id="Reporte">
             <table class="table table-light table-bordered" style="text-align: center;">
                 <thead class="table" style="background-color: #021329; color: white;">
                     <th>Usuario</th>
@@ -64,7 +75,8 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
     <script src="./js/ReporteErrores.js"></script>
-
+    <script src="../html2pdf.bundle.min.js"></script>
+    <script src="../TabletoExcel.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
