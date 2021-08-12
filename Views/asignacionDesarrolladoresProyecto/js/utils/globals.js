@@ -1,4 +1,4 @@
-const URL = "https://localhost:5001/api";
+const URL = "https://localhost:44368/api";
 
 function parseJwt(token) {
   var base64Url = token.split('.')[1];
