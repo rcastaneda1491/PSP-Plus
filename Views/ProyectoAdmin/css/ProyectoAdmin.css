@@ -16,6 +16,10 @@ body{
     margin-bottom: 100px;
 }
 
+#editar:hover{
+    cursor: pointer;
+}
+
 .form-control {
     background-color: #CACACA;
 }
