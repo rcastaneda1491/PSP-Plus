@@ -20,7 +20,7 @@ window.onload = () => {
 }
 
 async function getdatos() {
-    const url = `https://localhost:44368/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
+    const url = `https://localhost:5001/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
 
     await fetch(url, {
             headers: new Headers({
@@ -120,7 +120,7 @@ async function eliminarProyecto(e) {
     const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
-        const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
+        const url = `https://localhost:5001/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
         await fetch(url, {
                 method: 'DELETE',

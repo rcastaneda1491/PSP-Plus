@@ -19,7 +19,7 @@ window.onload = () => {
 }
 
 async function getdatos() {
-    const url = `https://localhost:44368/api/ProyectoAdmin`;
+    const url = `https://localhost:5001/api/ProyectoAdmin`;
 
     await fetch(url, {
             headers: new Headers({
@@ -119,7 +119,7 @@ async function eliminarProyecto(e) {
     const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
-        const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+        const url = `https://localhost:5001/api/ProyectoAdmin?idproyecto=${proyectoid}`;
 
         await fetch(url, {
                 method: 'DELETE',

@@ -189,3 +189,20 @@ end
 select * from Usuario;
 select * from Proyectos;
 
+/*Albin Cordero PROC*/
+USE [DBPSPPLUS]
+GO
+/****** Object:  StoredProcedure [dbo].[Analisis]    Script Date: 11/08/2021 14:56:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[Analisis]  @id int, @inn datetime,  @fn datetime
+as
+select case when (select s.nombre from Proyectos s where s.idProyecto=ps.idProyecto) is null then 'no asignado' else  (select s.nombre from Proyectos s where s.idProyecto=ps.idProyecto) end as Proyecto ,min(ps.fechaHoraInicio) as Fecha_Inicio, MAX(ps.fechaHoraFinal) as Fecha_Final , sum(Cast((ps.fechaHoraFinal - ps.fechaHoraInicio) as Float) * 24.0 ) as tiempo , count(ps.descripcion)+(select COUNT(er.idProyecto) from ErroresPSP er where er.idProyecto=ps.idProyecto and er.idUsuario=@id) as "Total de Tareas"
+, case when(select min(er.fechaHoraInicio) from ErroresPSP er where er.idProyecto = ps.idProyecto  and er.idUsuario=@id ) is null then  '' else (select min(er.fechaHoraInicio) from ErroresPSP er where er.idProyecto = ps.idProyecto and er.idUsuario=@id )  end as errormin ,case when(select max(er.fechaHoraFinal) from ErroresPSP er where er.idProyecto = ps.idProyecto and er.idUsuario=@id ) is null then  '' else (select max(er.fechaHoraFinal) from ErroresPSP er where er.idProyecto = ps.idProyecto  and er.idUsuario=@id)  end as errormax
+, case when (select sum(er.tiempoCorrecion) from ErroresPSP er where er.idProyecto=ps.idProyecto and er.idUsuario=@id) is null then 0 else (select sum(er.tiempoCorrecion) from ErroresPSP er where er.idProyecto=ps.idProyecto and er.idUsuario=@id) end  as terror
+from TiemposPSP ps  left join Proyectos pr on ps.idProyecto=pr.idProyecto
+where ps.idUsuario=@id
+and ps.fechaHoraInicio between @inn   and @fn
+group by ps.idProyecto
