@@ -11,6 +11,7 @@
         <!-- CSS Main -->
         <link rel="stylesheet" href="./css/estilos.css" />
         <link rel="stylesheet" href="../Navbar/nav.css">
+        <link rel="icon" type="image/png" href="../img/icon.png">
     </head>
     <body>
         <header id="header">
@@ -41,10 +42,13 @@
                 <input id="fechaHoraFinal" type="datetime-local" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
             </div>
 
-            <select class="input-group form-control" id="proyectos-listado" name="proyectos-listado">
-                <option value="" disabled selected>-- Seleccione un proyecto --</option>
-                <option value="0">Ninguno proyecto relacionado</option>
-            </select>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Proyecto:</span>
+                <select class="input-group form-control" id="proyectos-listado" name="proyectos-listado">
+                    <option value="" disabled selected>-- Seleccione un proyecto --</option>
+                    <option value="0">Ninguno proyecto relacionado</option>
+                </select>
+            </div>
             
             <div class="btnAgregar">
                 <center><button onclick="validarDatos()">Agregar</button></center>

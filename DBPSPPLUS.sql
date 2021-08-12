@@ -1,5 +1,5 @@
 --USE CRUD;
---DROP DATABASE DBPSPPLUS;
+DROP DATABASE DBPSPPLUS;
 
 CREATE DATABASE DBPSPPLUS;
 GO
@@ -56,6 +56,7 @@ CREATE TABLE UsuarioProyecto( -- Varios desarrolladores podrán tener varios pro
 		REFERENCES Proyectos(idProyecto),
 );
 GO
+
 CREATE TABLE TiemposPSP(
 	idTiempoPSP			int  IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	fechaHoraInicio		datetime NOT NULL,
@@ -99,7 +100,7 @@ CREATE TABLE Recordatorios(
 	estado				varchar(MAX) DEFAULT('No Leído'), -- Ó Leído
 
 	-- Recordatorio Tipo 1
-	fechaHoraRecordatorio	date,
+	fechaHoraRecordatorio	datetime,
 
 	-- Recordatorio Tipo 2 | Tiempo total de horas ingresadas de un proyecto
 	horasAlerta				decimal(8,2),
@@ -188,6 +189,8 @@ end
 
 select * from Usuario;
 select * from Proyectos;
+--Débora Chacach
+go
 
 /*Albin Cordero PROC*/
 USE [DBPSPPLUS]
@@ -206,3 +209,19 @@ from TiemposPSP ps  left join Proyectos pr on ps.idProyecto=pr.idProyecto
 where ps.idUsuario=@id
 and ps.fechaHoraInicio between @inn   and @fn
 group by ps.idProyecto
+
+--Débora Chacach
+--Proceso almacenado para reporte de Actividades por Proyecto
+create proc reporteActividades_por_proyecto @nombreProyecto varchar(100)
+as
+select TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from Usuario u
+inner join usuarioProyecto up on u.idUsuario= up.idUsuario
+inner join Proyectos p on up.idProyecto=p.idProyecto
+inner join TiemposPSP TpSp on u.idUsuario=TpSp.idUsuario
+left join ErroresPSP EpSp on u.idUsuario=EpSp.idUsuario
+where p.nombre=@nombreProyecto
+group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
+
+select * from ErroresPSP;
+select * from EquipoDesarrollo
+select * from Recordatorios;

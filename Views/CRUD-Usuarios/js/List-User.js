@@ -54,7 +54,7 @@ function validacion() {
         return;
     }
     setTimeout(() => {
-        window.location.href = "./List-User.html";
+        history.pushState(null, "", "./List-User.html");
     }, 3000);
 }
 

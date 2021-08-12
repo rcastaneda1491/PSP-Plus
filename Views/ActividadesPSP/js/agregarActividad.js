@@ -23,6 +23,7 @@ function CerrarSesion() {
 };
 
 const idUsuario = jwt.sub;
+
 // ---------------------------------- FIN Funciones cookies ----------------------------------
 
 let url = 'https://localhost:5001';

@@ -90,9 +90,10 @@ function validar() {
 
         setTimeout(() => {
             exitoso.style.display = 'none';
-        }, 3000);
+            window.location.href = (`./ProyectoDesarrolladorindex.html`);
+        }, 200);
 
-        //window.location.href = (`./ProyectoDesarrolladorindex.html`);
+ 
     }
 
 }
