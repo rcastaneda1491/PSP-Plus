@@ -178,6 +178,7 @@ function imprimirActividades(actividades) {
         };
 
         restarHoras(fechaHoraInicio, fechaHoraFinal);
+       
 
         actividadesForm.innerHTML += `
         <div class="actividad">
@@ -217,6 +218,7 @@ function restarHoras(horaInicio, horaFinal) {
     sumaDeMinutos = sumaDeMinutos + parseInt(a.diff(b, 'minutes')); // 44700
 
 }
+
 
 async function eliminarActividad(idActividad) {
     const confirmar = confirm('¿ Desea eliminar la actividad ?');
