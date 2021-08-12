@@ -1,4 +1,8 @@
 const cardlistelement = document.getElementById("lista-proyectos");
+const alerta = document.querySelector('#alert');
+const inpuntsearch = document.querySelector('#search');
+
+
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -22,10 +26,10 @@ async function getdatos() {
     const url = `https://localhost:44368/api/ProyectoAdmin`;
 
     await fetch(url, {
-            headers: new Headers({
-                'Authorization': 'Bearer ' + stringJWT
-            })
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
         })
+    })
         .then(respuesta => respuesta.json())
         .then(resultado => {
             mostrardatos(resultado);
@@ -53,29 +57,27 @@ function mostrardatos(datos) {
         }
 
         const card = `
-        <div class="col">
-          <div class="card">
-            <div class="card-body">            
-              <h4 class="card-title"">${proyecto.dev} | ${proyecto.nombre}</h4>
-              <p id="descripcionn">${proyecto.descripcion}</p>
-              <p>Cliente: ${proyecto.cliente}</p>
-              <p>Fecha Inicio Esperada: ${fechainicioesperada}</p>
-              <p>Fecha Inicio Real: ${fechainicioreal}</p>
-              <p>Fecha Final Esperada: ${fechafinalesperada}</p>
-              <p>Fecha Final Real: ${fechafinalreal}</p>
-              <p>Total Horas: ${proyecto.totalHorasTrabajadas} hrs</p>
-              <div><a class="edit" id="editar" data-id="${proyecto.idProyecto}">
+
+
+        <tr>
+              <td>${proyecto.idProyecto}</td>
+              <td>${proyecto.nombre}</td>
+              <td>${proyecto.cliente}</td>
+              <td>${fechainicioesperada}</td>
+              <td>${fechainicioreal}</td>
+              <td>${fechafinalesperada}</td>
+              <td>${fechafinalreal}</td>
+              <td>${proyecto.dev}</td>
+              <td>${proyecto.totalHorasTrabajadas}</td>
               
+              <td><a class="edit" id="editar" data-id="${proyecto.idProyecto}">
                     <img class="eliminar-editar" src="./img/Editar.svg" id="imgeditar" alt="" style=" width: 35px;">
-                </a>
-                <a class="delete" id="eliminar" data-id="${proyecto.idProyecto}">
+                    </a></td>
+              <td><a class="delete" id="eliminar" data-id="${proyecto.idProyecto}">
                     <img class="eliminar-editar" src="./img/Eliminar.svg" id="imgeliminar" alt="" style=" width: 25px;">
-                </a>
-                </div>
-              <button class="btn desarrollador" id="boton-verdesarrollador" data-id="${proyecto.idProyecto}"> Desarrolladores </button>
-            </div>
-          </div>
-        </div> 
+                </a></td>
+              <td><button class="btn dev"  data-id="${proyecto.idProyecto}"> Desarrolladores </button></td>
+            </tr>
        `;
         cardlistelement.innerHTML += card;
     });
@@ -92,19 +94,19 @@ function mostrardatos(datos) {
         elements2[i].addEventListener('click', eliminarProyecto);
     }
 
-    var elements3 = document.getElementsByClassName("desarrollador");
+   // var elements3 = document.getElementsByClassName("desarrollador");
 
-    for (var i = 0; i < elements3.length; i++) {
-        elements3[i].addEventListener('click', verDesarrollador);
+    //for (var i = 0; i < elements3.length; i++) {
+//        elements3[i].addEventListener('click', verDesarrollador);
+  //  }
+
+  var elementdesarrollador = document.getElementsByClassName("dev");
+    for (var i = 0; i < elementdesarrollador.length; i++) {
+      elementdesarrollador[i].addEventListener('click', verDesarrollador);
     }
 }
 
-function verDesarrollador(e) {
-    const proyecto = e.target.parentElement.parentElement;
-    const proyectoid = proyecto.querySelector('a').getAttribute('data-id');
 
-    window.location.href = (`../asignacionDesarrolladoresProyecto/desarrolladores.html?idProyecto=${proyectoid}`);
-}
 
 function modificarProyecto(e) {
     const proyecto = e.target.parentElement.parentElement;
@@ -122,15 +124,15 @@ async function eliminarProyecto(e) {
         const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
 
         await fetch(url, {
-                method: 'DELETE',
-                headers: new Headers({
-                    'Authorization': 'Bearer ' + stringJWT
-                })
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
             })
+        })
             .then(respuesta => respuesta)
 
         window.location.href = (`./ProyectoAdminindex.html`);
-        
+
 
     } else {
 
@@ -138,4 +140,40 @@ async function eliminarProyecto(e) {
 
     }
 
+}
+
+function verDesarrollador(e) {
+    const proyecto = e.target.parentElement.parentElement;
+    const proyectoid = proyecto.querySelector('BUTTON').getAttribute('data-id');
+
+   window.location.href = (`../asignacionDesarrolladoresProyecto/desarrolladores.html?idProyecto=${proyectoid}`);
+}
+
+
+async function searchCursos() {
+    document.getElementById('alert').style.display = 'none';
+    if (inpuntsearch.value == "") {
+        document.getElementById("lista-proyectos").innerHTML = "";
+        getdatos();
+    }
+    else {
+        document.getElementById("lista-proyectos").innerHTML = "";
+        const url = `https://localhost:44368/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}`;
+        await fetch(url, {
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+
+            .then(respuesta => respuesta.json())
+            .then(resultado => {
+                mostrardatos(resultado);
+                if (Object.keys(resultado).length == 0) {
+                    document.getElementById('alert').style.display = 'block';
+                } else {
+
+                    document.getElementById('alert').style.display = 'none';
+                }
+            })
+    }
 }
