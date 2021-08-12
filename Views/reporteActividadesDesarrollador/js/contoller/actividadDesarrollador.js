@@ -120,7 +120,37 @@ function parseJwt(token) {
 
 
   const onLoaded = () => {
+    
+ document.querySelector("#export-excel").addEventListener("click",() =>{
+  tableToExcel('Reporte', 'W3C Example Table')
+ })
+ document.querySelector("#export-pdf").addEventListener("click",() =>{
+   
+var element = document.querySelector('#Reporte');
+       
+html2pdf()
+.set({
+margin: 1.2,
+filename: 'Actividades'+Date.now()+'.pdf',
+image: {
+    type: 'jpeg',
+    quality: 0.98
+},
+html2canvas: {
+    scale: 3, // A mayor escala, mejores gráficos, pero más peso
+    letterRendering: true,
+},
+jsPDF: {
+    unit: "in",
+    format: "a3",
+    orientation: 'portrait' // landscape o portrait
+}
+})
+.from(element)
+.save()
+.catch(err => console.log(err));
 
+ })
     if (stringJWT) {
       jwt = parseJwt(stringJWT);
     }
