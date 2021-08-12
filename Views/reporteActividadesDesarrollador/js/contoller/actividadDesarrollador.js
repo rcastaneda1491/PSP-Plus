@@ -79,10 +79,10 @@ function parseJwt(token) {
 
 function calcularHoras(horaInicio, horaFinal) {
 
-    let a = moment(horaFinal);//now
+    let a = moment(horaFinal);
     let b = moment(horaInicio);
 
-    totalHoras = totalHoras + parseInt(a.diff(b, 'hours')); // 44700
+    totalHoras = totalHoras + parseInt(a.diff(b, 'hours')); 
 
 }
 
