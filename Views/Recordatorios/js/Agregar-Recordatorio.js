@@ -243,11 +243,7 @@ async function validar() {
 
 
 
-function sendEmail() {
-
-    
-
-
+async function sendEmail() {
 
 var mensaje = `<div class="card">
  
@@ -259,7 +255,7 @@ var mensaje = `<div class="card">
 </div>`;
 var correo = jwt.email;
 
-    Email.send({
+    await Email.send({
       Host: "smtp.gmail.com",
       Username: "pspplusti@gmail.com",
       Password: "PruebaProyecto1914",

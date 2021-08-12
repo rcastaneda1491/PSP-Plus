@@ -51,7 +51,7 @@ function validacion() {
         return;
     }
     setTimeout(() => {
-        window.location.href = "./Recordatorios.html";
+        history.pushState(null, "", "./Recordatorios.html");
     }, 3000);
 }
 
