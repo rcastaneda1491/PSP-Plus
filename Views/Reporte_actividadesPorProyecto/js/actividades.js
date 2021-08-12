@@ -3,6 +3,7 @@
 const cardListElement = document.getElementById("lista-actividades");
 const alerta = document.querySelector('#alert');
 const inpuntsearch = document.querySelector('#search');
+const alerta2 = document.querySelector('#alert2');
 
 
 
@@ -12,8 +13,8 @@ let eliminar = 0;
 
 
 window.onload = () => {
-  //  validacion();
-    GetDatos();
+  llenarSelect();
+   // GetDatos();
 
 }
 
@@ -31,30 +32,30 @@ let jwt;
 if (stringJWT) {
     jwt = parseJwt(stringJWT);
 }
+const id=jwt.sub;
+// async function GetDatos() {
+//     if (eliminar == 1) {
 
-async function GetDatos() {
-    if (eliminar == 1) {
+//         exitoso3.textContent = "Usuario Eliminado Correctamente"
+//         exitoso3.style.display = 'block';
+//         setTimeout(() => {
+//             exitoso3.style.display = 'none';
+//         }, 3000);
 
-        exitoso3.textContent = "Usuario Eliminado Correctamente"
-        exitoso3.style.display = 'block';
-        setTimeout(() => {
-            exitoso3.style.display = 'none';
-        }, 3000);
+//         eliminar = 0;
+//     }
+//     const url = `https://localhost:44368/api/ReporteActividadesporProyecto?/Actividades`;
 
-        eliminar = 0;
-    }
-    const url = `https://localhost:44368/api/ReporteActividadesporProyecto/Actividades`;
-
-    await fetch(url, {
-        headers: new Headers({
-            'Authorization': 'Bearer ' + stringJWT
-        })
-    })
-        .then(respuesta => respuesta.json())
-        .then(resultado => {
-            mostrarDatos(resultado);
-        })
-}
+//     await fetch(url, {
+//         headers: new Headers({
+//             'Authorization': 'Bearer ' + stringJWT
+//         })
+//     })
+//         .then(respuesta => respuesta.json())
+//         .then(resultado => {
+//             mostrarDatos(resultado);
+//         })
+// }
 
 function mostrarDatos(datos) {
     document.getElementById("lista-actividades").innerHTML = "";
@@ -94,17 +95,45 @@ function mostrarDatos(datos) {
 }
 
 
+async function llenarSelect(){
+    url= `https://localhost:44368/api/ReporteActividadesporProyecto?id=${id}`;
+    await fetch(url, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
+        .then(respuesta => respuesta.json())
+        .then(resultado => resultado)
+        .then(proyectos => selectProyecto(proyectos))
+}
+function selectProyecto(proyectosList){
+    proyectosList.forEach(proyecto => {
+        const { nombre, idProyecto } = proyecto;
 
+        const option = document.createElement('option');
+        option.value = nombre;
+        option.textContent = nombre;
+        inpuntsearch.appendChild(option);
+
+    });
+}
 
 async function searchCursos() {
     document.getElementById('alert').style.display = 'none';
     if (inpuntsearch.value == "") {
         document.getElementById("lista-actividades").innerHTML = "";
-        GetDatos();
+        alerta2.style.display = 'block';
+
+        setTimeout(() => {
+            alerta2.style.display = 'none';
+        }, 3000);
+
+        return;
+        // GetDatos();
     }
     else {
         document.getElementById("lista-actividades").innerHTML = "";
-        const url = `https://localhost:44368/api/ReporteActividadesporProyecto/${inpuntsearch.value}`;
+        const url = `https://localhost:44368/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT

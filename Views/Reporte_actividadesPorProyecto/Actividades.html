@@ -34,18 +34,29 @@
         </div> 
       
 
-        <div class="input-group rounded" style="padding-left: 30%; padding-right: 30%; padding-bottom: 3%;">
+         <div class="input-group rounded" style="padding-left: 30%; padding-right: 30%; padding-bottom: 3%;">
+            <!-- <input id="search" type="search" class="form-control rounded" placeholder="Buscar" aria-label="Search" -->
+            <!-- aria-describedby="search-addon" style="font-size: 20px; padding-left: 5%; " /> -->
 
-            <input id="search" type="search" class="form-control rounded" placeholder="Buscar Proyecto" aria-label="Search"
-              aria-describedby="search-addon" style="font-size: 20px; padding-left: 5%; " />
+          <div style="padding: 10px;" class="form-control rounded" style="border: none;">
+            <select id="search" name="desarrollador" class="form-select combo" 
+            aria-label="Seleccione Proyecto"> <option value="" disabled selected>   --Seleccione  Proyecto--  </option></select>
+
+            </div>
+
+
                 <a onclick="searchCursos()"id="editar"> 
                     <img src="./img/search.svg" id="imgeditar" alt="" style=" width: 45px;">
                 </a>
-          </div>
+         </div>
 
        <div class="alert alert-danger" id="alert" role="alert" style="display: none;">
             No se encontraron resultados!
         </div>
+        <div class="alert alert-danger" id="alert2" role="alert" style="display: none;">
+            Seleccione un Proyecto
+        </div>
+
 
        
 

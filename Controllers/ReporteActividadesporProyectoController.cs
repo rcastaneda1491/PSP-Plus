@@ -19,12 +19,12 @@ namespace PSP_.Controllers
     }
     [Route("api/[controller]")]
     [ApiController]
-    // [Authorize]
+   // [Authorize]
     public class ReporteActividadesporProyectoController : Controller
     {
-        [HttpGet("{proyecto}")]
+        [HttpGet]
 
-        public ActionResult Get(string proyecto)
+        public ActionResult Get(string proyecto, int? id)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
@@ -37,6 +37,12 @@ namespace PSP_.Controllers
                                     select u).ToList();
 
                  return Ok(actividades);*/
+
+                if (id != null)
+                {
+                    var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto where d.IdUsuario == id select p).ToList();
+                    return Ok(proyectos);
+                }
 
                 var dt = new List<Datos>();
 
@@ -58,7 +64,7 @@ namespace PSP_.Controllers
                                 temp.descripcion = reader.GetString(0);
                                 temp.fechaHoraInicio = reader.GetDateTime(1);
                                 temp.fechaHoraFin = reader.GetDateTime(2);
-                                temp.horas = reader.GetDouble(3);                  
+                                temp.horas = reader.GetDouble(3);
                                 temp.nombreUsuario = reader.GetString(4);
                                 temp.nombreProyecto = reader.GetString(5);
                                 dt.Add(temp);
@@ -71,5 +77,7 @@ namespace PSP_.Controllers
                 }
             }
         }
+
+       
     }
 }

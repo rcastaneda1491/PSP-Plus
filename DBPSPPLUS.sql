@@ -199,16 +199,14 @@ select * from TiemposPSP
 insert into TiemposPSP values('2021/07/06 08:00:00','2021/07/06 09:30:00','Crear BD',1,2)
 insert into TiemposPSP values('2021/07/06 08:00:00','2021/07/06 09:30:00','Crear Crud Usuario',1,2)
 go
---drop proc reporteActividades_por_proyecto
-create proc reporteActividades_por_proyecto @nombreProyecto varchar(100)
+alter proc reporteActividades_por_proyecto @nombreProyecto varchar(100)
 as
-select TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas ,u.nombres,p.nombre from Usuario u
+select TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from Usuario u
 inner join usuarioProyecto up on u.idUsuario= up.idUsuario
 inner join Proyectos p on up.idProyecto=p.idProyecto
 inner join TiemposPSP TpSp on u.idUsuario=TpSp.idUsuario
-inner join ErroresPSP EpSp on u.idUsuario=EpSp.idUsuario
+left join ErroresPSP EpSp on u.idUsuario=EpSp.idUsuario
 where p.nombre=@nombreProyecto
-group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre 
-
+group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
 
 exec reporteActividades_por_proyecto @nombreProyecto='beca'
