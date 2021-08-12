@@ -26,7 +26,7 @@ const idUsuario = jwt.sub;
 
 // ---------------------------------- FIN Funciones cookies ----------------------------------
 
-let url = 'https://localhost:5001';
+let url = 'https://localhost:44368';
 
 // SELECTORES
 const alerta = document.querySelector('#alert');
