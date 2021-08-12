@@ -11,7 +11,7 @@ namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
 
     //lourdes
     public class usuariosProyectosController : ControllerBase
@@ -70,6 +70,25 @@ namespace PSP_.Controllers
             return Ok("El desarrollador ha sido eliminado del proyecto con éxito");
         }
 
+        [HttpGet("proyecto/{id}")]
+        public ActionResult GetProyecto(int id)
+        {
+            using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
+            {
+                var query = db.Proyectos.Select(proyecto => new
+                {
+                    idProyecto = proyecto.IdProyecto,
+                    nombre = proyecto.Nombre, 
+                    descripcion = proyecto.Descripcion
+                    
 
-    }
+                }).Where(proyecto => proyecto.idProyecto == id).ToList();
+
+                return Ok(query);
+
+            }
+        }
+
+     }
 }
+

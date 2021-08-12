@@ -35,3 +35,13 @@ const usuariosProyectoService = {
     console.log(error);
   }
 }
+
+const obtenerProyecto = async idProyecto => {
+  try {
+    const resultado = await fetch(`${request}/proyecto/${idProyecto}`);
+    const proyecto= await resultado.json();
+    return proyecto;
+  } catch (error) {
+    console.log(error);
+  }
+}

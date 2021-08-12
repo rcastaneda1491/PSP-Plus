@@ -2,10 +2,21 @@
   const listado = document.getElementById("lista-usuarios");
   const addButton = document.getElementById("buttonAdd");
   const alerta = document.getElementById("eliminado");
+  const titulo = document.getElementById('subtitle');
   let idProyect;
 
   listado.addEventListener("click", confirmacionEliminacion);
   addButton.addEventListener("click", addView);
+
+  async function mostrarProyecto() {
+    const proyecto = await obtenerProyecto(idProyect);
+    console.info(proyecto);
+    const [{idProyecto, nombre, descripcion}] = proyecto;
+    titulo.innerHTML += `
+    <h2 class="project__subtitle">Proyecto: ${nombre}</h2>
+    <p class="text-sm-start"> Descripción: ${descripcion}</p>
+    `;
+  }
 
   async function mostrarUsuarios() {
     listado.innerHTML = "";
@@ -59,6 +70,7 @@
     const parametrosURL = new URLSearchParams(window.location.search);
     idProyect = parametrosURL.get("idProyecto");
     mostrarUsuarios();
+    mostrarProyecto();
   };
   document.addEventListener("DOMContentLoaded", onLoaded);
 })();
