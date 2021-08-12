@@ -1,5 +1,5 @@
 //Julio Garcia
-//9/08/2021
+
 const inputDescripcion = document.querySelector('#descripcion');
 const inputCondicion = document.querySelector('#condicion');
 const divproyecto = document.querySelector('#proyecto');

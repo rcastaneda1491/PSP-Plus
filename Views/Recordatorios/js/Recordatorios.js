@@ -1,5 +1,5 @@
 /*Julio Garcia
-9/08/2021*/
+*/
 const cardListElement = document.getElementById("lista-recordatorios");
 const exitoso = document.querySelector('#guardado');
 const exitoso2 = document.querySelector('#editado');
