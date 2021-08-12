@@ -1,5 +1,8 @@
-const formulario = document.querySelector('#formulario');
+/*
+    Desarrollador: Rogelio Raúl Castañeda Flores
+*/
 
+const formulario = document.querySelector('#formulario');
 const nombresInput = document.querySelector('#nombres');
 const apellidosInput = document.querySelector('#apellidos');
 const correoInput = document.querySelector('#correo');

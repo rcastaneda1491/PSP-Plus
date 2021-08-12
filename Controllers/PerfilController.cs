@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+//Desarrollador: Rogelio Raúl Castañeda Flores
+
 namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class PerfilController : ControllerBase
     {
         [HttpGet]
