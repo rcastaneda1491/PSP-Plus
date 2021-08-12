@@ -1,5 +1,5 @@
 --USE CRUD;
---DROP DATABASE DBPSPPLUS;
+DROP DATABASE DBPSPPLUS;
 
 CREATE DATABASE DBPSPPLUS;
 GO
@@ -100,7 +100,7 @@ CREATE TABLE Recordatorios(
 	estado				varchar(MAX) DEFAULT('No Leído'), -- Ó Leído
 
 	-- Recordatorio Tipo 1
-	fechaHoraRecordatorio	date,
+	fechaHoraRecordatorio	datetime,
 
 	-- Recordatorio Tipo 2 | Tiempo total de horas ingresadas de un proyecto
 	horasAlerta				decimal(8,2),
@@ -190,16 +190,6 @@ end
 select * from Usuario;
 select * from Proyectos;
 --Débora Chacach
-
---insert into  Proyectos(nombre, descripcion,cliente,fechaInicioEsperada,fechaFinalEsperada,dev) values('Beca','psp','fass','2021/06/07','2021/07/07','1')
---insert into  Proyectos(nombre, descripcion,cliente,fechaInicioEsperada,fechaFinalEsperada,dev) values('Beca2','psp2','fass2','2021/06/07','2021/07/07','1')
-
---insert into UsuarioProyecto(idUsuario,idProyecto) values(2,1);
-
---select * from TiemposPSP
---insert into TiemposPSP values('2021/07/06 08:00:00','2021/07/06 09:30:00','Crear BD',1,2)
---insert into TiemposPSP values('2021/07/06 08:00:00','2021/07/06 09:30:00','Crear Crud Usuario',1,2)
---INSERT INTO UsuarioProyecto(idUsuario,idProyecto) VALUES(1,1);
 go
 
 --Débora Chacach
@@ -214,4 +204,6 @@ left join ErroresPSP EpSp on u.idUsuario=EpSp.idUsuario
 where p.nombre=@nombreProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
 
---exec reporteActividades_por_proyecto @nombreProyecto='beca'
+select * from ErroresPSP;
+select * from EquipoDesarrollo
+select * from Recordatorios;
