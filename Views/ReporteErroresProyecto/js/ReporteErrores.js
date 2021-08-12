@@ -5,7 +5,7 @@ const inputproyecto = document.querySelector('#equipo');
 const inpuntsearch = document.querySelector('#search');
 const alerta = document.querySelector('#alert');
 
-const array = ["--Seleccione una opcion--"];
+const array = ["--Seleccione un proyecto--"];
 const array2 = [0];
 
 
@@ -108,8 +108,7 @@ function mostrarDatos(datos) {
         //var fecha = fechaSplit[0];
         const card = `
             <tr>
-              <td>${proyectos.nombres}</td> 
-              <td>${proyectos.apellidos}</td>
+              <td>${proyectos.nombres} ${proyectos.apellidos}</td>
               <td>${proyectos.email}</td>
               <td>${proyectos.cantidadErrores}</td>
               <td>${proyectos.cantidadHoras.toFixed(2)}</td>
