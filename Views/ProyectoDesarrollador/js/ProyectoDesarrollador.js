@@ -1,4 +1,6 @@
 const cardlistelement = document.getElementById("lista-proyectos");
+const alerta = document.querySelector('#alert');
+const inpuntsearch = document.querySelector('#search');
 
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
@@ -34,6 +36,7 @@ async function getdatos() {
 }
 
 function mostrardatos(datos) {
+    debugger;
     datos.forEach(proyecto => {
         var fechaSplit1 = proyecto.fechaInicioEsperada.split("T");
         var fechainicioesperada = fechaSplit1[0];
@@ -138,4 +141,33 @@ async function eliminarProyecto(e) {
 
     }
 
+}
+
+async function searchCursos() {
+    document.getElementById('alert').style.display = 'none';
+    if (inpuntsearch.value == "") {
+        document.getElementById("lista-proyectos").innerHTML = "";
+        getdatos();
+    }
+    else {
+        document.getElementById("lista-proyectos").innerHTML = "";
+        const url = `https://localhost:44368/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}&idUsuarios=${jwt.sub}`;
+        
+        await fetch(url, {
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+
+            .then(respuesta => respuesta.json())
+            .then(resultado => {
+                mostrardatos(resultado);
+                if (Object.keys(resultado).length == 0) {
+                    document.getElementById('alert').style.display = 'block';
+                } else {
+
+                    document.getElementById('alert').style.display = 'none';
+                }
+            })
+    }
 }
