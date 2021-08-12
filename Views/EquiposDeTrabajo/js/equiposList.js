@@ -1,11 +1,13 @@
+/*
+    Desarrollador: Rogelio Raúl Castañeda Flores
+*/
+
 const cardListElement = document.getElementById("lista-equipos");
 const exitoso = document.querySelector('#guardado');
 const exitoso2 = document.querySelector('#editado');
 const exitoso3 = document.querySelector('#eliminado');
 const alerta = document.querySelector('#alert');
 const inpuntsearch = document.querySelector('#search');
-
-
 
 const urlParams = new URLSearchParams(window.location.search);
 const val = urlParams.get('validar');

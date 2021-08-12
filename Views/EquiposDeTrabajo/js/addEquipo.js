@@ -1,3 +1,7 @@
+/*
+    Desarrollador: Rogelio Raúl Castañeda Flores
+*/
+
 const inputNombre = document.querySelector('#nombre');
 const inputDescripcion = document.querySelector('#descripcion');
 const alerta = document.querySelector('#alert');

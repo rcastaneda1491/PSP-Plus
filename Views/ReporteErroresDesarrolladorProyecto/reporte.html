@@ -1,4 +1,6 @@
-<!--Julio García 5/08/2021-->
+<!--
+    Desarrollador: Rogelio Raúl Castañeda Flores
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,65 +25,49 @@
         <h1 style="margin-bottom: 20px;">Reporte</h1>
         <div style="display: flex; justify-content: center; align-items: center;">
             <div id="button-container">
-                <div class="div button-export" >
-                    <button type="button" class="btn export-btn" id="export-excel"
-                        onclick="">Exportar Excel</button>
-        
+                <div class="div button-export">
+                    <button type="button" class="btn export-btn" id="export-excel" onclick="">Exportar Excel</button>
+
                 </div>
                 <div class="div button-export">
-                    <button type="button" class="btn export-btn" id="export-pdf"
-                        onclick="">Exportar PDF</button>
-        
+                    <button type="button" class="btn export-btn" id="export-pdf" onclick="">Exportar PDF</button>
+
                 </div>
             </div>
-        </div> 
+        </div>
 
-        <div class="input-group rounded" id="input-container" style="display: flex; justify-content: center; align-items: center;">
-            <div style="padding: 10px;" class="combo-container">
-                <select id="select1" name="desarrollador" class="form-select combo"
-                    aria-label="Seleccione desarrollador"></select>
+        <div class="input-group rounded" id="input-container"
+            style="display: flex; justify-content: center; align-items: center;">
+            <div style="padding: 10px;" class="combo-container" id="dev-container">
+                <select id="select-dev" name="desarrollador" class="form-select combo"
+                    aria-label="Seleccione desarrollador" onchange="cargarProyectos()"></select>
             </div>
             <div style="padding: 10px;" class="combo-container">
-                <select id="select2" name="desarrollador" class="form-select combo"
-                    aria-label="Seleccione desarrollador"></select>
+                <select id="select-project" name="desarrollador" class="form-select combo"
+                    aria-label="Seleccione desarrollador" onchange="validarAccion()"></select>
             </div>
-            <a onclick="searchCursos()" id="editar">
+            <a onclick="BusquedaReporte()" id="editar">
                 <img src="./img/search.svg" id="imgeditar" alt="" style=" width: 45px;">
-            </a>
+            </a >
         </div>
-
         <div class="alert alert-danger" id="alert" role="alert" style="display: none;">
-            No se encontraron resultados!
-        </div>
-
-        <div class="alert alert-success" id="guardado" role="alert" style="display: none;">
 
         </div>
-
-        <div class="alert alert-info" id="editado" role="alert" style="display: none;">
-
-        </div>
-
-        <div class="alert alert-danger" id="eliminado" role="alert" style="display: none;">
-
-        </div>
-
-
         <div class="table-responsive" style="margin-top: 25px;">
             <h3 class="titulo">Errores por desarrollador y proyecto</h3>
             <table class="table table-light table-bordered" style="text-align: center;">
                 <thead class="table" style="background-color: #021329; color: white;">
-                    <th>Id</th>
-                    <th>Fecha Hora Inicio</th>
-                    <th>Fecha Hora Final</th>
+                    <th>Correlativo</th>
                     <th>Descripción</th>
                     <th>Solución</th>
+                    <th>Fecha Hora Inicio</th>
+                    <th>Fecha Hora Final</th>
                     <th>Tipo</th>
                     <th>Introducido</th>
                     <th>Eliminado</th>
-                    <th>Tiempo de corrección</th>
+                    <th>Tiempo de corrección hrs</th>
                 </thead>
-                <tbody id="lista-usuarios" style="background-color: D8D8D8; color: #000;">
+                <tbody id="lista-errores" style="background-color: D8D8D8; color: #000;">
 
                 </tbody>
             </table>
@@ -104,6 +90,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script src="./js/reporte.js"></script>
 </body>
 
 </html>
