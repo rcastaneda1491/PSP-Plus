@@ -112,7 +112,7 @@ function mostrarDatos(datos) {
               <td>${proyectos.apellidos}</td>
               <td>${proyectos.email}</td>
               <td>${proyectos.cantidadErrores}</td>
-              <td>${proyectos.cantidadHoras}</td>
+              <td>${proyectos.cantidadHoras.toFixed(2)}</td>
             </tr>
         `;
         cardListElement.innerHTML += card;

@@ -34,6 +34,9 @@ body{
     background-color: #D8D8D8 !important;
 }
 
+#editar:hover{
+    cursor: pointer;
+}
 
 footer {
     background-color: black;

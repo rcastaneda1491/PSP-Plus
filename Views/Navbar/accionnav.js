@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../ProyectoDesarrollador/ProyectoDesarrolladorindex.html">Proyectos</a>
           </li>  
           <li class="nav-item">
-            <a class="nav-link" href="#">Recordatorios</a>
+            <a class="nav-link" href="../Recordatorios/Recordatorios.html">Recordatorios</a>
           </li>
             <li class="nav-item">
             <a class="nav-link" href="../MenuReportes/Reporteria.html">Reportes</a>

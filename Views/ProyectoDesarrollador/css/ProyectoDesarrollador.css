@@ -37,6 +37,10 @@ body{
     height: 50px;
 }
 
+#editar:hover{
+    cursor: pointer;
+}
+
 #imgProyecto {
     margin-bottom: 45px;
 }
