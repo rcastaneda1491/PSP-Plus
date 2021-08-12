@@ -54,29 +54,27 @@ function mostrardatos(datos) {
         }
 
         const card = `
-        <div class="col">
-          <div class="card">
-            <div class="card-body">            
-              <h4 class="card-title"">${proyecto.dev} | ${proyecto.nombre}</h4>
-              <p id="descripcionn">${proyecto.descripcion}</p>
-              <p>Cliente: ${proyecto.cliente}</p>
-              <p>Fecha Inicio Esperada: ${fechainicioesperada}</p>
-              <p>Fecha Inicio Real: ${fechainicioreal}</p>
-              <p>Fecha Final Esperada: ${fechafinalesperada}</p>
-              <p>Fecha Final Real: ${fechafinalreal}</p>
-              <p>Total Horas: ${proyecto.totalHorasTrabajadas} hrs</p>
-              <div><a class="edit" id="editar" data-id="${proyecto.idProyecto}">
+
+
+        <tr>
+              <td>${proyecto.idProyecto}</td>
+              <td>${proyecto.nombre}</td>
+              <td>${proyecto.cliente}</td>
+              <td>${fechainicioesperada}</td>
+              <td>${fechainicioreal}</td>
+              <td>${fechafinalesperada}</td>
+              <td>${fechafinalreal}</td>
+              <td>${proyecto.dev}</td>
+              <td>${proyecto.totalHorasTrabajadas}</td>
               
+              <td><a class="edit" id="editar" data-id="${proyecto.idProyecto}">
                     <img class="eliminar-editar" src="./img/Editar.svg" id="imgeditar" alt="" style=" width: 35px;">
-                </a>
-                <a class="delete" id="eliminar" data-id="${proyecto.idProyecto}">
+                    </a></td>
+              <td><a class="delete" id="eliminar" data-id="${proyecto.idProyecto}">
                     <img class="eliminar-editar" src="./img/Eliminar.svg" id="imgeliminar" alt="" style=" width: 25px;">
-                </a>
-                </div>
-              <button class="btn desarrollador" id="boton-verdesarrollador" data-id="${proyecto.idProyecto}"> Desarrolladores </button>
-            </div>
-          </div>
-        </div> 
+                </a></td>
+              <td><button class="btn desarrollador" id="boton-verdesarrollador" data-id="${proyecto.idProyecto}"> Desarrolladores </button></td>
+            </tr>
        `;
         cardlistelement.innerHTML += card;
     });
