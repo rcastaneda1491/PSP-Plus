@@ -18,6 +18,7 @@ const fillSelect = () => {
   usuarioService
     .getUsuarios()
     .then((response) => {
+       
       setSelectOptions(response);
     })
     .catch(() => alert("No se pueden obtener usuarios"));

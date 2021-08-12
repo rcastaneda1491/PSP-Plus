@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
        
       </div>
       <div >
-      <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></button>
-      </li>
+      <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></a>
+       
       </div>
       
     </nav>
@@ -101,15 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <div >
 
-      <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></button>
-      </li>
+      <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></a>
+      
       </div>
       
     </nav>
     `
     }else{
-
-      window.location.href = "../Login.html";  
+     window.location.href = "../Login.html";  
     }
   }else{
     window.location.href = "../Login.html";

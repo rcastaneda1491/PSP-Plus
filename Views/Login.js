@@ -2,8 +2,7 @@
     Desarrollador: Rogelio Raúl Castañeda Flores
 */
 
-const URL = `https://localhost:44368/api/Usuarios/SignIn`;
-const emailInput = document.getElementById("inputEmail");
+const URL = `https://localhost:5001/api/Usuarios/SignIn`;const emailInput = document.getElementById("inputEmail");
 const passwordInput = document.getElementById("inputPassword");
 const form = document.getElementById('signin-form');
 const alerta = document.querySelector('#alert');
@@ -36,6 +35,7 @@ const signIn = async (e) => {
         const data = await response.text();
         emailInput.value = '';
         passwordInput.value = '';
+         
         Cookies.set('jwt', data);
         const stringJWT = Cookies.get('jwt');
         let jwt;
