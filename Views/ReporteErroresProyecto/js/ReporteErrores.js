@@ -1,11 +1,11 @@
-const inputidUsuario = document.querySelector('#idusuario');
-const inputNombre = document.querySelector('#nombre');
+//Roberto González
+const cardListElement = document.getElementById("lista-erroesp");
 
-
+const inputproyecto = document.querySelector('#equipo');
 const inpuntsearch = document.querySelector('#search');
+const alerta = document.querySelector('#alert');
 
-
-const array = ["---Seleccione una opcion---"];
+const array = ["--Seleccione una opcion--"];
 const array2 = [0];
 
 
@@ -35,9 +35,9 @@ window.onload = () => {
 async function getProyectos() {
     var url;
     if(jwt.rol == "desarrollador"){
-        url = `https://localhost:44368/api/ReporteErroresProyecto?idUsuario=2`;
+        url = `https://localhost:44368/api/ReporteErroresProyecto?idUsuario=${jwt.sub}`;
     }else if(jwt.rol == "administrador"){
-        url = `https://localhost:44368/api/ReporteErroresProyecto?idUsuario=1`;
+        url = `https://localhost:44368/api/ReporteErroresProyecto`;
     }
     
 
@@ -76,30 +76,46 @@ function cargar() {
 }
 
 
-async function searchCursos() {
-    //document.getElementById('alert').style.display = 'none';
-    if (inpuntsearch.value == "") {
-        document.getElementById("lista-erroesp").innerHTML = "";
-        GetDatos();
-    }
-    else {
-        document.getElementById("lista-erroesp").innerHTML = "";
-        const url = `https://localhost:44368/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
-        await fetch(url, {
-            headers: new Headers({
-                'Authorization': 'Bearer ' + stringJWT
-            })
+
+
+async function GetDatos() {
+    if(inputproyecto.value== 0){
+        alerta.style.display = 'block';
+        setTimeout(() => {
+            alerta.style.display = 'none';
+        }, 3000);
+    }else{
+    const url = `https://localhost:44368/api/ReporteErroresProyectoTabla?idProyecto=${inputproyecto.value}`;
+
+    await fetch(url, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
         })
+    })
+        .then(respuesta => respuesta.json())
+        .then(resultado => {
+            mostrarDatos(resultado);
+        })
+    } 
+}
 
-            .then(respuesta => respuesta.json())
-            .then(resultado => {
-                mostrarDatos(resultado);
-                if (Object.keys(resultado).length == 0) {
-                    document.getElementById('alert').style.display = 'block';
-                } else {
 
-                    document.getElementById('alert').style.display = 'none';
-                }
-            })
-    }
+function mostrarDatos(datos) {
+    document.getElementById("lista-erroesp").innerHTML = "";
+
+    datos.forEach(proyectos => {
+        //var fechaSplit = proyectos.fechaNacimiento.split("T");
+        //var fecha = fechaSplit[0];
+        const card = `
+            <tr>
+              <td>${proyectos.nombres}</td> 
+              <td>${proyectos.apellidos}</td>
+              <td>${proyectos.email}</td>
+              <td>${proyectos.cantidadErrores}</td>
+              <td>${proyectos.cantidadHoras}</td>
+            </tr>
+        `;
+        cardListElement.innerHTML += card;
+    })
+
 }

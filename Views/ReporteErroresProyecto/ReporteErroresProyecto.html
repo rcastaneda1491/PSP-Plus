@@ -1,19 +1,23 @@
+<!--Roberto González -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PSP+ | Errores-Proyecto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/ReporteErroresProyecto.css">
-   <link rel="stylesheet" href="../Navbar/nav.css">
+    <link rel="stylesheet" href="../Navbar/nav.css">
 </head>
+
 <body>
     <header id="header">
-  
+
     </header>
-    
+
     <div class="container">
 
         <h1 class="titulo">Errores-Proyecto</h1>
@@ -21,21 +25,28 @@
 
         <div class="input-group rounded" style="padding-left: 30%; padding-right: 30%; padding-bottom: 3%;">
 
-              <select class="form-select" aria-label="Default select example" id="equipo" style="background-color: #CACACAC9;">
+            <select class="form-select" aria-label="Default select example" id="equipo"
+                style="background-color: #CACACAC9;">
             </select>
-                <a onclick="searchCursos()"id="editar"> 
-                    <img src="./img/search.svg" id="imgeditar" alt="" style=" width: 45px;">
-                </a>
-          </div>
+            <a onclick="GetDatos()" id="editar">
+                <img src="./img/search.svg" id="imgeditar" alt="" style=" width: 45px;">
+            </a>
+        </div>
+
+
+        <div class="alert alert-danger" id="alert" role="alert" style="display: none;">
+            No se encontraron resultados, elija un proyecto
+        </div>
 
 
         <div class="table-responsive">
             <table class="table table-light table-bordered" style="text-align: center;">
                 <thead class="table" style="background-color: #021329; color: white;">
-                    <th>Usuario</th>
-                    <th>Proyecto</th>
-                    <th>Cantidad de Errores</th>
-                    <th>Tiempo Total</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Total de Errores</th>
+                    <th>Total de Horas</th>
                 </thead>
                 <tbody id="lista-erroesp" style="background-color: D8D8D8; color: #000;">
 
@@ -51,17 +62,18 @@
 
     <script src="../Navbar/accionnav.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    
-     <script src="./js/ReporteErrores.js"></script>
-     
-     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+
+    <script src="./js/ReporteErrores.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
