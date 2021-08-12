@@ -188,9 +188,6 @@ end
 
 select * from Usuario;
 select * from Proyectos;
+select * from ErroresPSP;
 select * from EquipoDesarrollo
-
-
 select * from Recordatorios;
-
- 
