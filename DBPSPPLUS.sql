@@ -188,4 +188,5 @@ end
 
 select * from Usuario;
 select * from Proyectos;
+select * from EquipoDesarrollo
 

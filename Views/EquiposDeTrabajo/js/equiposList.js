@@ -145,7 +145,7 @@ async function eliminarEquipo(e) {
 }
 
 
-async function searchCursos() {
+async function searchProyectos() {
     document.getElementById('alert').style.display = 'none';
     if (inpuntsearch.value == "") {
         document.getElementById("lista-equipos").innerHTML = "";
@@ -153,7 +153,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-equipos").innerHTML = "";
-        const url = `https://localhost:44368/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
+        const url = `https://localhost:44368/api/equiposTrabajoBusqueda?nombre=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT
