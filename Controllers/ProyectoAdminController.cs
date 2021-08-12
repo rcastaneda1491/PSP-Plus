@@ -10,7 +10,7 @@ namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class ProyectoAdminController : ControllerBase
     {
         [HttpGet]

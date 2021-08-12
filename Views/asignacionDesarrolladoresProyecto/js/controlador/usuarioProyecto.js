@@ -30,7 +30,7 @@ const guardarUsuario = (e) => {
     idProyecto,
   };
   usuariosProyectoService.saveUsuariosProyecto(usuarioP);
-  window.location.href = `./desarrolladores.html?idProyecto=${idProyect}`;
+  window.location.href = `./desarrolladores.html?idProyecto=${idProyecto}`;
 };
 
 
