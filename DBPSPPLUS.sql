@@ -117,48 +117,113 @@ CREATE TABLE Recordatorios(
 		REFERENCES Usuario(idUsuario)
 );
 GO
------ Erick Echeverria/Debora Chacach 06/08/2021
-create trigger TR_HoraInicioReal
+----- Erick Echeverria/Debora Chacach 12/08/2021
+-- ############################################################################################
+-- #######################   TRIGGERS | TiemposPSP   ##########################################
+-- ############################################################################################
+
+
+-- ###############
+-- #   AGREGAR   #
+-- ###############
+create trigger TR_HoraInicioRealTiemposPSP_Insertar
 on TiemposPSP after insert
 as begin
 --Declarar variables
-	declare @id_proyecto int, @fechaMinima date, @fechaMaxima date, @horasTrabajadas decimal(8,2), @idTiempoPSP int, @fechaHoraInicioTrabajado datetime, @fechaHoraFinalTrabajado datetime
+	declare @id_proyecto int, @fechaMinima date, @fechaMaxima date, @horasTrabajadas decimal(8,2), @idTiempoPSP int, @fechaHoraInicioTrabajado datetime, @fechaHoraFinalTrabajado datetime,
+	@fechaMinimaTiempos date, @fechaMinimaErrores date, @fechaMaximaTiempos date, @fechaMaximaErrores date
 
 	select @id_proyecto = idProyecto from inserted;
 	select @fechaHoraInicioTrabajado = fechaHoraInicio from inserted;
 	select @fechaHoraFinalTrabajado = fechaHoraFinal from inserted;
-	select @fechaMinima = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyecto));
-	select @fechaMaxima = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyecto));
+
+	select @fechaMinimaTiempos = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyecto));
+	select @fechaMinimaErrores = CONVERT(date,(select MIN(fechaHoraInicio) from ErroresPSP WHERE idProyecto = @id_proyecto));
+
+	IF @fechaMinimaErrores < @fechaMinimaTiempos
+		BEGIN
+		select @fechaMinima = @fechaMinimaErrores;
+		END
+	ELSE
+		BEGIN
+		select @fechaMinima = @fechaMinimaTiempos ;
+		END
+
+	select @fechaMaximaTiempos = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyecto));
+	select @fechaMaximaErrores = CONVERT(date,(select MAX(fechaHoraFinal) from ErroresPSP WHERE idProyecto = @id_proyecto));
+
+	IF @fechaMaximaErrores > @fechaMaximaTiempos
+		BEGIN
+		select @fechaMaxima = @fechaMaximaErrores;
+		END
+	ELSE
+		BEGIN
+		select @fechaMaxima = @fechaMaximaTiempos;
+		END
+
 	select @horasTrabajadas = ROUND((DATEDIFF(SECOND,@fechaHoraInicioTrabajado,@fechaHoraFinalTrabajado)/3600.00), 2,0);
 
 	update Proyectos set fechaInicioReal=(@fechaMinima), fechaFinalReal=(@fechaMaxima), totalHorasTrabajadas=(totalHorasTrabajadas + @horasTrabajadas)
 		where idProyecto=@id_proyecto
 end
-go
 
-create trigger TR_HoraInicioRealEliminar
+-- ###############
+-- #  ELIMINAR   #
+-- ###############
+GO
+create trigger TR_HoraInicioRealTiemposPSP_Eliminar
 on TiemposPSP after delete
 as begin
 --Declarar variables
-	declare @id_proyecto int, @fechaMinima date, @fechaMaxima date, @horasTrabajadas decimal(8,2), @idTiempoPSP int, @fechaHoraInicioTrabajado datetime, @fechaHoraFinalTrabajado datetime
+	declare @id_proyecto int, @fechaMinima date, @fechaMaxima date, @horasTrabajadas decimal(8,2), @idTiempoPSP int, @fechaHoraInicioTrabajado datetime, @fechaHoraFinalTrabajado datetime,
+	@fechaMinimaTiempos date, @fechaMinimaErrores date, @fechaMaximaTiempos date, @fechaMaximaErrores date
 
 	select @id_proyecto = idProyecto from deleted;
 	select @fechaHoraInicioTrabajado = fechaHoraInicio from deleted;
 	select @fechaHoraFinalTrabajado = fechaHoraFinal from deleted;
-	select @fechaMinima = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyecto));
-	select @fechaMaxima = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyecto));
+
+	select @fechaMinimaTiempos = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyecto));
+	select @fechaMinimaErrores = CONVERT(date,(select MIN(fechaHoraInicio) from ErroresPSP WHERE idProyecto = @id_proyecto));
+	IF @fechaMinimaTiempos < @fechaMinimaErrores
+		BEGIN
+		select @fechaMinima = @fechaMinimaTiempos;
+		END
+	ELSE
+		BEGIN
+		select @fechaMinima = @fechaMinimaErrores;
+		END
+
+
+	select @fechaMaximaTiempos = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyecto));
+	select @fechaMaximaErrores = CONVERT(date,(select MAX(fechaHoraFinal) from ErroresPSP WHERE idProyecto = @id_proyecto));
+	
+	IF @fechaMaximaTiempos > @fechaMaximaErrores
+		BEGIN
+		select @fechaMaxima = @fechaMaximaTiempos;
+		END
+	ELSE
+		BEGIN
+		select @fechaMaxima = @fechaMaximaErrores;
+		END
+
 	select @horasTrabajadas = ROUND((DATEDIFF(SECOND,@fechaHoraInicioTrabajado,@fechaHoraFinalTrabajado)/3600.00), 2,0);
 
 	update Proyectos set fechaInicioReal=(@fechaMinima), fechaFinalReal=(@fechaMaxima), totalHorasTrabajadas=(totalHorasTrabajadas - @horasTrabajadas)
 		where idProyecto=@id_proyecto
 end
-go
-create trigger TR_HoraInicioRealUpdate
-on TiemposPSP for update
+
+-- ###############
+-- #  ACTUALIZAR   #
+-- ###############
+GO
+create trigger TR_HoraInicioRealTiemposPSP_Actualizar
+on TiemposPSP after update
 as begin
 --Declarar variables
 	declare @id_proyectoEntrante int, @id_proyectoAnterior int, @fechaHoraInicioTrabajadoEntrante datetime, @fechaHoraFinalTrabajadoEntrante datetime, @fechaHoraInicioTrabajadoSaliente datetime, @fechaHoraFinalTrabajadoSaliente datetime,
-		@fechaMinima date, @fechaMaxima date, @horas_borrar decimal(8,2), @horas_Ingresar decimal(8,2), @fechaMinimaSaliente date, @fechaMaximaSaliente date;
+		@fechaMinima date, @fechaMaxima date, @horas_borrar decimal(8,2), @horas_Ingresar decimal(8,2), @fechaMinimaSaliente date, @fechaMaximaSaliente date,
+		@fechaMinimaTiemposEntrante date, @fechaMinimaErroresEntrante date, @fechaMaximaTiemposEntrante date, @fechaMaximaErroresEntrante date,
+		@fechaMinimaTiemposAnterior date, @fechaMinimaErroresAnterior date, @fechaMaximaTiemposAnterior date, @fechaMaximaErroresAnterior date;
 	
 	select @id_proyectoEntrante = idProyecto from inserted;
 	select @id_proyectoAnterior = idProyecto from deleted;
@@ -170,12 +235,54 @@ as begin
 	select @fechaHoraInicioTrabajadoSaliente = fechaHoraInicio from deleted;
 	select @fechaHoraFinalTrabajadoSaliente = fechaHoraFinal from deleted;
 
-	select @fechaMinima = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyectoEntrante));
-	select @fechaMaxima = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyectoEntrante));
+	select @fechaMinimaTiemposEntrante = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyectoEntrante));
+	select @fechaMinimaErroresEntrante = CONVERT(date,(select MIN(fechaHoraInicio) from ErroresPSP WHERE idProyecto = @id_proyectoEntrante));
 
-	select @fechaMinimaSaliente = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyectoAnterior));
-	select @fechaMaximaSaliente = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyectoAnterior));
+	select @fechaMaximaTiemposEntrante = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyectoEntrante));
+	select @fechaMaximaErroresEntrante = CONVERT(date,(select MAX(fechaHoraFinal) from ErroresPSP WHERE idProyecto = @id_proyectoEntrante));
 
+	IF @fechaMinimaErroresEntrante < @fechaMinimaTiemposEntrante
+		BEGIN
+		select @fechaMinima = @fechaMinimaErroresEntrante;
+		END
+	ELSE
+		BEGIN
+		select @fechaMinima = @fechaMinimaTiemposEntrante;
+		END
+
+	IF @fechaMaximaErroresEntrante > @fechaMaximaTiemposEntrante
+		BEGIN
+		select @fechaMaxima = @fechaMaximaErroresEntrante;
+		END
+	ELSE
+		BEGIN
+		select @fechaMaxima = @fechaMaximaTiemposEntrante;
+		END
+
+
+	select @fechaMinimaTiemposAnterior = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyectoAnterior));
+	select @fechaMinimaErroresAnterior = CONVERT(date,(select MIN(fechaHoraInicio) from ErroresPSP WHERE idProyecto = @id_proyectoAnterior));
+
+	select @fechaMaximaTiemposAnterior = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyectoAnterior));
+	select @fechaMaximaErroresAnterior = CONVERT(date,(select MAX(fechaHoraFinal) from ErroresPSP WHERE idProyecto = @id_proyectoAnterior));
+
+	IF @fechaMinimaTiemposAnterior < @fechaMinimaErroresAnterior
+		BEGIN
+		select @fechaMinimaSaliente = @fechaMinimaTiemposAnterior;
+		END
+	ELSE
+		BEGIN
+		select @fechaMinimaSaliente = @fechaMinimaErroresAnterior;
+		END
+
+	IF @fechaMaximaTiemposAnterior > @fechaMaximaErroresAnterior
+		BEGIN
+		select @fechaMaximaSaliente = @fechaMaximaTiemposAnterior;
+		END
+	ELSE
+		BEGIN
+		select @fechaMaximaSaliente = @fechaMaximaErroresAnterior;
+		END
 
 	select @horas_Ingresar = ROUND((DATEDIFF(SECOND,@fechaHoraInicioTrabajadoEntrante,@fechaHoraFinalTrabajadoEntrante)/3600.00), 2,0);
 	select @horas_borrar = ROUND((DATEDIFF(SECOND,@fechaHoraInicioTrabajadoSaliente,@fechaHoraFinalTrabajadoSaliente)/3600.00), 2,0);
@@ -185,6 +292,187 @@ as begin
 
 	update Proyectos set fechaInicioReal=(@fechaMinimaSaliente), fechaFinalReal=(@fechaMaximaSaliente), totalHorasTrabajadas=(totalHorasTrabajadas - @horas_borrar)
 		where idProyecto=@id_proyectoAnterior;
+
+end
+
+-- #########################################################################################
+-- #######################   TRIGGERS | ErroresPSP   ##########################################
+-- ############################################################################################
+
+
+-- ###############
+-- #   AGREGAR   #
+-- ###############
+
+GO
+create trigger TR_HoraInicioRealErroresPSP_Insertar
+on ErroresPSP after insert
+as begin
+--Declarar variables
+	declare @id_proyecto int, @fechaMinima date, @fechaMaxima date, @horasTrabajadas decimal(8,2), @idTiempoPSP int, @fechaHoraInicioTrabajado datetime, @fechaHoraFinalTrabajado datetime,
+	@fechaMinimaTiempos date, @fechaMinimaErrores date, @fechaMaximaTiempos date, @fechaMaximaErrores date
+
+	select @id_proyecto = idProyecto from inserted;
+	select @fechaHoraInicioTrabajado = fechaHoraInicio from inserted;
+	select @fechaHoraFinalTrabajado = fechaHoraFinal from inserted;
+
+	select @fechaMinimaTiempos = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyecto));
+	select @fechaMinimaErrores = CONVERT(date,(select MIN(fechaHoraInicio) from ErroresPSP WHERE idProyecto = @id_proyecto));
+
+	IF @fechaMinimaTiempos < @fechaMinimaErrores
+		BEGIN
+		select @fechaMinima = @fechaMinimaTiempos;
+		END
+	ELSE
+		BEGIN
+		select @fechaMinima = @fechaMinimaErrores ;
+		END
+
+	select @fechaMaximaTiempos = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyecto));
+	select @fechaMaximaErrores = CONVERT(date,(select MAX(fechaHoraFinal) from ErroresPSP WHERE idProyecto = @id_proyecto));
+
+	IF @fechaMaximaTiempos > @fechaMaximaErrores
+		BEGIN
+		select @fechaMaxima = @fechaMaximaTiempos;
+		END
+	ELSE
+		BEGIN
+		select @fechaMaxima = @fechaMaximaErrores;
+		END
+
+	select @horasTrabajadas = ROUND((DATEDIFF(SECOND,@fechaHoraInicioTrabajado,@fechaHoraFinalTrabajado)/3600.00), 2,0);
+
+	update Proyectos set fechaInicioReal=(@fechaMinima), fechaFinalReal=(@fechaMaxima), totalHorasTrabajadas=(totalHorasTrabajadas + @horasTrabajadas)
+		where idProyecto=@id_proyecto
+end
+
+-- ###############
+-- #  ELIMINAR   #
+-- ###############
+
+GO
+create trigger TR_HoraInicioRealErroresPSP_Eliminar
+on ErroresPSP after delete
+as begin
+--Declarar variables
+	declare @id_proyecto int, @fechaMinima date, @fechaMaxima date, @horasTrabajadas decimal(8,2), @idTiempoPSP int, @fechaHoraInicioTrabajado datetime, @fechaHoraFinalTrabajado datetime,
+	@fechaMinimaTiempos date, @fechaMinimaErrores date, @fechaMaximaTiempos date, @fechaMaximaErrores date
+
+	select @id_proyecto = idProyecto from deleted;
+	select @fechaHoraInicioTrabajado = fechaHoraInicio from deleted;
+	select @fechaHoraFinalTrabajado = fechaHoraFinal from deleted;
+
+	select @fechaMinimaTiempos = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyecto));
+	select @fechaMinimaErrores = CONVERT(date,(select MIN(fechaHoraInicio) from ErroresPSP WHERE idProyecto = @id_proyecto));
+	IF @fechaMinimaErrores < @fechaMinimaTiempos
+		BEGIN
+		select @fechaMinima = @fechaMinimaErrores ;
+		END
+	ELSE
+		BEGIN
+		select @fechaMinima = @fechaMinimaTiempos ;
+		END
+
+
+	select @fechaMaximaTiempos = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyecto));
+	select @fechaMaximaErrores = CONVERT(date,(select MAX(fechaHoraFinal) from ErroresPSP WHERE idProyecto = @id_proyecto));
+	
+	IF @fechaMaximaErrores > @fechaMaximaTiempos
+		BEGIN
+		select @fechaMaxima = @fechaMaximaErrores;
+		END
+	ELSE
+		BEGIN
+		select @fechaMaxima = @fechaMaximaTiempos;
+		END
+
+	select @horasTrabajadas = ROUND((DATEDIFF(SECOND,@fechaHoraInicioTrabajado,@fechaHoraFinalTrabajado)/3600.00), 2,0);
+
+	update Proyectos set fechaInicioReal=(@fechaMinima), fechaFinalReal=(@fechaMaxima), totalHorasTrabajadas=(totalHorasTrabajadas - @horasTrabajadas)
+		where idProyecto=@id_proyecto
+end
+
+-- ###############
+-- #  ACTUALIZAR   #
+-- ###############
+GO
+create trigger TR_HoraInicioErroresPSP_Actualizar
+on ErroresPSP after update
+as begin
+--Declarar variables
+	declare @id_proyectoEntrante int, @id_proyectoAnterior int, @fechaHoraInicioTrabajadoEntrante datetime, @fechaHoraFinalTrabajadoEntrante datetime, @fechaHoraInicioTrabajadoSaliente datetime, @fechaHoraFinalTrabajadoSaliente datetime,
+		@fechaMinima date, @fechaMaxima date, @horas_borrar decimal(8,2), @horas_Ingresar decimal(8,2), @fechaMinimaSaliente date, @fechaMaximaSaliente date,
+		@fechaMinimaTiemposEntrante date, @fechaMinimaErroresEntrante date, @fechaMaximaTiemposEntrante date, @fechaMaximaErroresEntrante date,
+		@fechaMinimaTiemposAnterior date, @fechaMinimaErroresAnterior date, @fechaMaximaTiemposAnterior date, @fechaMaximaErroresAnterior date;
+	
+	select @id_proyectoEntrante = idProyecto from inserted;
+	select @id_proyectoAnterior = idProyecto from deleted;
+
+
+	select @fechaHoraInicioTrabajadoEntrante = fechaHoraInicio from inserted;
+	select @fechaHoraFinalTrabajadoEntrante = fechaHoraFinal from inserted;
+
+	select @fechaHoraInicioTrabajadoSaliente = fechaHoraInicio from deleted;
+	select @fechaHoraFinalTrabajadoSaliente = fechaHoraFinal from deleted;
+
+	select @fechaMinimaTiemposEntrante = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyectoEntrante));
+	select @fechaMinimaErroresEntrante = CONVERT(date,(select MIN(fechaHoraInicio) from ErroresPSP WHERE idProyecto = @id_proyectoEntrante));
+
+	select @fechaMaximaTiemposEntrante = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyectoEntrante));
+	select @fechaMaximaErroresEntrante = CONVERT(date,(select MAX(fechaHoraFinal) from ErroresPSP WHERE idProyecto = @id_proyectoEntrante));
+
+	IF @fechaMinimaTiemposEntrante < @fechaMinimaErroresEntrante
+		BEGIN
+		select @fechaMinima = @fechaMinimaTiemposEntrante;
+		END
+	ELSE
+		BEGIN
+		select @fechaMinima = @fechaMinimaErroresEntrante;
+		END
+
+	IF @fechaMaximaTiemposEntrante >  @fechaMaximaErroresEntrante
+		BEGIN
+		select @fechaMaxima = @fechaMaximaTiemposEntrante;
+		END
+	ELSE
+		BEGIN
+		select @fechaMaxima = @fechaMaximaErroresEntrante;
+		END
+
+
+	select @fechaMinimaTiemposAnterior = CONVERT(date,(select MIN(fechaHoraInicio) from TiemposPSP WHERE idProyecto = @id_proyectoAnterior));
+	select @fechaMinimaErroresAnterior = CONVERT(date,(select MIN(fechaHoraInicio) from ErroresPSP WHERE idProyecto = @id_proyectoAnterior));
+
+	select @fechaMaximaTiemposAnterior = CONVERT(date,(select MAX(fechaHoraFinal) from TiemposPSP WHERE idProyecto = @id_proyectoAnterior));
+	select @fechaMaximaErroresAnterior = CONVERT(date,(select MAX(fechaHoraFinal) from ErroresPSP WHERE idProyecto = @id_proyectoAnterior));
+
+	IF @fechaMinimaErroresAnterior <  @fechaMinimaTiemposAnterior
+		BEGIN
+		select @fechaMinimaSaliente = @fechaMinimaErroresAnterior;
+		END
+	ELSE
+		BEGIN
+		select @fechaMinimaSaliente = @fechaMinimaTiemposAnterior;
+		END
+
+	IF @fechaMaximaErroresAnterior > @fechaMaximaTiemposAnterior
+		BEGIN
+		select @fechaMaximaSaliente = @fechaMaximaErroresAnterior;
+		END
+	ELSE
+		BEGIN
+		select @fechaMaximaSaliente = @fechaMaximaTiemposAnterior;
+		END
+
+	select @horas_Ingresar = ROUND((DATEDIFF(SECOND,@fechaHoraInicioTrabajadoEntrante,@fechaHoraFinalTrabajadoEntrante)/3600.00), 2,0);
+	select @horas_borrar = ROUND((DATEDIFF(SECOND,@fechaHoraInicioTrabajadoSaliente,@fechaHoraFinalTrabajadoSaliente)/3600.00), 2,0);
+
+	update Proyectos set fechaInicioReal=(@fechaMinima), fechaFinalReal=(@fechaMaxima), totalHorasTrabajadas=(totalHorasTrabajadas + @horas_Ingresar)
+		where idProyecto=@id_proyectoEntrante;
+
+	update Proyectos set fechaInicioReal=(@fechaMinimaSaliente), fechaFinalReal=(@fechaMaximaSaliente), totalHorasTrabajadas=(totalHorasTrabajadas - @horas_borrar)
+		where idProyecto=@id_proyectoAnterior;
+
 end
 
 select * from Usuario;
