@@ -200,7 +200,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER proc [dbo].[Analisis]  @id int, @inn datetime,  @fn datetime
+CREATE proc [dbo].[Analisis]  @id int, @inn datetime,  @fn datetime
 as
 select case when (select s.nombre from Proyectos s where s.idProyecto=ps.idProyecto) is null then 'no asignado' else  (select s.nombre from Proyectos s where s.idProyecto=ps.idProyecto) end as Proyecto ,min(ps.fechaHoraInicio) as Fecha_Inicio, MAX(ps.fechaHoraFinal) as Fecha_Final , sum(Cast((ps.fechaHoraFinal - ps.fechaHoraInicio) as Float) * 24.0 ) as tiempo , count(ps.descripcion)+(select COUNT(er.idProyecto) from ErroresPSP er where er.idProyecto=ps.idProyecto and er.idUsuario=@id) as "Total de Tareas"
 , case when(select min(er.fechaHoraInicio) from ErroresPSP er where er.idProyecto = ps.idProyecto  and er.idUsuario=@id ) is null then  '' else (select min(er.fechaHoraInicio) from ErroresPSP er where er.idProyecto = ps.idProyecto and er.idUsuario=@id )  end as errormin ,case when(select max(er.fechaHoraFinal) from ErroresPSP er where er.idProyecto = ps.idProyecto and er.idUsuario=@id ) is null then  '' else (select max(er.fechaHoraFinal) from ErroresPSP er where er.idProyecto = ps.idProyecto  and er.idUsuario=@id)  end as errormax
