@@ -78,7 +78,7 @@ body{
 
 .tituloActividad{
     display: inline-flex;
-    width: 400px;
+    width: 500px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -176,7 +176,7 @@ body{
 
     .tituloActividad{
         display: inline-flex;
-        width: 205px;
+        width: 500px;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -209,7 +209,6 @@ body{
         text-overflow: ellipsis;
         overflow: hidden;
         margin-block-end: 10px;
-
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
