@@ -16,7 +16,7 @@ namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class RecordatoriosController : ControllerBase
     {
         [HttpPost]

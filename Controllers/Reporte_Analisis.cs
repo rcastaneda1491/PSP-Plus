@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using SpreadsheetLight;
@@ -24,6 +25,7 @@ namespace PSP_.Models
     
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class Reporte_Analisis : ControllerBase
     {
         [HttpGet("{id},{feci},{fecf}")]
