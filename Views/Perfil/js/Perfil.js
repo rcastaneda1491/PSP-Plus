@@ -43,7 +43,7 @@ function mostrar() {
 
 function GetDatos() {
     
-    const url = `https://localhost:44368/api/Perfil?idUsuario=${jwt.sub}`;
+    const url = `https://172.30.236.13:8080/api/Perfil?idUsuario=${jwt.sub}`;
 
     fetch(url, {
         headers: new Headers({
@@ -97,7 +97,7 @@ function actualizar() {
         if (confirmar) {
            
             console.log("Actualizando..")
-            const urlActualizarUsuario = `https://localhost:44368/api/Perfil?idUsuario=${jwt.sub}&nombre=${nombresInput.value}&apellido=${apellidosInput.value}&email=${correoInput.value}&clave=${contraInput.value}&fechaNacimiento=${fechaInput.value}&idEquipo=${equipoInput.value}`;
+            const urlActualizarUsuario = `https://172.30.236.13:8080/api/Perfil?idUsuario=${jwt.sub}&nombre=${nombresInput.value}&apellido=${apellidosInput.value}&email=${correoInput.value}&clave=${contraInput.value}&fechaNacimiento=${fechaInput.value}&idEquipo=${equipoInput.value}`;
 
             fetch(urlActualizarUsuario, {
                 method: 'PUT',

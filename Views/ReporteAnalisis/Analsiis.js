@@ -1,6 +1,21 @@
 
 //Albin Cordero 
 
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  
+    return JSON.parse(jsonPayload);
+  };
+  const stringJWT = Cookies.get('jwt');
+  let jwt;
+  if (stringJWT) {
+    jwt = parseJwt(stringJWT);
+  }
+
 document.addEventListener('DOMContentLoaded', () => {
 const bt = document.querySelector("#btn");
     const inicio = document.querySelector("#inicio")
@@ -80,7 +95,7 @@ const bt = document.querySelector("#btn");
         
             
             
-            const url = `https://localhost:44368/api/Reporte_Analisis/${sel.value},${fnn},${inn}`;
+            const url = `https://172.30.236.13:8080/api/Reporte_Analisis/${sel.value},${fnn},${inn}`;
             cargar(url);
         
          
@@ -109,7 +124,7 @@ setTimeout(() => {
    
    
      
-        const url = `https://localhost:44368/api/Reporte_Analisis/${jwt.sub},${fnn},${inn}`;
+        const url = `https://172.30.236.13:8080/api/Reporte_Analisis/${jwt.sub},${fnn},${inn}`;
         cargar(url);
      
      

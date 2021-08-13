@@ -70,7 +70,7 @@ async function GetDatos() {
 
         eliminar = 0;
     }
-    const url = `https://localhost:44368/api/EquipoDesarrolloNombre`;
+    const url = `https://172.30.236.13:8080/api/EquipoDesarrolloNombre`;
 
     await fetch(url, {
         headers: new Headers({
@@ -132,7 +132,7 @@ async function eliminarUsuario(e) {
     const confirmar = confirm('¿Desea Eliminar Usuario?');
     if (confirmar) {
 
-        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+        const urlActualizarUsuario = `https://172.30.236.13:8080/api/AgregarUsuarios?idUsuario=${userid}`;
 
         await fetch(urlActualizarUsuario, {
             method: 'DELETE',
@@ -162,7 +162,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-usuarios").innerHTML = "";
-        const url = `https://localhost:44368/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
+        const url = `https://172.30.236.13:8080/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT
