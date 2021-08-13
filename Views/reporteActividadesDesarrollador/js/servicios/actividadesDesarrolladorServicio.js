@@ -1,4 +1,4 @@
-const UrlPeticion = `${URL}/reporteActividadDesarrollador`
+const UrlPeticion = `${URL_Global}/reporteActividadDesarrollador`
 
 function parseJwt(token) {
   var base64Url = token.split('.')[1];
