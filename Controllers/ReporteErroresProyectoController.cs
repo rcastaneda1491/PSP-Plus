@@ -10,7 +10,7 @@ namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ReporteErroresProyectoController : ControllerBase
     {
         [HttpGet]
@@ -21,13 +21,13 @@ namespace PSP_.Controllers
                 if(idUsuario == null)
                 {
                 
-                    var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto select p).ToList();
+                    var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto select p).Distinct().ToList();
                 
                     return Ok(proyectos);
                 }
                 else
                 {
-                    var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto where d.IdUsuario == idUsuario select p).ToList();
+                    var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto where d.IdUsuario == idUsuario select p).Distinct().ToList();
 
                     return Ok(proyectos);
 

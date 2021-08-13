@@ -477,6 +477,7 @@ end
 
 select * from Usuario;
 select * from Proyectos;
+select * from UsuarioProyecto;
 --Débora Chacach
 go
 
@@ -497,6 +498,7 @@ from TiemposPSP ps  left join Proyectos pr on ps.idProyecto=pr.idProyecto
 where ps.idUsuario=@id
 and ps.fechaHoraInicio between @inn   and @fn
 group by ps.idProyecto
+GO
 
 --Débora Chacach
 --Proceso almacenado para reporte de Actividades por Proyecto
@@ -509,6 +511,7 @@ inner join TiemposPSP TpSp on u.idUsuario=TpSp.idUsuario
 left join ErroresPSP EpSp on u.idUsuario=EpSp.idUsuario
 where p.nombre=@nombreProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
+go
 
 select * from ErroresPSP;
 select * from EquipoDesarrollo

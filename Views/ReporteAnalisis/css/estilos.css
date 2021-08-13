@@ -86,6 +86,10 @@ footer {
   width: 40%;
 }
 
+#btn:hover{
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   #input-container {
     flex-direction: column;

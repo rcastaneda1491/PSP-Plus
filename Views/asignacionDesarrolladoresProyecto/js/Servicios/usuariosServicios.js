@@ -1,4 +1,4 @@
-const requestUrl = `${URL}/AgregarUsuarios`
+const requestUrl = `${URL}/ComboDesarrolladores`
 
 const usuarioService = {
     getUsuarios() {

@@ -57,7 +57,7 @@ const bt = document.querySelector("#btn");
   bt.addEventListener('click',() => {
     jwt = parseJwt(stringJWT);
     console.log(jwt.rol) 
-    if(jwt.rol="administrador"){
+    if(jwt.rol=="administrador"){
         const sel = document.querySelector("#select");
             console.log(sel.value)
         if(inicio.value=="" || fin.value=="" || sel.value=="null" )

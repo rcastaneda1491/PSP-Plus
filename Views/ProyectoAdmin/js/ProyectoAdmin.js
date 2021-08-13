@@ -53,7 +53,7 @@ function mostrardatos(datos) {
             var fechafinalreal = "";
         } else {
             var fechaSplit4 = proyecto.fechaFinalReal.split("T");
-            var fechainicioreal = fechaSplit4[0];
+            var fechafinalreal = fechaSplit4[0];
         }
 
         const card = `
@@ -63,10 +63,10 @@ function mostrardatos(datos) {
               <td>${proyecto.idProyecto}</td>
               <td>${proyecto.nombre}</td>
               <td>${proyecto.cliente}</td>
-              <td>${fechainicioesperada}</td>
               <td>${fechainicioreal}</td>
-              <td>${fechafinalesperada}</td>
+              <td>${fechainicioesperada}</td>
               <td>${fechafinalreal}</td>
+              <td>${fechafinalesperada}</td>
               <td>${proyecto.dev}</td>
               <td>${proyecto.totalHorasTrabajadas}</td>
               
