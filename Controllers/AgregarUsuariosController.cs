@@ -29,7 +29,7 @@ namespace PSP_.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(string nombre, string apellido, string email, string clave,DateTime fechaNacimiento,int idEquipo, string rol)
+        public ActionResult Post(string nombre, string apellido, string email, string clave, DateTime fechaNacimiento, int idEquipo, string rol)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
@@ -52,7 +52,7 @@ namespace PSP_.Controllers
         }
 
         [HttpPut]
-        public ActionResult Put(int? idUsuario,string nombre, string apellido, string email, string clave, DateTime fechaNacimiento, int idEquipo)
+        public ActionResult Put(int? idUsuario, string nombre, string apellido, string email, string clave, DateTime fechaNacimiento, int idEquipo)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {

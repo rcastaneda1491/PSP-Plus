@@ -19,9 +19,11 @@ namespace PSP_.Controllers
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                var reporte = (from u in db.Usuarios join e in db.ErroresPsps 
-                               on u.IdUsuario equals e.IdUsuario
-                               where e.IdProyecto == idProyecto && u.IdUsuario == idUsuario select e).ToList();
+                var reporte = (from u in db.Usuarios
+                               join e in db.ErroresPsps
+         on u.IdUsuario equals e.IdUsuario
+                               where e.IdProyecto == idProyecto && u.IdUsuario == idUsuario
+                               select e).ToList();
 
                 return Ok(reporte);
             }

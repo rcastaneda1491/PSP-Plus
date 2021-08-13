@@ -32,7 +32,7 @@ namespace PSP_.Controllers
                         recordatorio.Descripcion = descripcion;
                         recordatorio.IdUsuario = idUsuario;
                         recordatorio.TipoRecordatorio = tipoRecordatorio;
-                        recordatorio.FechaHoraRecordatorio = Convert.ToDateTime( $"{fechaHoraRecordatorio.Date.Year}/{fechaHoraRecordatorio.Date.Month}/{fechaHoraRecordatorio.Date.Day} {fechaHoraRecordatorio.Hour}:{fechaHoraRecordatorio.Minute}");
+                        recordatorio.FechaHoraRecordatorio = Convert.ToDateTime($"{fechaHoraRecordatorio.Date.Year}/{fechaHoraRecordatorio.Date.Month}/{fechaHoraRecordatorio.Date.Day} {fechaHoraRecordatorio.Hour}:{fechaHoraRecordatorio.Minute}");
                         break;
                     case 2:
                         recordatorio.Descripcion = descripcion;
@@ -81,27 +81,27 @@ namespace PSP_.Controllers
             {
                 var recordatorioslist = new List<DatosRecordatorio>();
 
- 
+
                 var recordatorio = (from d in db.Recordatorios
-                                   select d).Where(d => d.IdUsuario == idUsuario).ToList();
+                                    select d).Where(d => d.IdUsuario == idUsuario).ToList();
 
-                    foreach (var item in recordatorio)
+                foreach (var item in recordatorio)
+                {
+                    if (item.IdProyecto != null)
                     {
-                        if(item.IdProyecto != null)
-                        {
-                            var proyecto = db.Proyectos.Find(item.IdProyecto);
-                            recordatorioslist.Add(new DatosRecordatorio { IdRecordatorios = item.IdRecordatorios, Descripcion = item.Descripcion, IdUsuario = item.IdUsuario, TipoRecordatorio = item.TipoRecordatorio, IdProyecto = item.IdProyecto, NombreProyecto = proyecto.Nombre, Estado = item.Estado, FechaHoraRecordatorio = item.FechaHoraRecordatorio, HorasAlerta = item.HorasAlerta });
+                        var proyecto = db.Proyectos.Find(item.IdProyecto);
+                        recordatorioslist.Add(new DatosRecordatorio { IdRecordatorios = item.IdRecordatorios, Descripcion = item.Descripcion, IdUsuario = item.IdUsuario, TipoRecordatorio = item.TipoRecordatorio, IdProyecto = item.IdProyecto, NombreProyecto = proyecto.Nombre, Estado = item.Estado, FechaHoraRecordatorio = item.FechaHoraRecordatorio, HorasAlerta = item.HorasAlerta });
 
-                        }
-                        else
-                        {
-                            recordatorioslist.Add(new DatosRecordatorio { IdRecordatorios = item.IdRecordatorios, Descripcion = item.Descripcion, IdUsuario = item.IdUsuario, TipoRecordatorio = item.TipoRecordatorio, IdProyecto = item.IdProyecto, NombreProyecto = "null", Estado = item.Estado, FechaHoraRecordatorio = item.FechaHoraRecordatorio, HorasAlerta = item.HorasAlerta });
+                    }
+                    else
+                    {
+                        recordatorioslist.Add(new DatosRecordatorio { IdRecordatorios = item.IdRecordatorios, Descripcion = item.Descripcion, IdUsuario = item.IdUsuario, TipoRecordatorio = item.TipoRecordatorio, IdProyecto = item.IdProyecto, NombreProyecto = "null", Estado = item.Estado, FechaHoraRecordatorio = item.FechaHoraRecordatorio, HorasAlerta = item.HorasAlerta });
 
-                        }
+                    }
                 }
 
                 return recordatorioslist;
-            }   
+            }
         }
 
 

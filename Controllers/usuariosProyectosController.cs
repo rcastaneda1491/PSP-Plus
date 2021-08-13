@@ -78,9 +78,9 @@ namespace PSP_.Controllers
                 var query = db.Proyectos.Select(proyecto => new
                 {
                     idProyecto = proyecto.IdProyecto,
-                    nombre = proyecto.Nombre, 
+                    nombre = proyecto.Nombre,
                     descripcion = proyecto.Descripcion
-                    
+
 
                 }).Where(proyecto => proyecto.idProyecto == id).ToList();
 
@@ -89,6 +89,6 @@ namespace PSP_.Controllers
             }
         }
 
-     }
+    }
 }
 

@@ -22,22 +22,22 @@ namespace PSP_.Controllers
                 var reporteProyectos = db.Usuarios.Join(
                         db.ErroresPsps, u => u.IdUsuario, e => e.IdUsuario,
                         (u, e) => new
-                            {
-                                idProyecto = e.IdProyecto,
-                                nombres = u.Nombres,
-                                apellidos = u.Apellidos,
-                                email = u.Email,
-                                cantidadErrores = calcularErrores(u.IdUsuario, e.IdProyecto),
-                                cantidadHoras = calcularHoras(u.IdUsuario, e.IdProyecto)
-                            }
+                        {
+                            idProyecto = e.IdProyecto,
+                            nombres = u.Nombres,
+                            apellidos = u.Apellidos,
+                            email = u.Email,
+                            cantidadErrores = calcularErrores(u.IdUsuario, e.IdProyecto),
+                            cantidadHoras = calcularHoras(u.IdUsuario, e.IdProyecto)
+                        }
 
                     ).Where(errores => errores.idProyecto == idProyecto).Distinct().ToList();
 
                 return Ok(reporteProyectos);
-                
+
             }
         }
-        
+
         public static int calcularErrores(int idUsuario, int? idProyecto)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
@@ -55,12 +55,12 @@ namespace PSP_.Controllers
                 decimal Horas = 0;
                 var ListaErrores = (from e in db.ErroresPsps join u in db.Usuarios on e.IdUsuario equals u.IdUsuario where u.IdUsuario == idUsuario && e.IdProyecto == idProyecto select e).ToList();
 
-                foreach(var item in ListaErrores)
+                foreach (var item in ListaErrores)
                 {
                     Horas = Horas + item.TiempoCorrecion;
                 }
 
-                return Horas/60;
+                return Horas / 60;
             }
         }
     }

@@ -62,7 +62,7 @@ namespace PSP_.Controllers
 
                 datos.Nombre = nombre;
                 datos.Descripcion = descripcion;
-                
+
                 db.Entry(datos).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
 

@@ -14,7 +14,7 @@ namespace PSP_.Controllers
     public class ProyectoDesarrolladorController : ControllerBase
     {
         [HttpGet]
-        public ActionResult Get( int idUsuario)
+        public ActionResult Get(int idUsuario)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
@@ -37,10 +37,10 @@ namespace PSP_.Controllers
                 proyecto.Cliente = cliente;
                 proyecto.FechaInicioEsperada = fechainicioesperada;
                 proyecto.FechaFinalEsperada = fechafinalesperada;
-                proyecto.Dev = dev; 
+                proyecto.Dev = dev;
                 db.Proyectos.Add(proyecto);
 
-                
+
 
                 db.SaveChanges();
 

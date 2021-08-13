@@ -14,15 +14,15 @@ namespace PSP_.Controllers
     public class ReporteErroresProyectoController : ControllerBase
     {
         [HttpGet]
-        public ActionResult Get( int? idUsuario)
+        public ActionResult Get(int? idUsuario)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                if(idUsuario == null)
+                if (idUsuario == null)
                 {
-                
+
                     var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto select p).Distinct().ToList();
-                
+
                     return Ok(proyectos);
                 }
                 else

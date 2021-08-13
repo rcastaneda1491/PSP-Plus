@@ -23,7 +23,7 @@ namespace PSP_.Controllers
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                if(idTiempoPSP != null) // Datos para editar la actividad PSP
+                if (idTiempoPSP != null) // Datos para editar la actividad PSP
                 {
                     var actividades = (from d in db.TiemposPsps
                                        select d).Where(d => d.IdTiempoPsp == idTiempoPSP).Where(d => d.IdUsuario == idUsuario).ToList();
@@ -44,15 +44,15 @@ namespace PSP_.Controllers
 
                 if (idProyecto == null && buscarProyecto == null) //Obtendra los tiempos PSP al cargar sin ningún filtrado
                 {
-                    if(fechaInicioFiltrado == null)
+                    if (fechaInicioFiltrado == null)
                     {
                         var actividades = (from d in db.TiemposPsps
                                            select d).Where(d => d.IdUsuario == idUsuario).OrderBy(d => d.FechaHoraInicio).ToList();
 
                         var errores = (from d in db.ErroresPsps
-                                           select d).Where(d => d.IdUsuario == idUsuario).OrderBy(d => d.FechaHoraInicio).ToList();
+                                       select d).Where(d => d.IdUsuario == idUsuario).OrderBy(d => d.FechaHoraInicio).ToList();
 
-                        return Ok( new { actividades, errores });
+                        return Ok(new { actividades, errores });
                     }
                     else
                     {
@@ -60,11 +60,11 @@ namespace PSP_.Controllers
                                            select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
                         var errores = (from d in db.ErroresPsps
-                                            select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
+                                       select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
                         return Ok(new { actividades, errores });
                     }
- 
+
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace PSP_.Controllers
                                            select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.IdProyecto == idProyecto).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
                         var errores = (from d in db.ErroresPsps
-                                            select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.IdProyecto == idProyecto).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
+                                       select d).Where(d => d.IdUsuario == idUsuario).Where(d => d.IdProyecto == idProyecto).Where(d => d.FechaHoraInicio >= fechaInicioFiltrado).Where(d => d.FechaHoraFinal <= fechaFinalFiltrado).OrderBy(d => d.FechaHoraInicio).ToList();
 
                         return Ok(new { actividades, errores });
                     }
@@ -88,7 +88,7 @@ namespace PSP_.Controllers
                         return Ok(proyectos);
                     }
 
-                        
+
                 }
             }
         }
@@ -104,12 +104,12 @@ namespace PSP_.Controllers
                 actividad.FechaHoraInicio = fechaHoraInicio;
                 actividad.FechaHoraFinal = fechaHoraFinal;
                 actividad.Descripcion = descripcion;
-                if(idProyecto != null)
+                if (idProyecto != null)
                 {
                     actividad.IdProyecto = idProyecto;
                 }
                 actividad.IdUsuario = idUsuario;
- 
+
                 db.TiemposPsps.Add(actividad);
                 db.SaveChanges();
 
@@ -126,7 +126,7 @@ namespace PSP_.Controllers
             {
                 try
                 {
-                   Models.TiemposPsp actividad = db.TiemposPsps.Find(idTiempoPSP);
+                    Models.TiemposPsp actividad = db.TiemposPsps.Find(idTiempoPSP);
 
                     db.TiemposPsps.Remove(actividad);
                     db.SaveChanges();
@@ -150,7 +150,7 @@ namespace PSP_.Controllers
                 datos.FechaHoraInicio = fechaHoraInicio;
                 datos.FechaHoraFinal = fechaHoraFinal;
                 datos.Descripcion = descripcion;
-                if(idProyecto != null)
+                if (idProyecto != null)
                 {
                     datos.IdProyecto = idProyecto;
                 }

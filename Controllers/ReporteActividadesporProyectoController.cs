@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 // Débora Chacach 11/08/2021
 namespace PSP_.Controllers
 {
@@ -19,7 +20,7 @@ namespace PSP_.Controllers
     }
     [Route("api/[controller]")]
     [ApiController]
-   [Authorize]
+    [Authorize]
     public class ReporteActividadesporProyectoController : Controller
     {
         [HttpGet]
@@ -78,6 +79,6 @@ namespace PSP_.Controllers
             }
         }
 
-       
+
     }
 }
