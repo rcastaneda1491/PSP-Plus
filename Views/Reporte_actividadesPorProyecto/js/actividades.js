@@ -113,7 +113,7 @@ function mostrarDatos(datos) {
               / ${hora_formateadaI} </td>
               <td>${fecha_formateadaF} 
               / ${hora_formateadaF} </td>
-              <td>${actividad.horas}</td>
+              <td>${actividad.horas.toFixed(2)}</td>
               <td>${actividad.nombreUsuario}</td>
 
             </tr>
