@@ -65,9 +65,9 @@ window.onload = () => {
 async function getProyectos() {
     var url;
     if(jwt.rol == "desarrollador"){
-        url = `https://localhost:44368/api/ReporteErroresProyecto?idUsuario=${jwt.sub}`;
+        url = `https://172.30.236.13:8080/api/ReporteErroresProyecto?idUsuario=${jwt.sub}`;
     }else if(jwt.rol == "administrador"){
-        url = `https://localhost:44368/api/ReporteErroresProyecto`;
+        url = `https://172.30.236.13:8080/api/ReporteErroresProyecto`;
     }
     
 
@@ -115,7 +115,7 @@ async function GetDatos() {
             alerta.style.display = 'none';
         }, 3000);
     }else{
-    const url = `https://localhost:44368/api/ReporteErroresProyectoTabla?idProyecto=${inputproyecto.value}`;
+    const url = `https://172.30.236.13:8080/api/ReporteErroresProyectoTabla?idProyecto=${inputproyecto.value}`;
 
     await fetch(url, {
         headers: new Headers({

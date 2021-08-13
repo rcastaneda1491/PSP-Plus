@@ -1,2 +1,2 @@
-const URL = "https://localhost:44368/api";
+const URL = "https://172.30.236.13:8080/api";
 

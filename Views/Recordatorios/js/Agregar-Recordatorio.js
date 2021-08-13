@@ -42,7 +42,7 @@ window.onload = () => {
 }
 
 async function getEquipos() {
-    const url = `https://localhost:44368/api/ProyectoAdmin`;
+    const url = `https://172.30.236.13:8080/api/ProyectoAdmin`;
 
     await fetch(url, {
         headers: new Headers({
@@ -143,7 +143,7 @@ async function validar() {
                 return;
             } else {
         
-                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&fechaHoraRecordatorio=${inputFechayHora.value}`;
+                const url = `https://172.30.236.13:8080/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&fechaHoraRecordatorio=${inputFechayHora.value}`;
 
                 await fetch(url, {
                     method: 'POST',
@@ -168,7 +168,7 @@ async function validar() {
                 return;
             } else {
         
-                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&idProyecto=${inputProyecto.value}&horasAlerta=${inputHoraTotal.value}`;
+                const url = `https://172.30.236.13:8080/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&idProyecto=${inputProyecto.value}&horasAlerta=${inputHoraTotal.value}`;
 
                 await fetch(url, {
                     method: 'POST',
@@ -193,7 +193,7 @@ async function validar() {
                 return;
             } else {
         
-                const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&fechaHoraRecordatorio=${inputFechayHora.value}&idProyecto=${inputProyecto.value}`;
+                const url = `https://172.30.236.13:8080/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&fechaHoraRecordatorio=${inputFechayHora.value}&idProyecto=${inputProyecto.value}`;
 
                 await fetch(url, {
                     method: 'POST',
@@ -218,7 +218,7 @@ async function validar() {
                     return;
                 } else {
             
-                    const url = `https://localhost:44368/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&idProyecto=${inputProyecto.value}`;
+                    const url = `https://172.30.236.13:8080/api/Recordatorios?descripcion=${inputDescripcion.value}&idUsuario=${jwt.sub}&tipoRecordatorio=${inputCondicion.value}&idProyecto=${inputProyecto.value}`;
 
                     await fetch(url, {
                         method: 'POST',

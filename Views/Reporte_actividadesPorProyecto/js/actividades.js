@@ -75,7 +75,7 @@ const id=jwt.sub;
 
 //         eliminar = 0;
 //     }
-//     const url = `https://localhost:44368/api/ReporteActividadesporProyecto?/Actividades`;
+//     const url = `https://172.30.236.13:8080//api/ReporteActividadesporProyecto?/Actividades`;
 
 //     await fetch(url, {
 //         headers: new Headers({
@@ -127,7 +127,7 @@ function mostrarDatos(datos) {
 
 
 async function llenarSelect(){
-    url= `https://localhost:44368/api/ReporteActividadesporProyecto?id=${id}`;
+    url= `https://172.30.236.13:8080/api/ReporteActividadesporProyecto?id=${id}`;
     await fetch(url, {
         headers: new Headers({
             'Authorization': 'Bearer ' + stringJWT
@@ -164,7 +164,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-actividades").innerHTML = "";
-        const url = `https://localhost:44368/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}`;
+        const url = `https://172.30.236.13:8080/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT
