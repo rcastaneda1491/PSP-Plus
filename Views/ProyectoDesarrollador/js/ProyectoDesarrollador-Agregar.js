@@ -31,39 +31,34 @@ async function agregarProyecto() {
     const url = `https://localhost:44368/api/ProyectoDesarrollador?nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
 
     await fetch(url, {
-            method: 'POST',
-            headers: new Headers({
-               'Authorization': 'Bearer ' + stringJWT
-            })
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
         })
-        .then(respuesta => {
-            
-            const url2 = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=${jwt.sub}`;
+    });
 
-            fetch(url2, {
-                    method: 'POST',
-                    headers: new Headers({
-                        'Authorization': 'Bearer ' + stringJWT
-                    })
-                })  
-                .then(respuesta => respuesta)
+    const url2 = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=${jwt.sub}`;
 
+    await fetch(url2, {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
         })
-
-        
+    })
+        .then(respuesta => respuesta)
 
 }
 
 //async function agregarProyecto2() {
-   // const url = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=${1.value}&idproyecto=${inputidProyecto.value}`;
+// const url = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=${1.value}&idproyecto=${inputidProyecto.value}`;
 
-   // await fetch(url, {
-        //  method: 'POST',
-        //    headers: new Headers({
-                //'Authorization': 'Bearer ' + stringJWT
-      //      })
-    //    })  
-  //      .then(respuesta => respuesta)
+// await fetch(url, {
+//  method: 'POST',
+//    headers: new Headers({
+//'Authorization': 'Bearer ' + stringJWT
+//      })
+//    })  
+//      .then(respuesta => respuesta)
 
 //} 
 
@@ -93,7 +88,7 @@ function validar() {
             window.location.href = (`./ProyectoDesarrolladorindex.html`);
         }, 200);
 
- 
+
     }
 
 }

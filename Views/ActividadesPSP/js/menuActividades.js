@@ -1,4 +1,4 @@
-// DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021 
+/// DOCUMENTO RELIZADO POR: Erick Eduardo Echeverría Garrido (EE) 5/08/2021 
 
 // ---------------------------------- Funciones cookies ----------------------------------
 function parseJwt(token) {
@@ -178,7 +178,7 @@ function imprimirActividades(actividades) {
 
     actividadesJuntas = actividadesJuntas.concat(actividades.errores);
 
-    actividadesJuntas = actividadesJuntas.sort((a, b) => new Date(a.fechaHoraInicio).getTime() - new Date(b.fechaHoraFinal).getTime());
+    actividadesJuntas = actividadesJuntas.sort((a, b) => new Date(a.fechaHoraInicio).getTime() - new Date(b.fechaHoraInicio).getTime());
     
     eliminarSpinner();
 
@@ -219,11 +219,11 @@ function imprimirActividades(actividades) {
                     <a href="../ErroresPSP/VerError.html?error=${idErrorPsp}"><img id="ver" src="./img/vers.svg"></a>
                 </div>
                  <div class="fechaHora d-flex">
-                    <h5>${horaFinal}</h5>
-                    <h4>${fechaFinal}</h4>
-                    <h4>a</h4>
                     <h5>${horaInicio}</h5>
                     <h4>${fechaInicio}</h4>
+                    <h4>a</h4>
+                    <h5>${horaFinal}</h5>
+                    <h4>${fechaFinal}</h4>
                 </div>  
                 
             </div>
@@ -271,16 +271,19 @@ function imprimirActividades(actividades) {
                     <a href="./VerActividad.html?actividad=${idTiempoPsp}"><img id="ver" src="./img/vers.svg"></a>
                 </div>
                 <div class="fechaHora d-flex">
-                    <h5>${horaFinal}</h5>
-                    <h4>${fechaFinal}</h4>
-                    <h4>a</h4>
                     <h5>${horaInicio}</h5>
                     <h4>${fechaInicio}</h4>
+                    <h4>a</h4>
+                    <h5>${horaFinal}</h5>
+                    <h4>${fechaFinal}</h4>
                 </div>
                 
             </div>
             `;
- 
+    
+            if(fechaInicioFiltrado.value == '' || fechaInicioFiltrado.value > fechaInicioSplit[0]){
+                fechaInicioFiltrado.value = fechaInicioSplit[0];
+            }
             
             if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
                 fechaFinalFiltrado.value = fechaFinalSplit[0];;
@@ -311,7 +314,6 @@ function restarHoras(horaInicio, horaFinal) {
     sumaDeMinutos = sumaDeMinutos + parseInt(a.diff(b, 'minutes'));
 
 }
-
 
 async function eliminarActividad(idActividad) {
     const confirmar = confirm('¿ Desea eliminar la actividad ?');

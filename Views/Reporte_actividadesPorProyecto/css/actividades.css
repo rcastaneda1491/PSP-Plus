@@ -1,3 +1,5 @@
+/*Julio Garcia
+5/08/2021*/
 *{
     margin: 0;
     padding: 0;
@@ -6,21 +8,6 @@
     box-sizing: border-box;
 }
 
-#export-pdf {
-    border-radius: 8px;
-    background-color: #3d9be9;
-    color: #f3f3f3;
-    width: 187px;
-    height: 45px;
-  }
-  
-  #export-excel {
-    border-radius: 8px;
-    background-color: #09254f;
-    color: #f3f3f3;
-    width: 187px;
-    height: 45px;
-  }
 html{
     min-height: 100%;
     position: relative;
@@ -40,6 +27,10 @@ body{
     margin-bottom: 45px;
 }
 
+#editar:hover{
+  cursor: pointer;
+}
+
 ::placeholder{
     color: #000000 !important;
 }
@@ -48,10 +39,22 @@ body{
     border-radius: 30px !important;
     background-color: #D8D8D8 !important;
 }
+#export-pdf {
+    border-radius: 8px;
+    background-color: #3d9be9;
+    color: #f3f3f3;
+    width: 187px;
+    height: 45px;
+  }
+  
+  #export-excel {
+    border-radius: 8px;
+    background-color: #09254f;
+    color: #f3f3f3;
+    width: 187px;
+    height: 45px;
+  }
 
-#editar:hover{
-    cursor: pointer;
-}
 
 footer {
     background-color: black;
@@ -107,3 +110,4 @@ footer {
       width: 60%;
     }
   }
+

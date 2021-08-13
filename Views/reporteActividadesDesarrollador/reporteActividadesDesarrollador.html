@@ -11,6 +11,7 @@
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="../../Navbar/nav.css">
+    <link rel="icon" type="image/png" href="../img/icon.png">
 </head>
 
 <body>
@@ -36,6 +37,14 @@
             </div>
         </div> 
 
+        <div class="input-group rounded" id="input-container"
+            style="display: flex; justify-content: center; align-items: center;">
+            <div style="padding: 10px;" class="combo-container" id="dev-container">
+                <select id="select-dev" name="desarrollador" class="form-select combo"
+                    aria-label="Seleccione desarrollador"></select>
+            </div>
+        </div>
+
         <div class="input-group rounded" id="input-container" style="display: flex; justify-content: center; align-items: center;">
             <div style="padding: 10px;" class="combo-container">
                 <span class="input-group-text text-align center" id="inputGroup-sizing-sm">Fecha Inicio</span>
@@ -57,7 +66,7 @@
         </div>
 
 
-        <div class="table-responsive" style="margin-top: 25px;">
+        <div class="table-responsive" style="margin-top: 25px;" id="Reporte">
             <h3 class="titulo">Actividadades del desarrollador</h3>
             <table class="table table-light table-bordered" style="text-align: center;">
                 <thead class="table" style="background-color: #021329; color: white;">
@@ -83,13 +92,14 @@
         <img src="../../img/LOGOPLUSTI 2.svg" id="" alt="" width="140px">
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="./js/utils/globals.js"></script>
     <script src="./js/servicios/actividadesDesarrolladorServicio.js"></script>
     <script src="./js/contoller/actividadDesarrollador.js"></script>
     <script src="../Navbar/accionnav.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="../html2pdf.bundle.min.js"></script>
+<script src="../TabletoExcel.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
