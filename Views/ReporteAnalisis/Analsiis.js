@@ -95,7 +95,7 @@ const bt = document.querySelector("#btn");
         
             
             
-            const url = `https://172.30.236.13:8080/api/Reporte_Analisis/${sel.value},${fnn},${inn}`;
+            const url = `https://localhost:44368/api/Reporte_Analisis/${sel.value},${fnn},${inn}`;
             cargar(url);
         
          
@@ -124,7 +124,7 @@ setTimeout(() => {
    
    
      
-        const url = `https://172.30.236.13:8080/api/Reporte_Analisis/${jwt.sub},${fnn},${inn}`;
+        const url = `https://localhost:44368/api/Reporte_Analisis/${jwt.sub},${fnn},${inn}`;
         cargar(url);
      
      

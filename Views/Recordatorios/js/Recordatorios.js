@@ -67,7 +67,7 @@ async function GetDatos() {
 
         eliminar = 0;
     }
-    const url = `https://172.30.236.13:8080/api/Recordatorios?idUsuario=${jwt.sub}`;
+    const url = `https://localhost:44368/api/Recordatorios?idUsuario=${jwt.sub}`;
 
     await fetch(url, {
         headers: new Headers({
@@ -301,7 +301,7 @@ async function actualizarEstado(e) {
     const recordatoriovalor = recordatorio.querySelector('input').getAttribute('value');
     if(recordatoriovalor == "No Leído"){
 
-        const url = `https://172.30.236.13:8080/api/Recordatorios?idRecordatorio=${recordatorioid}&estado=Leído`;
+        const url = `https://localhost:44368/api/Recordatorios?idRecordatorio=${recordatorioid}&estado=Leído`;
 
         await fetch(url, {
             method: 'PUT',
@@ -324,7 +324,7 @@ async function deleteRecordatorio(e) {
     const confirmar = confirm('¿Desea Eliminar Usuario?');
     if (confirmar) {
 
-        const urlActualizarUsuario = `https://172.30.236.13:8080/api/Recordatorios?idRecordatorio=${recordatorioid}`;
+        const urlActualizarUsuario = `https://localhost:44368/api/Recordatorios?idRecordatorio=${recordatorioid}`;
 
         await fetch(urlActualizarUsuario, {
             method: 'DELETE',
