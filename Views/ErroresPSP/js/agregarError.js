@@ -25,8 +25,6 @@ function CerrarSesion() {
 const idUsuario = jwt.sub;
 // ---------------------------------- FIN Funciones cookies ----------------------------------
 
-let url = 'https://localhost:44368';
-
 // SELECTORES
 const alerta = document.querySelector('#alert');
 const alertaFechasIncorrectas = document.querySelector('#alert2');
@@ -51,7 +49,7 @@ window.onload = () => {
 }
 
 async function obtenerProyectos() {
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -109,9 +107,9 @@ async function agregarError() {
     let direccion;
 
     if (proyectosSelect.value == '0') {
-        direccion = `${url}/api/Errores?fecha=${fechaHoraInicioInput.value}&descripcion=${descripcionInput.value}&solucion=${solucionInput.value}&correlativo=${correlativoInput.value}&tipoError=${tipoErrorSelect.value}&introducido=${etapasIntroducidoSelect.value}&eliminado=${etapasEliminadoSelect.value}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&tiempoCorrecion=${tiempoCorrecion}&lenguaje=${lenguajeInput.value}&idUsuario=${idUsuario}`;
+        direccion = `${URL_Global}/Errores?fecha=${fechaHoraInicioInput.value}&descripcion=${descripcionInput.value}&solucion=${solucionInput.value}&correlativo=${correlativoInput.value}&tipoError=${tipoErrorSelect.value}&introducido=${etapasIntroducidoSelect.value}&eliminado=${etapasEliminadoSelect.value}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&tiempoCorrecion=${tiempoCorrecion}&lenguaje=${lenguajeInput.value}&idUsuario=${idUsuario}`;
     } else {
-        direccion = `${url}/api/Errores?fecha=${fechaHoraInicioInput.value}&descripcion=${descripcionInput.value}&solucion=${solucionInput.value}&correlativo=${correlativoInput.value}&tipoError=${tipoErrorSelect.value}&introducido=${etapasIntroducidoSelect.value}&eliminado=${etapasEliminadoSelect.value}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&tiempoCorrecion=${tiempoCorrecion}&lenguaje=${lenguajeInput.value}&idProyecto=${proyectosSelect.value}&idUsuario=${idUsuario}`;
+        direccion = `${URL_Global}/Errores?fecha=${fechaHoraInicioInput.value}&descripcion=${descripcionInput.value}&solucion=${solucionInput.value}&correlativo=${correlativoInput.value}&tipoError=${tipoErrorSelect.value}&introducido=${etapasIntroducidoSelect.value}&eliminado=${etapasEliminadoSelect.value}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&tiempoCorrecion=${tiempoCorrecion}&lenguaje=${lenguajeInput.value}&idProyecto=${proyectosSelect.value}&idUsuario=${idUsuario}`;
     }
 
     await fetch(direccion, {

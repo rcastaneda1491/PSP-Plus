@@ -33,8 +33,6 @@ function getParameterByName(name) {
 }
 // ------------------- FIN FUNCION Para obtener datos De la URL ----------------------------------
 
-let url = 'https://localhost:44368';
-
 let idErrorPSP = getParameterByName('error');
 
 // SELECTORES
@@ -64,7 +62,7 @@ async function obtenerProyectos() {
 
     mostrarSpinner();
 
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -92,7 +90,7 @@ function selectProyecto(proyectos) {
 
 async function obtenerDatosErrorPSP(){
 
-    const direccion = `${url}/api/Errores?idUsuario=${idUsuario}&idErrorPsp=${idErrorPSP}`;
+    const direccion = `${URL_Global}/Errores?idUsuario=${idUsuario}&idErrorPsp=${idErrorPSP}`;
 
     await fetch(direccion, {
         headers: new Headers({
