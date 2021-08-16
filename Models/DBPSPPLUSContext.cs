@@ -35,10 +35,10 @@ namespace PSP_.Models
                 //optionsBuilder.UseSqlServer("Server=DESKTOP-UVJPA4R;DATABASE=DBPSPPLUS;user=prueba;password=prueba");
 
                 //optionsBuilder.UseSqlServer("Server=DESKTOP-DF943KT;DATABASE=DBPSPPLUS;user=tito1;password=1234");
-                optionsBuilder.UseSqlServer("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345");
+                //optionsBuilder.UseSqlServer("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345");
                 // optionsBuilder.UseSqlServer("Server=LAPTOP-AA3NT37P;DATABASE=DBPSPPLUS;user=Usuario1;password=Usuario1");
 
-                //optionsBuilder.UseSqlServer("Server=DESKTOP-FGBRIH1;DATABASE=DBPSPPLUS;user=capacitacion;password=12345");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-FGBRIH1;DATABASE=DBPSPPLUS;user=capacitacion;password=12345");
 
             }
         }
