@@ -58,7 +58,7 @@
       idProyecto: idP,
     };
 
-    Swal.fire({
+    /*Swal.fire({
       title: 'Eliminar desarrollador',
       text: "¿Estas seguro que deseas eliminar el desarrollador de este proyecto?",
       icon: 'warning',
@@ -76,12 +76,14 @@
       }
       mostrarUsuarios();
       alertaEliminado();
-    })
+    })*/
 
-   /* const confirmar = confirm("¿Desea eliminar el usuario?");
+    const confirmar = confirm("¿Desea eliminar el usuario?");
     if (confirmar) {
-    
-    }*/
+      await usuariosProyectoService.deleteUsuariosProyecto(user);
+      mostrarUsuarios();
+      alertaEliminado();
+    }
   }
 
   const onLoaded = () => {
