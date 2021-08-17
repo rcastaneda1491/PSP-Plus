@@ -41,13 +41,11 @@ namespace PSP_.Models
                 var dt = new List<Datos>();
 
 
-<<<<<<< HEAD
-                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345"))
+ 
+                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-IFKEU1D\\SQLEXPRESS;DATABASE=DBPSPPLUS;user=sa;password=albin123"))
                 {
                     using (SqlCommand cmd = new SqlCommand("Analisis", sql))
-=======
-                    using (SqlConnection sql = new SqlConnection("Server=DESKTOP-FGBRIH1;DATABASE=DBPSPPLUS;user=capacitacion;password=12345"))
->>>>>>> 0368db076fb13c878f30b7079dd60f596cc898c1
+ 
                     {
 
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
