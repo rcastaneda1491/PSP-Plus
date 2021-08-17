@@ -23,7 +23,7 @@ window.onload = () => {
 }
 
 async function getdatos() {
-    const url = `https://172.30.236.13:8080/api/ProyectoAdmin`;
+    const url = `https://localhost:44368/api/ProyectoAdmin`;
 
     await fetch(url, {
         headers: new Headers({
@@ -121,7 +121,7 @@ async function eliminarProyecto(e) {
     const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
-        const url = `https://172.30.236.13:8080/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+        const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
 
         await fetch(url, {
             method: 'DELETE',
@@ -158,7 +158,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-proyectos").innerHTML = "";
-        const url = `https://172.30.236.13:8080/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}`;
+        const url = `https://localhost:44368/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT

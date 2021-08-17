@@ -105,7 +105,7 @@ function parseJwt(token) {
   };
 
   async function fillSelectDev() {
-    const url = `https://172.30.236.13:8080/api/ComboDesarrolladores`;
+    const url = `https://localhost:44368/api/ComboDesarrolladores`;
 
     await fetch(url, {
       headers: new Headers({
