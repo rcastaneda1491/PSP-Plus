@@ -1,6 +1,8 @@
 const cardlistelement = document.getElementById("lista-proyectos");
 const alerta = document.querySelector('#alert');
+const alertarelacion = document.querySelector('#relacion');
 const inpuntsearch = document.querySelector('#search');
+let array = [];
 
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
@@ -19,10 +21,11 @@ if (stringJWT) {
 
 window.onload = () => {
     getdatos();
+    validarcascada();
 }
 
 async function getdatos() {
-    const url = `https://172.30.236.13:8080/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
+    const url = `https://localhost:44368/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
 
     await fetch(url, {
             headers: new Headers({
@@ -36,7 +39,7 @@ async function getdatos() {
 }
 
 function mostrardatos(datos) {
-    debugger;
+    
     datos.forEach(proyecto => {
         var fechaSplit1 = proyecto.fechaInicioEsperada.split("T");
         var fechainicioesperada = fechaSplit1[0];
@@ -121,7 +124,22 @@ async function eliminarProyecto(e) {
     const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
-        const url = `https://172.30.236.13:8080/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
+        
+        for(i=0;i<array.length;i++){
+
+            if(array[i] == proyectoid){
+                alertarelacion.style.display = 'block';
+
+                setTimeout(() => {
+                    alertarelacion.style.display = 'none';
+                }, 3000);
+            return;
+            
+            }
+        }
+
+
+        const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
         await fetch(url, {
                 method: 'DELETE',
@@ -132,6 +150,7 @@ async function eliminarProyecto(e) {
             .then(respuesta => respuesta)
 
         window.location.href = (`./ProyectoDesarrolladorindex.html`);
+        
         getdatos();
 
 
@@ -143,6 +162,35 @@ async function eliminarProyecto(e) {
 
 }
 
+
+
+async function validarcascada(){
+
+    const url = `https://localhost:44368/api/GetUsuarioProyecto`;
+
+    await fetch(url, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
+        .then(respuesta => respuesta.json())
+        .then(resultado => {
+                validardatos(resultado);
+        })
+
+    }
+
+
+    function validardatos(datos) {
+        datos.forEach(proyecto => {
+
+            array.push(proyecto.idProyecto);
+
+        })}
+
+
+
+
 async function searchCursos() {
     document.getElementById('alert').style.display = 'none';
     if (inpuntsearch.value == "") {
@@ -151,7 +199,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-proyectos").innerHTML = "";
-        const url = `https://172.30.236.13:8080/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}&idUsuarios=${jwt.sub}`;
+        const url = `https://localhost:44368/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}&idUsuarios=${jwt.sub}`;
         
         await fetch(url, {
             headers: new Headers({

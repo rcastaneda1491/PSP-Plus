@@ -38,7 +38,7 @@ if (stringJWT) {
 }
 
 async function getEquipos(){
-    const url = `https://172.30.236.13:8080/api/GetEquiposDesarrollo`;
+    const url = `https://localhost:44368/api/GetEquiposDesarrollo`;
 
     await fetch(url, {
         headers: new Headers({
@@ -76,7 +76,7 @@ function cargar(){
 
 
 async function getUser(){
-    const url = `https://172.30.236.13:8080/api/EquipoDesarrolloNombre?idUsuario=${idUsuario}`;
+    const url = `https://localhost:44368/api/EquipoDesarrolloNombre?idUsuario=${idUsuario}`;
 
     await fetch(url, {
         headers: new Headers({
@@ -127,7 +127,7 @@ function validar(){
 }
 
 async function editUser(){
-    const url = `https://172.30.236.13:8080/api/AgregarUsuarios?idUsuario=${idUsuario}&nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}`;
+    const url = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${idUsuario}&nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}`;
 
     await fetch(url, {
         method: 'PUT',
