@@ -58,12 +58,30 @@
       idProyecto: idP,
     };
 
-    const confirmar = confirm("¿Desea eliminar el usuario?");
-    if (confirmar) {
-      await usuariosProyectoService.deleteUsuariosProyecto(user);
+    Swal.fire({
+      title: 'Eliminar desarrollador',
+      text: "¿Estas seguro que deseas eliminar el desarrollador de este proyecto?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+         usuariosProyectoService.deleteUsuariosProyecto(user);
+
+        Swal.fire(
+          'Desarrollador Eliminado!'
+        )
+      }
       mostrarUsuarios();
       alertaEliminado();
-    }
+    })
+
+   /* const confirmar = confirm("¿Desea eliminar el usuario?");
+    if (confirmar) {
+    
+    }*/
   }
 
   const onLoaded = () => {
