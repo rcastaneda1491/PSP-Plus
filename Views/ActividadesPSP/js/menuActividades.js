@@ -232,7 +232,7 @@ function imprimirActividades(actividades) {
             }
             
             if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
-                fechaFinalFiltrado.value = fechaFinalSplit[0];;
+                fechaFinalFiltrado.value = fechaFinalSplit[0];
             }
         }else{
             const { idTiempoPsp, fechaHoraInicio, fechaHoraFinal, descripcion, idProyecto, idUsuario } = actividad;
@@ -366,11 +366,11 @@ async function eliminarError(idErrorPSP){
 
 
 function crearActividad() {
-    window.location.href = ('./AgregarActividad.html');
+    window.location.href = ('../MenuAgregarActividadesPSP/menuAgregarActividadPSP.html?actividad=1');
 }
 
 function crearError(){
-    window.location.href = ('../ErroresPSP/AgregarError.html');
+    window.location.href = ('../MenuAgregarActividadesPSP/menuAgregarActividadPSP.html?error=1');
 }
 
 function mostrarSpinner() {

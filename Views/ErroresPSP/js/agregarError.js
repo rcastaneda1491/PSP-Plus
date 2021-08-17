@@ -46,6 +46,30 @@ let tiempoCorrecion;
 
 window.onload = () => {
     obtenerProyectos();
+    proyectosSelect.addEventListener("change", obtenerCorrelativo);
+}
+
+function obtenerCorrelativo(){
+
+    if(proyectosSelect.value == '0'){
+        correlativoInput.value = 1;
+
+        return;
+    }
+
+    const direccion = `${URL_Global}/Errores?idProyecto=${proyectosSelect.value}`;
+
+    fetch(direccion, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
+        .then(respuesta => respuesta.json())
+        .then(resultado => resultado)
+        .then(correlativo => mostrarCorrelativo(correlativo))
+}
+function mostrarCorrelativo(maxCorrelativo){
+    correlativoInput.value = maxCorrelativo + 1;
 }
 
 async function obtenerProyectos() {
