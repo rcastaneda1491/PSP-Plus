@@ -10,7 +10,7 @@ var FortTimer = {
     on_update: null,
     startit:function(reset){
 
-        if(fechaHoraInicioActividadxCronometro){
+        if(fechaHoraInicioErrorxCronometro){
             console.log(fechaHoraInicioObtenido.fechaHoraInicio)
             if(this.started == null){
 

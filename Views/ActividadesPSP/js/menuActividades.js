@@ -176,7 +176,7 @@ function imprimirActividades(actividades) {
 
     actividadesJuntas = actividadesJuntas.concat(actividades.errores);
 
-    actividadesJuntas = actividadesJuntas.sort((a, b) => new Date(a.fechaHoraInicio).getTime() - new Date(b.fechaHoraInicio).getTime());
+    actividadesJuntas = actividadesJuntas.sort((a, b) => new Date(b.fechaHoraInicio).getTime() - new Date(a.fechaHoraInicio).getTime());
     
     eliminarSpinner();
 

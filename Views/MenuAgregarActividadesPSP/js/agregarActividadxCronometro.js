@@ -36,16 +36,39 @@ const alerta = document.querySelector('#alert');
 const btnIniciar = document.querySelector('#btnComenzar');
 const btnDetener = document.querySelector('#btnDetener');
 const btnFinalizar = document.querySelector('#btnFinalizar');
+const btnReiniciar = document.querySelector('#btnReiniciar');
 
 
 window.onload = () => {
-
-    btnIniciar.addEventListener("click", tomarNotaFechaHoraInicio);
-    btnDetener.addEventListener("click", tomarNotaFechaHoraInicio);
-    btnFinalizar.addEventListener("click", tomarNotaFechaHoraInicio);
     
+    btnIniciar.addEventListener("click", comenzar);
+    btnDetener.addEventListener("click", detener);
+    btnFinalizar.addEventListener("click", finalizar);
+    btnReiniciar.addEventListener("click", reinciar);
     mostrarSpinner();
-    obtenerProyectos();    
+    obtenerProyectos();
+}
+
+const fechaHoraInicioActividadxCronometro = localStorage.getItem('fechaHoraInicioActividadxCronometro');
+const fechaHoraInicioObtenido = JSON.parse(fechaHoraInicioActividadxCronometro);
+
+function validarCronometroGuardado(){
+
+    if(fechaHoraInicioActividadxCronometro){
+
+        fechaHoraInicio = new Date(fechaHoraInicioObtenido.fechaHoraInicio);
+        descripcionInput.value = fechaHoraInicioObtenido.descripcion;
+        proyectosSelect.value = fechaHoraInicioObtenido.numeroProyecto;
+
+        estado = 1;
+
+        descripcionInput.addEventListener("change", actualizarDatosLocalS);
+        proyectosSelect.addEventListener("change", actualizarDatosLocalS);
+
+        $('#btnComenzar').click();
+        comenzar();
+    }
+
 }
 
 async function obtenerProyectos() {
@@ -72,6 +95,8 @@ function selectProyecto(proyectos) {
         proyectosSelect.appendChild(option);
 
     })
+
+    validarCronometroGuardado(); // Valida si anteriormente el usuario habia dejado una actividad cargando...
 }
  
 let fechaHoraInicio;
@@ -79,53 +104,110 @@ let fechaHoraFinal;
 
 let estado = 0; // 0 significa que el conteo empezo y 1 que la proxima acción va a ser detenerse
 
-function tomarNotaFechaHoraInicio() {
+function comenzar() {
 
     if(estado == 0){
         fechaHoraInicio = new Date();
-        btnIniciar.style.display = 'none';
-        btnDetener.style.display = 'block';
         estado = 1;
-    }else{
 
-        if(fechaHoraFinal == null){
-            fechaHoraFinal = new Date();
+        const fechaHoraInicioActividadxCronometro = {
+            fechaHoraInicio: fechaHoraInicio,
+            descripcion: descripcionInput.value,
+            numeroProyecto: proyectosSelect.value
         }
 
-        btnDetener.style.display = 'none';
-        btnFinalizar.style.display = 'block';
+        const actividadString = JSON.stringify(fechaHoraInicioActividadxCronometro);
+        localStorage.setItem('fechaHoraInicioActividadxCronometro', actividadString);
 
-        if (descripcionInput.value == '' || proyectosSelect.value == '') {
-    
-            alerta.style.display = 'block';
-    
-            setTimeout(() => {
-                alerta.style.display = 'none';
-            }, 3000);
-    
-            return;    
-        }
-    
-        agregarActividad();    
+        descripcionInput.addEventListener("change", actualizarDatosLocalS);
+        proyectosSelect.addEventListener("change", actualizarDatosLocalS);
     }
+
+    btnIniciar.style.display = 'none';
+    btnDetener.style.display = 'block';
+    btnReiniciar.style.display = 'block';
+
 }
+
+function actualizarDatosLocalS(){
+    
+    const fechaHoraInicioActividadxCronometro = {
+        fechaHoraInicio: fechaHoraInicio,
+        descripcion: descripcionInput.value,
+        numeroProyecto: proyectosSelect.value
+    }
+
+    const actividadString = JSON.stringify(fechaHoraInicioActividadxCronometro);
+
+    localStorage.setItem('fechaHoraInicioActividadxCronometro', actividadString);
+}
+
+function detener() {
+
+    fechaHoraFinal = new Date();
+
+    btnDetener.style.display = 'none';
+    btnReiniciar.style.display = 'none';
+    btnFinalizar.style.display = 'block';
+
+}
+
+function finalizar(){
+    if (descripcionInput.value == '' || proyectosSelect.value == '') {
+    
+        alerta.style.display = 'block';
+
+        setTimeout(() => {
+            alerta.style.display = 'none';
+        }, 3000);
+
+        return;    
+    }
+
+    agregarActividad(); 
+}
+
+function reinciar(){
+    localStorage.removeItem('fechaHoraInicioActividadxCronometro');
+    location.reload();
+}
+
+
+
 
 async function agregarActividad() {
 
     mostrarSpinner();
 
     let direccion;
+    if(fechaHoraInicio.getHours() < 10){
+        if(fechaHoraInicio.getMinutes() < 10){
+            fechaHoraInicio = fechaHoraInicio.getFullYear()+'-'+(fechaHoraInicio.getMonth()+1)+'-'+fechaHoraInicio.getDate()+'T0'+fechaHoraInicio.getHours()+':0'+fechaHoraInicio.getMinutes();
+        }else{
+            fechaHoraInicio = fechaHoraInicio.getFullYear()+'-'+(fechaHoraInicio.getMonth()+1)+'-'+fechaHoraInicio.getDate()+'T0'+fechaHoraInicio.getHours()+':'+fechaHoraInicio.getMinutes();
+        }
+    }else{
+        if(fechaHoraInicio.getMinutes() < 10){
+            fechaHoraInicio = fechaHoraInicio.getFullYear()+'-'+(fechaHoraInicio.getMonth()+1)+'-'+fechaHoraInicio.getDate()+'T'+fechaHoraInicio.getHours()+':0'+fechaHoraInicio.getMinutes();
+        }else{
+            fechaHoraInicio = fechaHoraInicio.getFullYear()+'-'+(fechaHoraInicio.getMonth()+1)+'-'+fechaHoraInicio.getDate()+'T'+fechaHoraInicio.getHours()+':'+fechaHoraInicio.getMinutes();
+        }
+    }
 
-    if(fechaHoraInicio.getMinutes() < 10){
-        fechaHoraInicio = fechaHoraInicio.getFullYear()+'-'+(fechaHoraInicio.getMonth()+1)+'-'+fechaHoraInicio.getDate()+'T'+fechaHoraInicio.getHours()+':0'+fechaHoraInicio.getMinutes();
+    if(fechaHoraFinal.getHours() < 10){
+        if(fechaHoraFinal.getMinutes() < 10){
+            fechaHoraFinal = fechaHoraFinal.getFullYear()+'-'+(fechaHoraFinal.getMonth()+1)+'-'+fechaHoraFinal.getDate()+'T0'+fechaHoraFinal.getHours()+':0'+fechaHoraFinal.getMinutes();
+        }else{
+            fechaHoraFinal = fechaHoraFinal.getFullYear()+'-'+(fechaHoraFinal.getMonth()+1)+'-'+fechaHoraFinal.getDate()+'T0'+fechaHoraFinal.getHours()+':'+fechaHoraFinal.getMinutes();
+        }
     }else{
-        fechaHoraInicio = fechaHoraInicio.getFullYear()+'-'+(fechaHoraInicio.getMonth()+1)+'-'+fechaHoraInicio.getDate()+'T'+fechaHoraInicio.getHours()+':'+fechaHoraInicio.getMinutes();
+        if(fechaHoraFinal.getMinutes() < 10){
+            fechaHoraFinal = fechaHoraFinal.getFullYear()+'-'+(fechaHoraFinal.getMonth()+1)+'-'+fechaHoraFinal.getDate()+'T'+fechaHoraFinal.getHours()+':0'+fechaHoraFinal.getMinutes();
+        }else{
+            fechaHoraFinal = fechaHoraFinal.getFullYear()+'-'+(fechaHoraFinal.getMonth()+1)+'-'+fechaHoraFinal.getDate()+'T'+fechaHoraFinal.getHours()+':'+fechaHoraFinal.getMinutes();
+        }
     }
-    if(fechaHoraFinal.getMinutes() < 10){
-        fechaHoraFinal = fechaHoraFinal.getFullYear()+'-'+(fechaHoraFinal.getMonth()+1)+'-'+fechaHoraFinal.getDate()+'T'+fechaHoraFinal.getHours()+':0'+fechaHoraFinal.getMinutes();
-    }else{
-        fechaHoraFinal = fechaHoraFinal.getFullYear()+'-'+(fechaHoraFinal.getMonth()+1)+'-'+fechaHoraFinal.getDate()+'T'+fechaHoraFinal.getHours()+':'+fechaHoraFinal.getMinutes();
-    }
+    
 
     if (proyectosSelect.value == '0') {
         direccion = `${URL_Global}/ActividadesPSP?fechaHoraInicio=${fechaHoraInicio}&fechaHoraFinal=${fechaHoraFinal}&descripcion=${descripcionInput.value}&idUsuario=${idUsuario}`;
@@ -143,15 +225,12 @@ async function agregarActividad() {
         .then(resultado => {
         })
 
+        localStorage.removeItem('fechaHoraInicioActividadxCronometro');
+
     alert('Agregado Exitosamente');
     window.location.href = (`../ActividadesPSP/MenuActividades.html`);
 }
  
-
-
-
-
-
 function mostrarSpinner() {
 
     const spinner = document.createElement('div');

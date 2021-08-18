@@ -117,4 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function CerrarSesion() {
   Cookies.remove('jwt');
+  localStorage.removeItem('fechaHoraInicioErrorxCronometro'); // Elimina del localStorage los POSIBLES
+  localStorage.removeItem('fechaHoraInicioActividadxCronometro'); // tiempos de ejecución que tenga el Usuario en proceso
 };

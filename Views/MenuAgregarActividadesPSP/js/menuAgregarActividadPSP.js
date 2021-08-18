@@ -46,24 +46,50 @@ window.onload = () => {
     btnAgregarActividadxDatos.addEventListener('click', crearActividadxDatos);
 }
 
+const fechaHoraInicioErrorxCronometro = localStorage.getItem('fechaHoraInicioErrorxCronometro');
+const fechaHoraInicioActividadxCronometro = localStorage.getItem('fechaHoraInicioActividadxCronometro');
 
 
 function crearActividadxCronometro() {
+
     if(actividad == "1"){
-        window.location.href = ('./AgregarActividadxCronometro.html');
+        if(fechaHoraInicioErrorxCronometro){
+            alert('Actualmente se está corrigiendo un error, terminé la actividad e intentelo nuevamente');
+        }else{
+            window.location.href = ('./AgregarActividadxCronometro.html');
+        }
     }else{
-        window.location.href = ('./AgregarErrorxCronometro.html');
-    }
-    
+        if(fechaHoraInicioActividadxCronometro){
+            alert('Actualmente hay una actividad en ejecución, terminé la actividad e intentelo nuevamente');
+        }else{
+            window.location.href = ('./AgregarErrorxCronometro.html');
+        }
+    }  
 }
 
 function crearActividadxDatos(){
+
     if(actividad == "1"){
-        window.location.href = ('../ActividadesPSP/AgregarActividad.html');
+        if(fechaHoraInicioErrorxCronometro){
+            alert('Actualmente se está corrigiendo un error, terminé la actividad e intentelo nuevamente');
+        }else{
+            if(fechaHoraInicioActividadxCronometro){
+                alert('Actualmente hay una actividad en ejecución, terminé la actividad e intentelo nuevamente');
+            }else{
+                window.location.href = ('../ActividadesPSP/AgregarActividad.html');
+            }
+        }
     }else{
-        window.location.href = ('../ErroresPSP/AgregarError.html');
-    }
-    
+        if(fechaHoraInicioActividadxCronometro){
+            alert('Actualmente hay una actividad en ejecución, terminé la actividad e intentelo nuevamente');
+        }else{
+            if(fechaHoraInicioErrorxCronometro){
+                alert('Actualmente se está corrigiendo un error, terminé la actividad e intentelo nuevamente');
+            }else{
+                window.location.href = ('../ErroresPSP/AgregarError.html');
+            }
+        }
+    }     
 }
 
 function mostrarSpinner() {
