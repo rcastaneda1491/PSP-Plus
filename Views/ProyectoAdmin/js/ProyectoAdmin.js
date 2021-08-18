@@ -124,7 +124,9 @@ async function eliminarProyecto(e) {
     const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
-        for(i=0;i<array.length;i++){
+
+    for(i=0;i<array.length;i++){
+        const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
 
             if(array[i] == proyectoid){
        

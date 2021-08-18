@@ -124,7 +124,7 @@ async function eliminarProyecto(e) {
     const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
-        
+
         for(i=0;i<array.length;i++){
 
             if(array[i] == proyectoid){

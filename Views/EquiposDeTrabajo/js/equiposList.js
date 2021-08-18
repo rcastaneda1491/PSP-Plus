@@ -151,7 +151,6 @@ async function eliminarEquipo(e) {
             }
         }
 
-
         const urlEliminarEquipo = `https://localhost:44368/api/GetEquiposDesarrollo?idEquipo=${equipoId}`;
 
         await fetch(urlEliminarEquipo, {

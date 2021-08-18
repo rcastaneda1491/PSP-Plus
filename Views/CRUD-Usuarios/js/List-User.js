@@ -134,6 +134,8 @@ async function eliminarUsuario(e) {
     if (confirmar) {
 
 
+        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+
         const url = `https://localhost:44368/api/ActividadesPSP?idUsuario=${userid}`;
 
         await fetch(url, {
