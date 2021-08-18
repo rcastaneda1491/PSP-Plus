@@ -7,9 +7,32 @@ const inputClave = document.querySelector('#clave');
 const inputFecha = document.querySelector('#fecha');
 const inputEquipo = document.querySelector('#equipo');
 const inputRol = document.querySelector('#rol');
+const passwordText = document.querySelector('#passstrength');
 
 const alerta = document.querySelector('#alert');
 
+$('#clave').keyup(function(e) {
+    var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+    var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+    var enoughRegex = new RegExp("(?=.{6,}).*", "g");
+    if (false == enoughRegex.test($(this).val())) {
+            $('#passstrength').html('Más caracteres.');
+            inputClave.style.borderBottom = "2px solid red";
+    } else if (strongRegex.test($(this).val())) {
+            $('#passstrength').className = 'ok';
+            $('#passstrength').html('Contraseña Segura!');
+            inputClave.style.borderBottom = "2px solid green";
+    } else if (mediumRegex.test($(this).val())) {
+            $('#passstrength').className = 'alert';
+            $('#passstrength').html('Contraseña Media!');
+            inputClave.style.borderBottom = "2px solid yellow";
+    } else {
+            $('#passstrength').className = 'error';
+            $('#passstrength').html('Contraseña Débil!');
+            inputClave.style.borderBottom = "2px solid orange";
+    }
+    return true;
+});
 
 const array = ["---Seleccione una opcion---"];
 const array2 = [0];
@@ -126,6 +149,7 @@ async function agregarUser() {
 }
 
 function validar() {
+    alerta.textContent = 'Todos los campos son necesarios!';
     if (inputNombre.value == "" || inputApellido.value == "" || inputEmail.value == "" || inputClave.value == "" || inputFecha.value == "" || inputEquipo.value == 0 || inputRol.value == "") {
         alerta.style.display = 'block';
 
@@ -135,8 +159,15 @@ function validar() {
 
         return;
     } else {
-
-        agregarUser();
+        if(passwordText.textContent != "Contraseña Segura!"){
+            alerta.textContent = 'Necesita contraseña segura';
+            alerta.style.display = 'block';
+            setTimeout(() => {
+                alerta.style.display = 'none';
+            }, 3000);
+        }else{
+            agregarUser();
+        }
     }
 
 }
