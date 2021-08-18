@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 /*
@@ -19,6 +21,8 @@ namespace PSP_.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly IJwtAuthenticationManager jwtAuthenticationManager;
+        static string desKey = "m/ti5TXBWPOigPCSqBy0Kg==";
+        protected static SymmetricAlgorithm DES = null;
 
         public UsuariosController(IJwtAuthenticationManager jwtAuthenticationManager)
         {
@@ -33,17 +37,42 @@ namespace PSP_.Controllers
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                var user = db.Usuarios.Where(x => x.Email == credentials.Email && x.Clave == credentials.Clave).FirstOrDefault();
+                var usuario = db.Usuarios.Where(x => x.Email == credentials.Email).FirstOrDefault();
 
-                if (user == null)
+                if (DecryptPassword(usuario.Clave) == credentials.Clave)
+                {
+                    var token = jwtAuthenticationManager.Authenticate(usuario);
+                    return Ok(token);
+                }
+                else
                 {
                     var tokenEmpty = "";
                     return Ok(tokenEmpty);
                 }
-
-                var token = jwtAuthenticationManager.Authenticate(user);
-                return Ok(token);
             }
+        }
+
+        public static string DecryptPassword(string Password)
+        {
+            DES = new TripleDESCryptoServiceProvider();
+            DES.Key = ParseKey(desKey);
+            DES.IV = GetIV();
+            byte[] encryptedBytes = Convert.FromBase64String(Password);
+            byte[] decryptedBytes = DES.CreateDecryptor().TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+            return Encoding.UTF8.GetString(decryptedBytes);
+        }
+
+        private static byte[] ParseKey(string data)
+        {
+            byte[] key = Convert.FromBase64String(data);
+            return key;
+        }
+
+        private static byte[] GetIV()
+        {
+
+            byte[] iv = new byte[DES.BlockSize / 8];
+            return iv;
         }
     }
 }
