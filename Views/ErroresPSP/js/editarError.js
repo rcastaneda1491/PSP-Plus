@@ -179,7 +179,6 @@ async function editarErrorPSP(){
         .then(resultado => {
         })
 
-    alert('Actualizado Exitosamente');
     window.location.href = (`../ActividadesPSP/MenuActividades.html`);
 
 }
