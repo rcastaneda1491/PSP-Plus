@@ -84,7 +84,7 @@ namespace PSP_.Models
                                 }
                                
                                 
-                                temp.tiempo = reader.GetDouble(3)+ Convert.ToDouble(reader.GetDecimal(7));
+                                temp.tiempo = reader.GetDouble(3)+ (Convert.ToDouble(reader.GetDecimal(7))/60);
                                 temp.tareas = reader.GetInt32(4);
                                  
                               
