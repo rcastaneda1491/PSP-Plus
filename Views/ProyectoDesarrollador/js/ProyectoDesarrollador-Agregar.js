@@ -50,7 +50,7 @@ async function agregarProyecto() {
 }
 
 //async function agregarProyecto2() {
-// const url = `https://localhost:44368/api/AgregarDesarrolladorProyecto?idusuario=${1.value}&idproyecto=${inputidProyecto.value}`;
+// const url = `https://localhost:44368{/api/AgregarDesarrolladorProyecto?idusuario=${1.value}&idproyecto=${inputidProyecto.value}`;
 
 // await fetch(url, {
 //  method: 'POST',

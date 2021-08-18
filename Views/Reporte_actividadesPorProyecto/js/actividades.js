@@ -79,7 +79,7 @@ const id=jwt.sub;
 
 //         eliminar = 0;
 //     }
-//     const url = `https://localhost:44368/api/ReporteActividadesporProyecto?/Actividades`;
+//     const url = `https://localhost:44368//api/ReporteActividadesporProyecto?/Actividades`;
 
 //     await fetch(url, {
 //         headers: new Headers({
