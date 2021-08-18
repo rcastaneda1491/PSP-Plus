@@ -71,7 +71,6 @@
         usuariosProyectoService.deleteUsuariosProyecto(user).then( () => {
           Swal.fire('Desarrollador Eliminado!')
           mostrarUsuarios();
-          alertaEliminado();
         });
       }
     })

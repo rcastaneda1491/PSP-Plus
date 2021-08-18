@@ -316,7 +316,7 @@ function restarHoras(horaInicio, horaFinal) {
 }
 
 async function eliminarActividad(idActividad) {
-    const confirmar = confirm('¿ Desea eliminar la actividad ?');
+    /*const confirmar = confirm('¿ Desea eliminar la actividad ?');
 
     if (confirmar) {
 
@@ -338,12 +338,42 @@ async function eliminarActividad(idActividad) {
         return;
     }
 
+    location.reload();*/
+
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar actividad',
+            text: "¿Estas seguro que deseas esta actividad?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const direccion = `${url}/api/ActividadesPSP?idTiempoPSP=${idActividad}`;
+
+        await fetch(direccion, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+        Swal.fire('Actividad Eliminada!')
+        
+    } catch (error) {
+        Swal.fire("Problemas a elminiar actividad");
+    }
     location.reload();
+
 }
 
 async function eliminarError(idErrorPSP){
 
-    const confirmar = confirm('¿ Desea eliminar el error registrado ?');
+    /*const confirmar = confirm('¿ Desea eliminar el error registrado ?');
 
     if(confirmar){
         const direccion = `${url}/api/Errores?idErrorPSP=${idErrorPSP}`;
@@ -363,6 +393,36 @@ async function eliminarError(idErrorPSP){
         return;
     }
 
+    location.reload();*/
+
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar Error',
+            text: "¿Estas seguro que deseas este error?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const direccion = `${url}/api/Errores?idErrorPSP=${idErrorPSP}`;
+
+        await fetch(direccion, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+        Swal.fire('Error Eliminado!')
+        cargarActividades();
+        
+    } catch (error) {
+        Swal.fire("Problemas a elminiar error.");
+    }
     location.reload();
 }
 

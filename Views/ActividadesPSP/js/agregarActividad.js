@@ -114,8 +114,6 @@ async function agregarActividad() {
         .then(respuesta => respuesta)
         .then(resultado => {
         })
-
-    alert('Agregado Exitosamente');
     window.location.href = (`./MenuActividades.html`);
 }
 

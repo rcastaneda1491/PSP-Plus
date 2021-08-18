@@ -60,7 +60,7 @@ function validacion() {
 
 
 async function GetDatos() {
-    if (eliminar == 1) {
+    /*if (eliminar == 1) {
 
         exitoso3.textContent = "Usuario Eliminado Correctamente"
         exitoso3.style.display = 'block';
@@ -69,7 +69,7 @@ async function GetDatos() {
         }, 3000);
 
         eliminar = 0;
-    }
+    }*/
     const url = `https://localhost:44368/api/EquipoDesarrolloNombre`;
 
     await fetch(url, {
@@ -173,7 +173,6 @@ async function eliminarUsuario(e) {
             })
         })
         Swal.fire('Desarrollador Eliminado!')
-        eliminar = 1;
         GetDatos();
     } catch (error) {
         Swal.fire("Problemas a elminiar desarrollador");
