@@ -14,8 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const stringJWT = Cookies.get('jwt');
   let jwt;
 
+
   if (stringJWT) {
     jwt = parseJwt(stringJWT);
+    
 
     if (jwt.rol == "administrador") {
       document.querySelector("#header").innerHTML = `
@@ -52,11 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../MenuReportes/Reporteria.html">Reportes</a>
           </li>          
         </ul>
-       
+     
+      </div>
+      <div >
+      <a class="nav-link" style="text-decoration: none;" href="../Perfil/Perfil.html">${jwt.nombre} ${jwt.apellidos}</a>
       </div>
       <div >
       <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></a>
-       
+      </li>
       </div>
       
     </nav>
@@ -100,7 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
        
       </div>
       <div >
-
+      <a class="nav-link" style="text-decoration: none;" href="../Perfil/Perfil.html">${jwt.nombre} ${jwt.apellidos}</a>
+      </div>
+      <div >
+      
       <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></a>
       
       </div>
