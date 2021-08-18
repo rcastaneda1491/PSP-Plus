@@ -513,7 +513,9 @@ where p.nombre=@nombreProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
 go
 
-select * from Usuario
-select * from ErroresPSP;
+select * from Usuario;
+select * from TiemposPSP;
+select * from UsuarioProyecto;
 select * from EquipoDesarrollo
 select * from Recordatorios;
+select * from ErroresPSP;
