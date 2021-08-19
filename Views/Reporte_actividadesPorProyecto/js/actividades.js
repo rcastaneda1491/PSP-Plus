@@ -44,7 +44,11 @@ document.querySelector("#export-excel").addEventListener("click",() => {
     tableToExcel('Reporte', 'W3C Example Table')
 }
 )
-  llenarSelect();
+
+
+    llenarSelect();
+
+  
    // GetDatos();
 
 }
@@ -75,7 +79,7 @@ const id=jwt.sub;
 
 //         eliminar = 0;
 //     }
-//     const url = `https://localhost:44368/api/ReporteActividadesporProyecto?/Actividades`;
+//     const url = `https://localhost:44368//api/ReporteActividadesporProyecto?/Actividades`;
 
 //     await fetch(url, {
 //         headers: new Headers({
@@ -127,7 +131,14 @@ function mostrarDatos(datos) {
 
 
 async function llenarSelect(){
-    url= `https://localhost:44368/api/ReporteActividadesporProyecto?id=${id}`;
+    if(jwt.rol == "desarrollador"){
+        console.log(jwt.rol);
+        url= `https://localhost:44368/api/ReporteActividadesporProyecto?id=${id}`;
+    }else if(jwt.rol == "administrador"){
+        console.log(jwt.rol);
+        url = `https://localhost:44368/api/ReporteActividadesporProyecto?`;
+    }
+    
     await fetch(url, {
         headers: new Headers({
             'Authorization': 'Bearer ' + stringJWT

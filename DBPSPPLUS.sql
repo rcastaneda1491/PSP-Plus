@@ -18,6 +18,8 @@ CREATE TABLE Proyectos(
 	totalHorasTrabajadas decimal(8,2) DEFAULT(0.0), -- Manejarlo en Horas | Se completara con Trigger
 );
 GO
+insert into  Proyectos(nombre, descripcion,cliente,fechaInicioEsperada,fechaFinalEsperada,dev) values('Beca','psp','fass','2021/06/07','2021/07/07','1')
+insert into  Proyectos(nombre, descripcion,cliente,fechaInicioEsperada,fechaFinalEsperada,dev) values('Beca2','psp','fass','2021/06/07','2021/07/07','1')
 CREATE TABLE EquipoDesarrollo(
 	idEquipoDesarrollo	int  IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	nombre				varchar(100) NOT NULL,
@@ -513,6 +515,9 @@ where p.nombre=@nombreProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
 go
 
-select * from ErroresPSP;
+select * from Usuario;
+select * from TiemposPSP;
+select * from UsuarioProyecto;
 select * from EquipoDesarrollo
 select * from Recordatorios;
+select * from ErroresPSP;
