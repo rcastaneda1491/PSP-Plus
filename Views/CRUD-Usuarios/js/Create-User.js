@@ -9,6 +9,7 @@ const inputEquipo = document.querySelector('#equipo');
 const inputRol = document.querySelector('#rol');
 
 const alerta = document.querySelector('#alert');
+const alerta2 = document.querySelector('#alert2');
 
 
 const array = ["---Seleccione una opcion---"];
@@ -102,7 +103,11 @@ async function agregarUser() {
 
 
     if (cantidadCorreos == true) {
-        alert('Correo ya existente, por favor intentelo nuevamente');
+        alerta2.style.display = 'block';
+
+        setTimeout(() => {
+            alerta2.style.display = 'none';
+        }, 3000);
 
         inputEmail.value = '';
         cantidadCorreos = false;
