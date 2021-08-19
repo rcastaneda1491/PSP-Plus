@@ -41,7 +41,7 @@ namespace PSP_.Models
                 var dt = new List<Datos>();
 
 
-                    using (SqlConnection sql = new SqlConnection("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345"))
+                    using (SqlConnection sql = new SqlConnection("Server=DESKTOP-FGBRIH1;DATABASE=DBPSPPLUS;user=capacitacion;password=12345"))
                     {
                         using (SqlCommand cmd = new SqlCommand("Analisis", sql))
                         {
@@ -84,7 +84,7 @@ namespace PSP_.Models
                                 }
                                
                                 
-                                temp.tiempo = reader.GetDouble(3)+ Convert.ToDouble(reader.GetDecimal(7));
+                                temp.tiempo = reader.GetDouble(3)+ (Convert.ToDouble(reader.GetDecimal(7))/60);
                                 temp.tareas = reader.GetInt32(4);
                                  
                               
