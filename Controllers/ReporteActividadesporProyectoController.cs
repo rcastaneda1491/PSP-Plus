@@ -52,7 +52,7 @@ namespace PSP_.Controllers
 
                 var dt = new List<Datos>();
 
-                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-0C3G53Q;DATABASE=DBPSPPLUS;user=capacitacion;password=123456"))
+                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345"))
 
                 {
                     using (SqlCommand cmd = new SqlCommand("reporteActividades_por_proyecto", sql))
