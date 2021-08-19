@@ -39,9 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../MenuPrincipa-Admin/index.html">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../Perfil/Perfil.html">Perfil</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="../CRUD-Usuarios/List-User.html">Usuarios</a>
           </li>
           <li class="nav-item">
@@ -57,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
      
       </div>
       <div >
-      <a class="nav-link" style="text-decoration: none;" href="../Perfil/Perfil.html">${jwt.nombre} ${jwt.apellidos}</a>
+      <a class="nav-link nombre-nav" style="text-decoration: none;" href="../Perfil/Perfil.html">${jwt.nombre} ${jwt.apellidos}</a>
       </div>
       <div >
       <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></a>
@@ -70,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else if ((jwt.rol = "desarrollador")) {
       document.querySelector("#header").innerHTML = `
       <nav class="navbar navbar-expand-sm   ">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones" style="margin-left: 10px">
        <img src="../Navbar/menu.png"class="navh">
       </button>
       
@@ -85,9 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
           
           <li class="nav-item">
             <a class="nav-link" href="../MenuPrincipal/Menu.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../Perfil/Perfil.html">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../ActividadesPSP/MenuActividades.html">Actividades</a>
@@ -105,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
        
       </div>
       <div >
-      <a class="nav-link" style="text-decoration: none;" href="../Perfil/Perfil.html">${jwt.nombre} ${jwt.apellidos}</a>
+      <a class="nav-link nombre-nav" style="text-decoration: none;" href="../Perfil/Perfil.html">${jwt.nombre} ${jwt.apellidos}</a>
       </div>
       <div >
       
