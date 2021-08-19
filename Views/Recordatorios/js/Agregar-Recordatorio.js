@@ -151,9 +151,7 @@ async function validar() {
                         'Authorization': 'Bearer ' + stringJWT
                     })
                 })
-                    .then(respuesta => respuesta)
-
-                    sendEmail();
+                .then(sendEmail())
 
             }
             break;
@@ -176,9 +174,7 @@ async function validar() {
                         'Authorization': 'Bearer ' + stringJWT
                     })
                 })
-                    .then(respuesta => respuesta)
-
-                    sendEmail();
+                .then(sendEmail())
 
             }
             break;
@@ -201,9 +197,7 @@ async function validar() {
                         'Authorization': 'Bearer ' + stringJWT
                     })
                 })
-                    .then(respuesta => respuesta)
-
-                    sendEmail();
+                .then(sendEmail())
 
             }
             break;
@@ -226,10 +220,8 @@ async function validar() {
                             'Authorization': 'Bearer ' + stringJWT
                         })
                     })
-                        .then(respuesta => respuesta)
-
-                        sendEmail();
-
+                        .then(sendEmail())
+                    
                 }
                 break;
     }
@@ -245,24 +237,15 @@ async function validar() {
 
 async function sendEmail() {
 
-var mensaje = `<div class="card">
  
-  <div>
-    <h2>Recordatorio</h2>
-    <p>${inputDescripcion.value}</p>
-    
-  </div>
-</div>`;
-var correo = jwt.email;
+    const url = `https://localhost:44368/api/SendEmail?to=${jwt.email}&descripcion=${inputDescripcion.value}`
 
-    await Email.send({
-      Host: "smtp.gmail.com",
-      Username: "pspplusti@gmail.com",
-      Password: "PruebaProyecto1914",
-      To: `${correo}`,
-      From: "pspplusti@gmail.com",
-      Subject: "Recordatorio PSP+",
-      Body: `${mensaje}`,
+    await fetch(url, {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
     })
+        .then(respuesta => respuesta)
 
-  }
+}
