@@ -86,7 +86,7 @@ function validar() {
         setTimeout(() => {
             exitoso.style.display = 'none';
             window.location.href = (`./ProyectoDesarrolladorindex.html`);
-        }, 200);
+        }, 400);
 
 
     }
