@@ -7,7 +7,6 @@ const nombresInput = document.querySelector('#nombres');
 const apellidosInput = document.querySelector('#apellidos');
 const correoInput = document.querySelector('#correo');
 const fechaInput = document.querySelector('#fecha');
-const contraInput = document.querySelector('#clave');
 const equipoInput = document.querySelector('#equipo');
 
 function parseJwt(token) {
@@ -56,6 +55,8 @@ function GetDatos() {
         })
 }
 
+var contra;
+
 function mostrarDatos(datos) {
 
         for (i = 0; ele = formulario.elements[i]; i++) {
@@ -67,7 +68,7 @@ function mostrarDatos(datos) {
         nombresInput.value = datos.nombres;
         apellidosInput.value = datos.apellidos;
         correoInput.value = datos.email;
-        contraInput.value = datos.clave;
+        contra = datos.clave;
         fechaInput.value = fecha;
         equipoInput.value = datos.idEquipoDesarrollo;
 
@@ -77,7 +78,7 @@ function mostrarDatos(datos) {
 
 function actualizar() {
 
-    if (nombresInput.value === '' || apellidosInput.value === '' || correoInput.value === '' || contraInput.value === '' ||
+    if (nombresInput.value === '' || apellidosInput.value === '' || correoInput.value === '' ||
     fechaInput.value === '' || equipoInput.value === '') {
 
         $(document).ready(function () {
@@ -97,7 +98,7 @@ function actualizar() {
         if (confirmar) {
            
             console.log("Actualizando..")
-            const urlActualizarUsuario = `https://localhost:44368/api/Perfil?idUsuario=${jwt.sub}&nombre=${nombresInput.value}&apellido=${apellidosInput.value}&email=${correoInput.value}&clave=${contraInput.value}&fechaNacimiento=${fechaInput.value}&idEquipo=${equipoInput.value}`;
+            const urlActualizarUsuario = `https://localhost:44368/api/Perfil?idUsuario=${jwt.sub}&nombre=${nombresInput.value}&apellido=${apellidosInput.value}&email=${correoInput.value}&clave=${contra}&fechaNacimiento=${fechaInput.value}&idEquipo=${equipoInput.value}`;
 
             fetch(urlActualizarUsuario, {
                 method: 'PUT',

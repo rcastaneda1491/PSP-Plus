@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using SpreadsheetLight;
@@ -41,8 +41,9 @@ namespace PSP_.Models
                 var dt = new List<Datos>();
 
 
-
-                    using (SqlConnection sql = new SqlConnection("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345"))
+                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345"))
+                {
+                    using (SqlCommand cmd = new SqlCommand("Analisis", sql))
                     {
 
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -81,10 +82,9 @@ namespace PSP_.Models
                                 {
                                     temp.fin = reader.GetDateTime(2);
                                 }
-                               
-                                
-                                temp.tiempo = reader.GetDouble(3)+ (Convert.ToDouble(reader.GetDecimal(7))/60);
 
+
+                                temp.tiempo = reader.GetDouble(3) + (Convert.ToDouble(reader.GetDecimal(7)) / 60);
                                 temp.tareas = reader.GetInt32(4);
 
 
