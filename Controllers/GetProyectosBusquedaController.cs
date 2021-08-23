@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace PSP_.Controllers
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                if (idUsuarios != null)
+                if(idUsuarios != null)
                 {
 
                     var proyectos = db.UsuarioProyectos.Join(
@@ -39,7 +40,7 @@ namespace PSP_.Controllers
                             TotalHorasTrabajadas = e.TotalHorasTrabajadas
                         }
 
-                    ).Where(e => e.Nombre.Contains(nombreProyecto) && e.idUsuario == idUsuarios).ToList();
+                    ).Where(e => e.Nombre.Contains(nombreProyecto)&& e.idUsuario == idUsuarios).ToList();
 
                     //var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto where d.IdUsuario == idUsuario  select p.Nombre).Contains(nombreProyecto);
 
@@ -49,7 +50,7 @@ namespace PSP_.Controllers
                 else
                 {
 
-                    var proyectos = (from d in db.Proyectos.Where(p => p.Nombre.Contains(nombreProyecto)) select d).ToList();
+                    var proyectos = (from d in db.Proyectos.Where(p => p.Nombre.Contains(nombreProyecto))select d).ToList();
 
 
                     return Ok(proyectos);
@@ -61,3 +62,4 @@ namespace PSP_.Controllers
 
     }
 }
+

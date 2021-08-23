@@ -1,3 +1,4 @@
+
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,17 +21,17 @@ namespace PSP_.Controllers
             {
                 var query = db.TiemposPsps.Select(actividad => new
                 {
-                    IdActividad = actividad.IdTiempoPsp,
-                    IdUsuario = actividad.IdUsuario,
-                    IdProyecto = actividad.IdProyecto,
-                    NombreUsuario = actividad.IdUsuarioNavigation.Nombres,
-                    ApellidoUsuario = actividad.IdUsuarioNavigation.Apellidos,
-                    NombreProyecto = actividad.IdProyectoNavigation.Nombre,
-                    DescripcionProyecto = actividad.IdProyectoNavigation.Descripcion,
-                    DescripcionActividad = actividad.Descripcion,
-                    FechaInicio = actividad.FechaHoraInicio,
-                    FechaFinal = actividad.FechaHoraFinal
-                }).Where(actividad => actividad.FechaInicio >= fechaInicio && actividad.FechaFinal <= fechaFinal && actividad.IdUsuario == id).ToList();
+                   IdActividad = actividad.IdTiempoPsp, 
+                   IdUsuario = actividad.IdUsuario, 
+                   IdProyecto = actividad.IdProyecto, 
+                   NombreUsuario = actividad.IdUsuarioNavigation.Nombres, 
+                   ApellidoUsuario = actividad.IdUsuarioNavigation.Apellidos, 
+                   NombreProyecto = actividad.IdProyectoNavigation.Nombre,
+                   DescripcionProyecto = actividad.IdProyectoNavigation.Descripcion,
+                   DescripcionActividad = actividad.Descripcion,
+                   FechaInicio = actividad.FechaHoraInicio, 
+                   FechaFinal = actividad.FechaHoraFinal
+                }).Where(actividad => actividad.FechaInicio  >= fechaInicio && actividad.FechaFinal <= fechaFinal && actividad.IdUsuario == id ).ToList();
 
                 return Ok(query);
 
@@ -38,3 +39,4 @@ namespace PSP_.Controllers
         }
     }
 }
+

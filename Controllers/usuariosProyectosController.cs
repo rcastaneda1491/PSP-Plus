@@ -1,3 +1,4 @@
+
 ﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,7 @@ namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
 
     //lourdes
     public class usuariosProyectosController : ControllerBase
@@ -78,9 +79,9 @@ namespace PSP_.Controllers
                 var query = db.Proyectos.Select(proyecto => new
                 {
                     idProyecto = proyecto.IdProyecto,
-                    nombre = proyecto.Nombre,
+                    nombre = proyecto.Nombre, 
                     descripcion = proyecto.Descripcion
-
+                    
 
                 }).Where(proyecto => proyecto.idProyecto == id).ToList();
 
@@ -89,6 +90,6 @@ namespace PSP_.Controllers
             }
         }
 
-    }
+     }
 }
 

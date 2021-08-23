@@ -25,8 +25,6 @@ function CerrarSesion() {
 const idUsuario = jwt.sub;
 // ---------------------------------- FIN Funciones cookies ----------------------------------
 
-let url = 'https://localhost:44368';
-
 // SELECTORES
 const formulario = document.querySelector('#formulario');
 const actividadesForm = document.querySelector('#actividades');
@@ -87,9 +85,9 @@ async function cargarActividadesFiltrado() {
     let direccion;
 
     if (proyectosSelect.value == 'SinProyecto') {
-        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&actividadesSinProyecto=1&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
+        direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&actividadesSinProyecto=1&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
     } else {
-        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&idProyecto=${proyectosSelect.value}&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
+        direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&idProyecto=${proyectosSelect.value}&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
     }
 
     await fetch(direccion, {
@@ -114,7 +112,7 @@ async function obtenerProyectos() {
 
     mostrarSpinner();
 
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -149,9 +147,9 @@ async function cargarActividades() {
     let direccion;
 
     if(fechaFinalFiltrado.value == ''){
-        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}`;
+        direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}`;
     }else{
-        direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
+        direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&fechaInicioFiltrado=${fechaInicioFiltrado.value}&fechaFinalFiltrado=${fechaFinalFiltrado.value} 23:59:59`;
     }
     
     tituloProyecto.textContent = 'Tiempos PSP';
@@ -178,7 +176,7 @@ function imprimirActividades(actividades) {
 
     actividadesJuntas = actividadesJuntas.concat(actividades.errores);
 
-    actividadesJuntas = actividadesJuntas.sort((a, b) => new Date(a.fechaHoraInicio).getTime() - new Date(b.fechaHoraInicio).getTime());
+    actividadesJuntas = actividadesJuntas.sort((a, b) => new Date(b.fechaHoraInicio).getTime() - new Date(a.fechaHoraInicio).getTime());
     
     eliminarSpinner();
 
@@ -234,7 +232,7 @@ function imprimirActividades(actividades) {
             }
             
             if(fechaFinalFiltrado.value == '' || fechaFinalFiltrado.value < fechaFinalSplit[0]){
-                fechaFinalFiltrado.value = fechaFinalSplit[0];;
+                fechaFinalFiltrado.value = fechaFinalSplit[0];
             }
         }else{
             const { idTiempoPsp, fechaHoraInicio, fechaHoraFinal, descripcion, idProyecto, idUsuario } = actividad;
@@ -316,10 +314,43 @@ function restarHoras(horaInicio, horaFinal) {
 }
 
 async function eliminarActividad(idActividad) {
-    const confirmar = confirm('¿ Desea eliminar la actividad ?');
+    /*const confirmar = confirm('¿ Desea eliminar la actividad ?');
 
     if (confirmar) {
 
+        const direccion = `${URL_Global}/ActividadesPSP?idTiempoPSP=${idActividad}`;
+
+        await fetch(direccion, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+            .then(resultado => {
+            })
+
+        alert('Elimando Exitosamente');
+
+    }else{
+        return;
+    }
+
+    location.reload();*/
+
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar actividad',
+            text: "¿Estas seguro que deseas esta actividad?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
         const direccion = `${url}/api/ActividadesPSP?idTiempoPSP=${idActividad}`;
 
         await fetch(direccion, {
@@ -329,24 +360,21 @@ async function eliminarActividad(idActividad) {
             })
         })
             .then(respuesta => respuesta)
-            .then(resultado => {
-            })
-
-        alert('Elimando Exitosamente');
-
-    }else{
-        return;
+        Swal.fire('Actividad Eliminada!')
+        
+    } catch (error) {
+        Swal.fire("Problemas a elminiar actividad");
     }
-
     location.reload();
+
 }
 
 async function eliminarError(idErrorPSP){
 
-    const confirmar = confirm('¿ Desea eliminar el error registrado ?');
+    /*const confirmar = confirm('¿ Desea eliminar el error registrado ?');
 
     if(confirmar){
-        const direccion = `${url}/api/Errores?idErrorPSP=${idErrorPSP}`;
+        const direccion = `${URL_Global}/Errores?idErrorPSP=${idErrorPSP}`;
 
         await fetch(direccion, {
             method: 'DELETE',
@@ -363,16 +391,46 @@ async function eliminarError(idErrorPSP){
         return;
     }
 
+    location.reload();*/
+
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar Error',
+            text: "¿Estas seguro que deseas este error?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const direccion = `${url}/api/Errores?idErrorPSP=${idErrorPSP}`;
+
+        await fetch(direccion, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+        Swal.fire('Error Eliminado!')
+        cargarActividades();
+        
+    } catch (error) {
+        Swal.fire("Problemas a elminiar error.");
+    }
     location.reload();
 }
 
 
 function crearActividad() {
-    window.location.href = ('./AgregarActividad.html');
+    window.location.href = ('../MenuAgregarActividadesPSP/menuAgregarActividadPSP.html?actividad=1');
 }
 
 function crearError(){
-    window.location.href = ('../ErroresPSP/AgregarError.html');
+    window.location.href = ('../MenuAgregarActividadesPSP/menuAgregarActividadPSP.html?error=1');
 }
 
 function mostrarSpinner() {

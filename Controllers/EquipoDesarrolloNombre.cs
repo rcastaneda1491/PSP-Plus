@@ -1,3 +1,4 @@
+
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +46,7 @@ namespace PSP_.Controllers
                         equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre, Rol = item.Rol });
                     }
                 }
-                else if (idUsuario != 0 && correo == null)
+                else if(idUsuario != 0 && correo == null)
                 {
                     var usuario = (from d in db.Usuarios
                                    select d).Where(d => d.IdUsuario == idUsuario).ToList();
@@ -56,8 +57,7 @@ namespace PSP_.Controllers
                         equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre, Rol = item.Rol });
                     }
 
-                }
-                else if (idUsuario == 0 && correo != null)
+                }else if(idUsuario == 0 && correo != null)
                 {
                     var usuario = (from d in db.Usuarios
                                    select d).Where(d => d.Email.Contains(correo)).ToList();
@@ -68,9 +68,10 @@ namespace PSP_.Controllers
                         equipolist.Add(new DatosdeUsuario { IdUsuario = item.IdUsuario, Nombres = item.Nombres, Apellidos = item.Apellidos, Email = item.Email, Clave = item.Clave, FechaNacimiento = item.FechaNacimiento, IdEquipoDesarrollo = item.IdEquipoDesarrollo, NombreEquipo = equipo.Nombre, Rol = item.Rol });
                     }
                 }
-
+                
                 return equipolist;
             }
         }
     }
 }
+

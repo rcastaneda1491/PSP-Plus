@@ -7,16 +7,23 @@ const exitoso = document.querySelector('#guardado');
 const exitoso2 = document.querySelector('#editado');
 const exitoso3 = document.querySelector('#eliminado');
 const alerta = document.querySelector('#alert');
+const alertarelacion = document.querySelector('#relacion');
 const inpuntsearch = document.querySelector('#search');
+
+
+
 
 const urlParams = new URLSearchParams(window.location.search);
 const val = urlParams.get('validar');
 let eliminar = 0;
 
+let array = [];
+
 
 window.onload = () => {
     validacion();
     GetDatos();
+    validarcascada();
 
 }
 
@@ -125,8 +132,24 @@ async function eliminarEquipo(e) {
 
     const equipo = e.target.parentElement.parentElement;
     const equipoId = equipo.querySelector('button').getAttribute('data-id');
-    const confirmar = confirm('¿Desea Eliminar Equipo de Trabajo?');
-    if (confirmar) {
+    //const confirmar = confirm('¿Desea Eliminar Equipo de Trabajo?');
+    /*if (confirmar) {
+
+        for(i=0;i<array.length;i++){
+
+            if(array[i] == equipoId){
+       
+
+                alertarelacion.style.display = 'block';
+
+                setTimeout(() => {
+                    alertarelacion.style.display = 'none';
+                }, 3000);
+
+
+            return;
+            }
+        }
         const urlEliminarEquipo = `https://localhost:44368/api/GetEquiposDesarrollo?idEquipo=${equipoId}`;
 
         await fetch(urlEliminarEquipo, {
@@ -142,9 +165,65 @@ async function eliminarEquipo(e) {
 
     } else {
         return;
+    }*/
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar Equipo',
+            text: "¿Estas seguro que deseas eliminar este equipo?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const urlEliminarEquipo = `https://localhost:44368/api/GetEquiposDesarrollo?idEquipo=${equipoId}`;
+
+        await fetch(urlEliminarEquipo, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+        Swal.fire('Equipo Eliminado!')
+        GetDatos();
+        
+    } catch (error) {
+        Swal.fire("Problemas a eliminiar el equipo.");
     }
 
 }
+
+
+
+async function validarcascada(){
+
+    const url = `https://localhost:44368/api/AgregarUsuarios`;
+
+    await fetch(url, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
+        .then(respuesta => respuesta.json())
+        .then(resultado => {
+                validardatos(resultado);
+        })
+
+    }
+
+
+    function validardatos(datos) {
+        datos.forEach(user => {
+
+            array.push(user.idEquipoDesarrollo);
+
+        })}
+
+
 
 
 async function searchProyectos() {

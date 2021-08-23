@@ -1,3 +1,4 @@
+
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace PSP_.Controllers
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
                 var equipos = (from d in db.EquipoDesarrollos.Where(p => p.Nombre.Contains(nombre))
-                               select d).ToList();
+                              select d).ToList();
 
                 return Ok(equipos);
             }

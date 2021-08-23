@@ -1,3 +1,4 @@
+
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +49,7 @@ namespace PSP_.Controllers
         }
 
         [HttpPut]
-        public ActionResult Put(int? idproyecto, string nombre, string descripcion, string cliente, DateTime fechainicioesperada, DateTime fechafinalesperada, string dev, decimal totalhorastrabajadas)
+        public ActionResult Put(int? idproyecto,string nombre, string descripcion, string cliente, DateTime fechainicioesperada, DateTime fechafinalesperada, string dev, decimal totalhorastrabajadas)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {

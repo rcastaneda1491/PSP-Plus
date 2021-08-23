@@ -18,10 +18,32 @@ namespace PSP_.Controllers
     public class ErroresController : ControllerBase
     {
         [HttpGet]
-        public ActionResult Get(int idUsuario, int? idErrorPsp)
+        public ActionResult Get(int idUsuario, int? idErrorPsp, int? idProyecto)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
+
+                if(idProyecto != null)
+                {
+
+                    var maxCorrelativo = (from d in db.ErroresPsps
+                                          select d).Where(d => d.IdProyecto == idProyecto).Count();
+
+                    if(maxCorrelativo == 0)
+                    {
+                        maxCorrelativo = 0;
+                        return Ok(maxCorrelativo);
+                    }
+                    else
+                    {
+                        maxCorrelativo = (from d in db.ErroresPsps
+                                          select d).Where(d => d.IdProyecto == idProyecto).Max(d => d.Correlativo);
+
+                        return Ok(maxCorrelativo);
+                    }
+                    
+                    
+                }
 
                 var errorPSP = (from d in db.ErroresPsps
                                 select d).Where(d => d.IdErrorPsp == idErrorPsp).Where(d => d.IdUsuario == idUsuario).ToList();

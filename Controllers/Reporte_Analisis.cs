@@ -41,11 +41,8 @@ namespace PSP_.Models
                 var dt = new List<Datos>();
 
 
- 
-                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-IFKEU1D\\SQLEXPRESS;DATABASE=DBPSPPLUS;user=sa;password=albin123"))
-                {
-                    using (SqlCommand cmd = new SqlCommand("Analisis", sql))
- 
+
+                    using (SqlConnection sql = new SqlConnection("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345"))
                     {
 
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
@@ -84,9 +81,10 @@ namespace PSP_.Models
                                 {
                                     temp.fin = reader.GetDateTime(2);
                                 }
+                               
+                                
+                                temp.tiempo = reader.GetDouble(3)+ (Convert.ToDouble(reader.GetDecimal(7))/60);
 
-
-                                temp.tiempo = reader.GetDouble(3) + Convert.ToDouble(reader.GetDecimal(7));
                                 temp.tareas = reader.GetInt32(4);
 
 

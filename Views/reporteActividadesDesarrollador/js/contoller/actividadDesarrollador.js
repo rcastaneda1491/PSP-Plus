@@ -42,6 +42,7 @@ function parseJwt(token) {
     }
     console.info(actividades);
 
+    
     actividades.forEach((element) => {
       const { idActividad, idProyecto, idUsuario, nombreUsuario, apellidoUsuario, descripcionActividad, descripcionProyecto, fechaInicio,
         fechaFinal, nombreProyecto } = element;
@@ -64,9 +65,7 @@ function parseJwt(token) {
         proyecto = nombreProyecto;
         desProyecto = descripcionProyecto;
       }
-
       calcularHoras(fechaInicio, fechaFinal);
-
       const row = document.createElement("tr");
 
       row.innerHTML += `
@@ -81,9 +80,11 @@ function parseJwt(token) {
 
       listado.appendChild(row);
     });
+     totalHoras = 0;
   }
 
   let totalHoras = 0;
+
 
   function calcularHoras(horaInicio, horaFinal) {
 

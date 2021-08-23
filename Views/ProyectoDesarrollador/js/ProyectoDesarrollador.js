@@ -1,6 +1,8 @@
 const cardlistelement = document.getElementById("lista-proyectos");
 const alerta = document.querySelector('#alert');
+const alertarelacion = document.querySelector('#relacion');
 const inpuntsearch = document.querySelector('#search');
+let array = [];
 
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
@@ -19,6 +21,7 @@ if (stringJWT) {
 
 window.onload = () => {
     getdatos();
+    validarcascada();
 }
 
 async function getdatos() {
@@ -36,7 +39,7 @@ async function getdatos() {
 }
 
 function mostrardatos(datos) {
-    debugger;
+    
     datos.forEach(proyecto => {
         var fechaSplit1 = proyecto.fechaInicioEsperada.split("T");
         var fechainicioesperada = fechaSplit1[0];
@@ -118,8 +121,23 @@ function modificarProyecto(e) {
 async function eliminarProyecto(e) {
     const proyecto = e.target.parentElement.parentElement;
     const proyectoid = proyecto.querySelector('a').getAttribute('data-id');
-    const confirmar = confirm('¿Desea Eliminar Proyecto?');
+   /* const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
+
+
+        for(i=0;i<array.length;i++){
+
+            if(array[i] == proyectoid){
+                alertarelacion.style.display = 'block';
+
+                setTimeout(() => {
+                    alertarelacion.style.display = 'none';
+                }, 3000);
+            return;
+            
+            }
+        }
+
 
         const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
@@ -132,6 +150,7 @@ async function eliminarProyecto(e) {
             .then(respuesta => respuesta)
 
         window.location.href = (`./ProyectoDesarrolladorindex.html`);
+        
         getdatos();
 
 
@@ -139,9 +158,61 @@ async function eliminarProyecto(e) {
 
         return;
 
+    }*/
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar Proyecto',
+            text: "¿Estas seguro que deseas este proyecto?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
+
+        await fetch(url, {
+                method: 'DELETE',
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + stringJWT
+                })
+            })
+            .then(respuesta => respuesta)
+        Swal.fire('Proyecto Eliminado!')
+        
+    } catch (error) {
+        Swal.fire("Problemas a eliminiar el proyecto.");
+    }
+    window.location.href = (`./ProyectoDesarrolladorindex.html`);
+        getdatos();
+}
+
+async function validarcascada(){
+
+    const url = `https://localhost:44368/api/GetUsuarioProyecto`;
+
+    await fetch(url, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
+        .then(respuesta => respuesta.json())
+        .then(resultado => {
+                validardatos(resultado);
+        })
+
     }
 
-}
+
+    function validardatos(datos) {
+        datos.forEach(proyecto => {
+
+            array.push(proyecto.idProyecto);
+
+        })}
 
 async function searchCursos() {
     document.getElementById('alert').style.display = 'none';

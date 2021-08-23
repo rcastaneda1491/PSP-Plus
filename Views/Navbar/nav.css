@@ -16,3 +16,12 @@
 .navbar-brand{
     margin-left: 20px;
 }
+
+.nombre-nav{
+    font-size: 1em;
+    color: #c4c4c4;
+}
+
+#opciones{
+    margin-left: 20px;
+}
