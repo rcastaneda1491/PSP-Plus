@@ -61,7 +61,7 @@ function validacion() {
 
 
 async function GetDatos() {
-    if (eliminar == 1) {
+    /*if (eliminar == 1) {
 
         exitoso3.textContent = "Usuario Eliminado Correctamente"
         exitoso3.style.display = 'block';
@@ -70,7 +70,7 @@ async function GetDatos() {
         }, 3000);
 
         eliminar = 0;
-    }
+    }*/
     const url = `https://localhost:44368/api/EquipoDesarrolloNombre`;
 
     await fetch(url, {
@@ -130,7 +130,8 @@ function modificarUsuario(e) {
 async function eliminarUsuario(e) {
     const user = e.target.parentElement.parentElement;
     const userid = user.querySelector('button').getAttribute('data-id');
-    const confirmar = confirm('¿Desea Eliminar Usuario?');
+    
+    /*const confirmar = confirm('¿Desea Eliminar Usuario?');
     if (confirmar) {
 
 
@@ -155,8 +156,34 @@ async function eliminarUsuario(e) {
 
         return;
 
-    }
+    }*/
 
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar desarrollador',
+            text: "¿Estas seguro que deseas eliminar el desarrollador de este proyecto?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+        await fetch(urlActualizarUsuario, {
+            method: 'DELETE',
+            headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+        Swal.fire('Desarrollador Eliminado!')
+        GetDatos();
+    } catch (error) {
+        Swal.fire("Problemas a elminiar desarrollador");
+    }
+    
 }
 
 

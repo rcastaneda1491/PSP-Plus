@@ -321,7 +321,7 @@ async function actualizarEstado(e) {
 async function deleteRecordatorio(e) {
     const recordatorio = e.target.parentElement.parentElement;
     const recordatorioid = recordatorio.querySelector('a').getAttribute('data-id');
-    const confirmar = confirm('¿Desea Eliminar Usuario?');
+   /* const confirmar = confirm('¿Desea Eliminar Usuario?');
     if (confirmar) {
 
         const urlActualizarUsuario = `https://localhost:44368/api/Recordatorios?idRecordatorio=${recordatorioid}`;
@@ -341,9 +341,40 @@ async function deleteRecordatorio(e) {
 
         return;
 
-    }
+    }*/
 
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar Recordatorio',
+            text: "¿Estas seguro que deseas eliminar este recordatorio?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const urlActualizarUsuario = `https://localhost:44368/api/Recordatorios?idRecordatorio=${recordatorioid}`;
+
+        await fetch(urlActualizarUsuario, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+        Swal.fire('Recordatorio Eliminado!')
+        GetDatos();
+        
+    } catch (error) {
+        Swal.fire("Problemas a eliminiar el recordatorio.");
+    }
+  
 }
+
+
 
 
 

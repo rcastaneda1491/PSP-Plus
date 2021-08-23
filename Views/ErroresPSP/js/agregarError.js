@@ -146,7 +146,6 @@ async function agregarError() {
         .then(resultado => {
         })
 
-    alert('Agregado Exitosamente');
     window.location.href = (`../ActividadesPSP/MenuActividades.html`);
 }
 

@@ -10,6 +10,7 @@ const inputRol = document.querySelector('#rol');
 const passwordText = document.querySelector('#passstrength');
 
 const alerta = document.querySelector('#alert');
+const alerta2 = document.querySelector('#alert2');
 
 $('#clave').keyup(function(e) {
     var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
@@ -125,7 +126,11 @@ async function agregarUser() {
 
 
     if (cantidadCorreos == true) {
-        alert('Correo ya existente, por favor intentelo nuevamente');
+        alerta2.style.display = 'block';
+
+        setTimeout(() => {
+            alerta2.style.display = 'none';
+        }, 3000);
 
         inputEmail.value = '';
         cantidadCorreos = false;

@@ -121,7 +121,7 @@ function modificarProyecto(e) {
 async function eliminarProyecto(e) {
     const proyecto = e.target.parentElement.parentElement;
     const proyectoid = proyecto.querySelector('a').getAttribute('data-id');
-    const confirmar = confirm('¿Desea Eliminar Proyecto?');
+    /*const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
 
@@ -158,8 +158,35 @@ async function eliminarProyecto(e) {
 
         return;
 
-    }
+    }*/
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar Proyecto',
+            text: "¿Estas seguro que deseas este proyecto?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
 
+        await fetch(url, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+        Swal.fire('Proyecto Eliminado!')
+        
+    } catch (error) {
+        Swal.fire("Problemas a eliminiar el proyecto.");
+    }
+    window.location.href = (`./ProyectoAdminindex.html`);
 }
 
 
@@ -186,9 +213,6 @@ async function validarcascada(){
             array.push(proyecto.idProyecto);
 
         })}
-
-
-
 
 function verDesarrollador(e) {
     const proyecto = e.target.parentElement.parentElement;

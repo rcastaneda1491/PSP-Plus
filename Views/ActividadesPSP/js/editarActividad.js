@@ -155,7 +155,6 @@ async function actualizarActividad() {
         .then(resultado => {
         })
 
-    alert('Editado Exitosamente');
     window.location.href = (`./MenuActividades.html`);
 }
 

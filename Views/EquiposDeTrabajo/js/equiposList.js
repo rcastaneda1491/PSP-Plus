@@ -132,8 +132,8 @@ async function eliminarEquipo(e) {
 
     const equipo = e.target.parentElement.parentElement;
     const equipoId = equipo.querySelector('button').getAttribute('data-id');
-    const confirmar = confirm('¿Desea Eliminar Equipo de Trabajo?');
-    if (confirmar) {
+    //const confirmar = confirm('¿Desea Eliminar Equipo de Trabajo?');
+    /*if (confirmar) {
 
         for(i=0;i<array.length;i++){
 
@@ -150,7 +150,6 @@ async function eliminarEquipo(e) {
             return;
             }
         }
-
         const urlEliminarEquipo = `https://localhost:44368/api/GetEquiposDesarrollo?idEquipo=${equipoId}`;
 
         await fetch(urlEliminarEquipo, {
@@ -166,6 +165,34 @@ async function eliminarEquipo(e) {
 
     } else {
         return;
+    }*/
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar Equipo',
+            text: "¿Estas seguro que deseas eliminar este equipo?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const urlEliminarEquipo = `https://localhost:44368/api/GetEquiposDesarrollo?idEquipo=${equipoId}`;
+
+        await fetch(urlEliminarEquipo, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+        Swal.fire('Equipo Eliminado!')
+        GetDatos();
+        
+    } catch (error) {
+        Swal.fire("Problemas a eliminiar el equipo.");
     }
 
 }
