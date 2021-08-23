@@ -136,7 +136,7 @@ async function llenarSelect(){
         url= `https://localhost:44368/api/ReporteActividadesporProyecto?id=${id}`;
     }else if(jwt.rol == "administrador"){
         console.log(jwt.rol);
-        url = `https://localhost:44368/api/ReporteActividadesporProyecto?`;
+        url = `https://localhost:44368/api/ActividadesporProyectoAdmin?id=${id}`;
     }
     
     await fetch(url, {
@@ -175,7 +175,16 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-actividades").innerHTML = "";
-        const url = `https://localhost:44368/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}`;
+        if(jwt.rol == "desarrollador"){
+            console.log(jwt.rol);
+            url = `https://localhost:44368/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}`;
+        }else if(jwt.rol == "administrador"){
+            console.log(jwt.rol);
+            url = `https://localhost:44368/api/ActividadesporProyectoAdmin?proyecto=${inpuntsearch.value}`;
+        }
+
+
+        
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT
