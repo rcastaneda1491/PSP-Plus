@@ -33,9 +33,6 @@ function getParameterByName(name) {
 }
 // ------------------- FIN FUNCION Para obtener datos De la URL ----------------------------------
 
-let url = 'https://localhost:44368';
-
-
 let idTiempoPSP = getParameterByName('actividad');
 
 const formulario = document.querySelector('#formulario');
@@ -53,7 +50,7 @@ async function obtenerProyectos() {
 
     mostrarSpinner();
 
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -80,7 +77,7 @@ function selectProyecto(proyectos) {
 }
 
 async function obtenerDatosActividad() {
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&idTiempoPSP=${idTiempoPSP}`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&idTiempoPSP=${idTiempoPSP}`;
 
     await fetch(direccion, {
         headers: new Headers({

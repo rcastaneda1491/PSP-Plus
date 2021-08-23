@@ -1,7 +1,9 @@
 const cardlistelement = document.getElementById("lista-proyectos");
 const alerta = document.querySelector('#alert');
+const alertarelacion = document.querySelector('#relacion');
 const inpuntsearch = document.querySelector('#search');
-
+let array = [];
+var validation = 0;
 
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
@@ -20,6 +22,7 @@ if (stringJWT) {
 
 window.onload = () => {
     getdatos();
+    validarcascada();
 }
 
 async function getdatos() {
@@ -111,16 +114,64 @@ function mostrardatos(datos) {
 function modificarProyecto(e) {
     const proyecto = e.target.parentElement.parentElement;
     const proyectoid = proyecto.querySelector('a').getAttribute('data-id');
-
+    idtemp = proyectoid;
     window.location.href = (`./ProyectoAdmin-Editar.html?proyectoId=${proyectoid}`);
 }
 
 async function eliminarProyecto(e) {
     const proyecto = e.target.parentElement.parentElement;
     const proyectoid = proyecto.querySelector('a').getAttribute('data-id');
-    const confirmar = confirm('¿Desea Eliminar Proyecto?');
+    /*const confirmar = confirm('¿Desea Eliminar Proyecto?');
     if (confirmar) {
 
+
+    for(i=0;i<array.length;i++){
+        const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+
+            if(array[i] == proyectoid){
+       
+
+                alertarelacion.style.display = 'block';
+
+                setTimeout(() => {
+                    alertarelacion.style.display = 'none';
+                }, 3000);
+
+
+            return;
+            }
+        }
+
+        const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+
+                await fetch(url, {
+                    method: 'DELETE',
+                    headers: new Headers({
+                        'Authorization': 'Bearer ' + stringJWT
+                    })
+                })
+                    .then(respuesta => respuesta)
+
+                window.location.href = (`./ProyectoAdminindex.html`);
+    }
+    else {
+
+        return;
+
+    }*/
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar Proyecto',
+            text: "¿Estas seguro que deseas este proyecto?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
         const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
 
         await fetch(url, {
@@ -130,17 +181,38 @@ async function eliminarProyecto(e) {
             })
         })
             .then(respuesta => respuesta)
+        Swal.fire('Proyecto Eliminado!')
+        
+    } catch (error) {
+        Swal.fire("Problemas a eliminiar el proyecto.");
+    }
+    window.location.href = (`./ProyectoAdminindex.html`);
+}
 
-        window.location.href = (`./ProyectoAdminindex.html`);
 
+async function validarcascada(){
 
-    } else {
+    const url = `https://localhost:44368/api/GetUsuarioProyecto`;
 
-        return;
+    await fetch(url, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
+        .then(respuesta => respuesta.json())
+        .then(resultado => {
+                validardatos(resultado);
+        })
 
     }
 
-}
+
+    function validardatos(datos) {
+        datos.forEach(proyecto => {
+
+            array.push(proyecto.idProyecto);
+
+        })}
 
 function verDesarrollador(e) {
     const proyecto = e.target.parentElement.parentElement;

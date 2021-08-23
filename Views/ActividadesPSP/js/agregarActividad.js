@@ -26,8 +26,6 @@ const idUsuario = jwt.sub;
 
 // ---------------------------------- FIN Funciones cookies ----------------------------------
 
-let url = 'https://localhost:44368';
-
 // SELECTORES
 const alerta = document.querySelector('#alert');
 const alertaFechasIncorrectas = document.querySelector('#alert2');
@@ -44,7 +42,7 @@ window.onload = () => {
 }
 
 async function obtenerProyectos() {
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -100,9 +98,9 @@ async function agregarActividad() {
     let direccion;
 
     if (proyectosSelect.value == '0') {
-        direccion = `${url}/api/ActividadesPSP?fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}&idUsuario=${idUsuario}`;
+        direccion = `${URL_Global}/ActividadesPSP?fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}&idUsuario=${idUsuario}`;
     } else {
-        direccion = `${url}/api/ActividadesPSP?fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}&idProyecto=${proyectosSelect.value}&idUsuario=${idUsuario}`;
+        direccion = `${URL_Global}/ActividadesPSP?fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}&idProyecto=${proyectosSelect.value}&idUsuario=${idUsuario}`;
     }
 
     await fetch(direccion, {
@@ -114,8 +112,6 @@ async function agregarActividad() {
         .then(respuesta => respuesta)
         .then(resultado => {
         })
-
-    alert('Agregado Exitosamente');
     window.location.href = (`./MenuActividades.html`);
 }
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 // Débora Chacach 11/08/2021
 namespace PSP_.Controllers
 {
@@ -19,7 +20,7 @@ namespace PSP_.Controllers
     }
     [Route("api/[controller]")]
     [ApiController]
-   [Authorize]
+    [Authorize]
     public class ReporteActividadesporProyectoController : Controller
     {
         [HttpGet]
@@ -43,11 +44,17 @@ namespace PSP_.Controllers
                     var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto where d.IdUsuario == id select p).ToList();
                     return Ok(proyectos);
                 }
+                else if(id == null)
+                {
+                    var proyectos = (from p in db.Proyectos select p).ToList();
+                    return Ok(proyectos);
+                }
+              
 
                 var dt = new List<Datos>();
 
+                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-U4PFR0A;DATABASE=DBPSPPLUS;user=Rogelio;password=12345"))
 
-                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-FGBRIH1;DATABASE=DBPSPPLUS;user=capacitacion;password=12345"))
                 {
                     using (SqlCommand cmd = new SqlCommand("reporteActividades_por_proyecto", sql))
                     {
@@ -78,6 +85,7 @@ namespace PSP_.Controllers
             }
         }
 
-       
+
     }
+
 }

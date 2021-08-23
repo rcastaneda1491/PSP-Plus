@@ -3,7 +3,16 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>PSP_</RootNamespace>
+    <UserSecretsId>32589072-ed2d-4e4f-bfdd-1ea8ebefa05a</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\ReporteErroresProyectoTablaController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Controllers\ReporteErroresProyectoTablaController.cs~RFb5423ba.TMP" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />

@@ -1,12 +1,12 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using PSP_.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using System.Security.Claims;
-using PSP_.Models;
 
 /*
     Desarrollador: Rogelio Raúl Castañeda Flores 
@@ -26,7 +26,10 @@ namespace PSP_
                 Subject = new ClaimsIdentity(new Claim[] {
                     new Claim("sub", usuario.IdUsuario.ToString()),
                     new Claim("rol", usuario.Rol.ToString()),
-                    new Claim("email", usuario.Email.ToString())
+                    new Claim("email", usuario.Email.ToString()),
+                    new Claim("nombre", usuario.Nombres.ToString()),
+                    new Claim("apellidos", usuario.Apellidos.ToString())
+
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)

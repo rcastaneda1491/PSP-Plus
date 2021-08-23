@@ -17,7 +17,7 @@
   
     </header>
     <div class="container">
-
+        
         <h1 class="titulo">Proyectos</h1>
         <div class="div" style="width: 80%;  text-align: center; margin-left: auto; margin-right: auto;">
             <button type="button" class="btn-crear" id="new-proyecto" onclick="location.href='../ProyectoDesarrollador/ProyectoDesarrollador.html'">
@@ -31,6 +31,11 @@
                 </a>
             </div>
 
+
+            <div class="alert alert-secondary" role="alert" id="relacion" style="display: none;">
+                No se puede eliminar debido a una relacion!
+            </div>
+            
             <div class="alert alert-danger" id="alert" role="alert" style="display: none;">
                 No se encontraron resultados
             </div>
@@ -64,8 +69,9 @@
         <img src="../img/LOGOPLUSTI 2.svg" id="" alt="" width="140px">
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../Navbar/accionnav.js"></script>
-    <script src="../Navbar/accionnav.js"></script>
+    <script src="../sessiontime.js"></script>
     <script src="./js/ProyectoDesarrollador.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

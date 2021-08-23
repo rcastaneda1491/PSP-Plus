@@ -5,6 +5,7 @@ const exitoso = document.querySelector('#guardado');
 const exitoso2 = document.querySelector('#editado');
 const exitoso3 = document.querySelector('#eliminado');
 const alerta = document.querySelector('#alert');
+const alertarelacion = document.querySelector('#relacion');
 const inpuntsearch = document.querySelector('#search');
 
 
@@ -60,7 +61,7 @@ function validacion() {
 
 
 async function GetDatos() {
-    if (eliminar == 1) {
+    /*if (eliminar == 1) {
 
         exitoso3.textContent = "Usuario Eliminado Correctamente"
         exitoso3.style.display = 'block';
@@ -69,7 +70,7 @@ async function GetDatos() {
         }, 3000);
 
         eliminar = 0;
-    }
+    }*/
     const url = `https://localhost:44368/api/EquipoDesarrolloNombre`;
 
     await fetch(url, {
@@ -129,8 +130,74 @@ function modificarUsuario(e) {
 async function eliminarUsuario(e) {
     const user = e.target.parentElement.parentElement;
     const userid = user.querySelector('button').getAttribute('data-id');
-    const confirmar = confirm('¿Desea Eliminar Usuario?');
+    
+    /*const confirmar = confirm('¿Desea Eliminar Usuario?');
     if (confirmar) {
+
+
+        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+
+        const url = `https://localhost:44368/api/ActividadesPSP?idUsuario=${userid}`;
+
+        await fetch(url, {
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta.json())
+            .then(resultado => {
+                validarEliminacion(resultado,userid);
+                
+            })
+
+            
+
+    } else {
+
+        return;
+
+    }*/
+
+    try {
+        const {isConfirmed} = await Swal.fire({
+            title: 'Eliminar desarrollador',
+            text: "¿Estas seguro que deseas eliminar el desarrollador de este proyecto?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Eliminar'
+        })
+        if(!isConfirmed){
+            return;
+        }
+        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+        await fetch(urlActualizarUsuario, {
+            method: 'DELETE',
+            headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+        Swal.fire('Desarrollador Eliminado!')
+        GetDatos();
+    } catch (error) {
+        Swal.fire("Problemas a elminiar desarrollador");
+    }
+    
+}
+
+
+async function validarEliminacion(resultado,userid){
+    if (Object.keys(resultado.actividades).length != 0 || Object.keys(resultado.errores).length  != 0) {
+
+        alertarelacion.style.display = 'block';
+
+        setTimeout(() => {
+            alertarelacion.style.display = 'none';
+        }, 3000);
+
+        return;
+    } else{
 
         const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
 
@@ -143,15 +210,12 @@ async function eliminarUsuario(e) {
             .then(respuesta => respuesta)
 
         eliminar = 1;
+
         GetDatos();
-
-    } else {
-
-        return;
-
     }
-
 }
+
+
 
 
 async function searchCursos() {

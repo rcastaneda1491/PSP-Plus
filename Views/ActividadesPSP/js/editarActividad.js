@@ -33,8 +33,8 @@ function getParameterByName(name) {
 }
 // ------------------- FIN FUNCION Para obtener datos De la URL ----------------------------------
 
-let url = 'https://localhost:44368';
 
+let url = 'https://localhost:44368';
 
 let idTiempoPSP = getParameterByName('actividad');
 
@@ -57,7 +57,7 @@ async function obtenerProyectos() {
 
     mostrarSpinner();
 
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -84,7 +84,7 @@ function selectProyecto(proyectos) {
 }
 
 async function obtenerDatosActividad() {
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&idTiempoPSP=${idTiempoPSP}`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&idTiempoPSP=${idTiempoPSP}`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -143,9 +143,9 @@ async function actualizarActividad() {
     let direccion;
 
     if (proyectosSelect.value == '0') {
-        direccion = `${url}/api/ActividadesPSP?idTiempoPSP=${idTiempoPSP}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}`;
+        direccion = `${URL_Global}/ActividadesPSP?idTiempoPSP=${idTiempoPSP}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}`;
     } else {
-        direccion = `${url}/api/ActividadesPSP?idTiempoPSP=${idTiempoPSP}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}&idProyecto=${proyectosSelect.value}`;
+        direccion = `${URL_Global}/ActividadesPSP?idTiempoPSP=${idTiempoPSP}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&descripcion=${descripcionInput.value}&idProyecto=${proyectosSelect.value}`;
     }
 
     await fetch(direccion, {
@@ -158,7 +158,6 @@ async function actualizarActividad() {
         .then(resultado => {
         })
 
-    alert('Editado Exitosamente');
     window.location.href = (`./MenuActividades.html`);
 }
 

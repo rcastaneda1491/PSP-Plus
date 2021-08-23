@@ -30,7 +30,7 @@
       row.innerHTML += `
               <td>${nombre} ${apellido}</td>
               <td>${correo}</td>
-              <td><button class="btn delete eliminar" id="delete" data-id="${idUsuario}" data-usuario="${idProyecto}" style="background-color: #09254F; color:white;"> Eliminar </button></td>`;
+              <td><button class="btn delete eliminar" data-id="${idUsuario}" data-usuario="${idProyecto}" style="background-color: #09254F; color:white;"> Eliminar </button></td>`;
 
       listado.appendChild(row);
     });
@@ -48,7 +48,7 @@
     }, 3000);
   };
 
-  async function confirmacionEliminacion(e) {
+  function confirmacionEliminacion(e) {
     e.preventDefault();
     const idU = e.target.dataset.id;
     const idP = e.target.dataset.usuario;
@@ -58,13 +58,31 @@
       idProyecto: idP,
     };
 
+    Swal.fire({
+      title: 'Eliminar desarrollador',
+      text: "¿Estas seguro que deseas eliminar el desarrollador de este proyecto?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        usuariosProyectoService.deleteUsuariosProyecto(user).then( () => {
+          Swal.fire('Desarrollador Eliminado!')
+          mostrarUsuarios();
+        });
+      }
+    })
+  }
+    /*
     const confirmar = confirm("¿Desea eliminar el usuario?");
     if (confirmar) {
       await usuariosProyectoService.deleteUsuariosProyecto(user);
       mostrarUsuarios();
       alertaEliminado();
     }
-  }
+  }*/
 
   const onLoaded = () => {
     const parametrosURL = new URLSearchParams(window.location.search);
