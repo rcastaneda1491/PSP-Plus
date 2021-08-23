@@ -33,8 +33,6 @@ function getParameterByName(name) {
 }
 // ------------------- FIN FUNCION Para obtener datos De la URL ----------------------------------
 
-let url = 'https://localhost:44368';
-
 let idErrorPSP = getParameterByName('error');
 
 // SELECTORES
@@ -58,13 +56,38 @@ let tiempoCorrecion;
 
 window.onload = () => {
     obtenerProyectos();
+    proyectosSelect.addEventListener("change", obtenerCorrelativo);
+}
+
+function obtenerCorrelativo(){
+
+    if(proyectosSelect.value == '0'){
+        correlativoInput.value = 1;
+
+        return;
+    }
+
+    const direccion = `${URL_Global}/Errores?idProyecto=${proyectosSelect.value}`;
+
+    fetch(direccion, {
+        headers: new Headers({
+            'Authorization': 'Bearer ' + stringJWT
+        })
+    })
+        .then(respuesta => respuesta.json())
+        .then(resultado => resultado)
+        .then(correlativo => mostrarCorrelativo(correlativo))
+}
+
+function mostrarCorrelativo(maxCorrelativo){
+    correlativoInput.value = maxCorrelativo + 1;
 }
 
 async function obtenerProyectos() {
 
     mostrarSpinner();
 
-    const direccion = `${url}/api/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
+    const direccion = `${URL_Global}/ActividadesPSP?idUsuario=${idUsuario}&buscarProyecto=1`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -92,7 +115,7 @@ function selectProyecto(proyectos) {
 
 async function obtenerDatosErrorPSP(){
 
-    const direccion = `${url}/api/Errores?idUsuario=${idUsuario}&idErrorPsp=${idErrorPSP}`;
+    const direccion = `${URL_Global}/Errores?idUsuario=${idUsuario}&idErrorPsp=${idErrorPSP}`;
 
     await fetch(direccion, {
         headers: new Headers({
@@ -164,9 +187,9 @@ async function editarErrorPSP(){
     let direccion;
 
     if (proyectosSelect.value == '0') {
-        direccion = `${url}/api/Errores?idErrorPSP=${idErrorPSP}&fecha=${fechaHoraInicioInput.value}&descripcion=${descripcionInput.value}&solucion=${solucionInput.value}&correlativo=${correlativoInput.value}&tipoError=${tipoErrorSelect.value}&introducido=${etapasIntroducidoSelect.value}&eliminado=${etapasEliminadoSelect.value}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&tiempoCorrecion=${tiempoCorrecion}&lenguaje=${lenguajeInput.value}`;
+        direccion = `${URL_Global}/Errores?idErrorPSP=${idErrorPSP}&fecha=${fechaHoraInicioInput.value}&descripcion=${descripcionInput.value}&solucion=${solucionInput.value}&correlativo=${correlativoInput.value}&tipoError=${tipoErrorSelect.value}&introducido=${etapasIntroducidoSelect.value}&eliminado=${etapasEliminadoSelect.value}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&tiempoCorrecion=${tiempoCorrecion}&lenguaje=${lenguajeInput.value}`;
     } else {
-        direccion = `${url}/api/Errores?idErrorPSP=${idErrorPSP}&fecha=${fechaHoraInicioInput.value}&descripcion=${descripcionInput.value}&solucion=${solucionInput.value}&correlativo=${correlativoInput.value}&tipoError=${tipoErrorSelect.value}&introducido=${etapasIntroducidoSelect.value}&eliminado=${etapasEliminadoSelect.value}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&tiempoCorrecion=${tiempoCorrecion}&lenguaje=${lenguajeInput.value}&idProyecto=${proyectosSelect.value}`;
+        direccion = `${URL_Global}/Errores?idErrorPSP=${idErrorPSP}&fecha=${fechaHoraInicioInput.value}&descripcion=${descripcionInput.value}&solucion=${solucionInput.value}&correlativo=${correlativoInput.value}&tipoError=${tipoErrorSelect.value}&introducido=${etapasIntroducidoSelect.value}&eliminado=${etapasEliminadoSelect.value}&fechaHoraInicio=${fechaHoraInicioInput.value}&fechaHoraFinal=${fechaHoraFinalInput.value}&tiempoCorrecion=${tiempoCorrecion}&lenguaje=${lenguajeInput.value}&idProyecto=${proyectosSelect.value}`;
     }
 
     await fetch(direccion, {

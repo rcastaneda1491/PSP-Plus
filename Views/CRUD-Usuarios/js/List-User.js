@@ -5,6 +5,7 @@ const exitoso = document.querySelector('#guardado');
 const exitoso2 = document.querySelector('#editado');
 const exitoso3 = document.querySelector('#eliminado');
 const alerta = document.querySelector('#alert');
+const alertarelacion = document.querySelector('#relacion');
 const inpuntsearch = document.querySelector('#search');
 
 
@@ -133,18 +134,23 @@ async function eliminarUsuario(e) {
     /*const confirmar = confirm('¿Desea Eliminar Usuario?');
     if (confirmar) {
 
+
         const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
 
-        await fetch(urlActualizarUsuario, {
-            method: 'DELETE',
+        const url = `https://localhost:44368/api/ActividadesPSP?idUsuario=${userid}`;
+
+        await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT
             })
         })
-            .then(respuesta => respuesta)
+            .then(respuesta => respuesta.json())
+            .then(resultado => {
+                validarEliminacion(resultado,userid);
+                
+            })
 
-        eliminar = 1;
-        GetDatos();
+            
 
     } else {
 
@@ -179,6 +185,37 @@ async function eliminarUsuario(e) {
     }
     
 }
+
+
+async function validarEliminacion(resultado,userid){
+    if (Object.keys(resultado.actividades).length != 0 || Object.keys(resultado.errores).length  != 0) {
+
+        alertarelacion.style.display = 'block';
+
+        setTimeout(() => {
+            alertarelacion.style.display = 'none';
+        }, 3000);
+
+        return;
+    } else{
+
+        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+
+        await fetch(urlActualizarUsuario, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + stringJWT
+            })
+        })
+            .then(respuesta => respuesta)
+
+        eliminar = 1;
+
+        GetDatos();
+    }
+}
+
+
 
 
 async function searchCursos() {

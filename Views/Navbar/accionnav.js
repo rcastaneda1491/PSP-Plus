@@ -14,8 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const stringJWT = Cookies.get('jwt');
   let jwt;
 
+
   if (stringJWT) {
     jwt = parseJwt(stringJWT);
+    
 
     if (jwt.rol == "administrador") {
       document.querySelector("#header").innerHTML = `
@@ -37,9 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../MenuPrincipa-Admin/index.html">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../Perfil/Perfil.html">Perfil</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="../CRUD-Usuarios/List-User.html">Usuarios</a>
           </li>
           <li class="nav-item">
@@ -52,11 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <a class="nav-link" href="../MenuReportes/Reporteria.html">Reportes</a>
           </li>          
         </ul>
-       
+     
+      </div>
+      <div >
+      <a class="nav-link nombre-nav" style="text-decoration: none;" href="../Perfil/Perfil.html">${jwt.nombre} ${jwt.apellidos}</a>
       </div>
       <div >
       <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></a>
-       
+      </li>
       </div>
       
     </nav>
@@ -65,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else if ((jwt.rol = "desarrollador")) {
       document.querySelector("#header").innerHTML = `
       <nav class="navbar navbar-expand-sm   ">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones" style="margin-left: 10px">
        <img src="../Navbar/menu.png"class="navh">
       </button>
       
@@ -80,9 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
           
           <li class="nav-item">
             <a class="nav-link" href="../MenuPrincipal/Menu.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../Perfil/Perfil.html">Perfil</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../ActividadesPSP/MenuActividades.html">Actividades</a>
@@ -100,7 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
        
       </div>
       <div >
-
+      <a class="nav-link nombre-nav" style="text-decoration: none;" href="../Perfil/Perfil.html">${jwt.nombre} ${jwt.apellidos}</a>
+      </div>
+      <div >
+      
       <a href="../Login.html" onclick="CerrarSesion();" class="nav-link"><img src="../Navbar/Vector.png"></a>
       
       </div>
@@ -117,4 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function CerrarSesion() {
   Cookies.remove('jwt');
+  localStorage.removeItem('fechaHoraInicioErrorxCronometro'); // Elimina del localStorage los POSIBLES
+  localStorage.removeItem('fechaHoraInicioActividadxCronometro'); // tiempos de ejecución que tenga el Usuario en proceso
 };
