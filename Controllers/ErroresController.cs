@@ -46,7 +46,7 @@ namespace PSP_.Controllers
                 }
 
                 var errorPSP = (from d in db.ErroresPsps
-                    select d).Where(d => d.IdErrorPsp == idErrorPsp).Where(d => d.IdUsuario == idUsuario).ToList();
+                                select d).Where(d => d.IdErrorPsp == idErrorPsp).Where(d => d.IdUsuario == idUsuario).ToList();
 
                 return Ok(errorPSP);
 
@@ -54,7 +54,7 @@ namespace PSP_.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(DateTime fecha, string descripcion, string solucion, int correlativo, string tipoError, string introducido, string eliminado, 
+        public ActionResult Post(DateTime fecha, string descripcion, string solucion, int correlativo, string tipoError, string introducido, string eliminado,
             DateTime fechaHoraInicio, DateTime fechaHoraFinal, decimal tiempoCorrecion, string lenguaje, int? idProyecto, int idUsuario)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())

@@ -1,2 +1,2 @@
-const URL_Global = "https://localhost:44368/api";
+const URL_Global = "https://localhost:5001/api";
 
