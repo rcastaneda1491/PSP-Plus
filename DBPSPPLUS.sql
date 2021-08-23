@@ -475,9 +475,7 @@ as begin
 
 end
 
-select * from Usuario;
-select * from Proyectos;
-select * from UsuarioProyecto;
+
 --Débora Chacach
 go
 
@@ -513,7 +511,10 @@ where p.nombre=@nombreProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
 go
 
-select * from Usuario
+
 select * from ErroresPSP;
 select * from EquipoDesarrollo
 select * from Recordatorios;
+select * from Usuario;
+select * from Proyectos;
+select * from UsuarioProyecto;
