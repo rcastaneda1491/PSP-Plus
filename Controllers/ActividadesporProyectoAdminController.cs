@@ -23,7 +23,7 @@ namespace PSP_.Controllers
             {
                if (id != null)
                 {
-                    var proyectos = (from p in db.Proyectos select p).ToList();
+                    var proyectos = (from p in db.Proyectos select p).Distinct().ToList();
                     return Ok(proyectos);
                 }
 
@@ -31,7 +31,7 @@ namespace PSP_.Controllers
                 var dt = new List<Datos>();
 
 
-                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-FGBRIH1;DATABASE=DBPSPPLUS;user=capacitacion;password=12345"))
+                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-0C3G53Q;DATABASE=DBPSPPLUS;user=capacitacion;password=123456"))
                 {
                     using (SqlCommand cmd = new SqlCommand("reporteActividades_por_proyecto", sql))
                     {
