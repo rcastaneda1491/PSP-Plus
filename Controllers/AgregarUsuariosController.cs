@@ -17,7 +17,7 @@ namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   [Authorize]
     public class AgregarUsuariosController : ControllerBase
     {
         static string desKey = "m/ti5TXBWPOigPCSqBy0Kg==";
@@ -46,8 +46,8 @@ namespace PSP_.Controllers
                 usuario.Email = email;
                 usuario.Clave = EncryptPassword(clave);
                 usuario.FechaNacimiento = fechaNacimiento;
-                usuario.IdEquipoDesarrollo = idEquipo;
-                usuario.Rol = rol;
+                usuario.IdEquipoDesarrollo = 1;
+                usuario.Rol = "desarrollador";
                 
                 db.Usuarios.Add(usuario);
                 db.SaveChanges();

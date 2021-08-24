@@ -34,7 +34,7 @@ function getParameterByName(name) {
 // ------------------- FIN FUNCION Para obtener datos De la URL ----------------------------------
 
 
-let url = 'https://localhost:44368';
+let url = 'https://localhost:5001';
 
 let idTiempoPSP = getParameterByName('actividad');
 
