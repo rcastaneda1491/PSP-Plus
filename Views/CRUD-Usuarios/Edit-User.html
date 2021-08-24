@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./css/Create-User.css">
     <link rel="stylesheet" href="../Navbar/nav.css">
     <link rel="icon" type="image/png" href="../img/icon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <header id="header">
@@ -37,7 +38,9 @@
         <div class="input-group mb-3">
             <input type="password" class="form-control" id="clave" aria-describedby="inputGroup-sizing-default" placeholder="Clave" required>
         </div>
-
+        <div class="input-group mb-3" style="margin-top: 5px !important; font-size: 15px;">
+            <span id="passstrength"></span>
+        </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="inputGroup-sizing-default" style="background-color: #B5B5B5;">Fecha Nacimiento</span>
             <input type="date" class="form-control" id="fecha" aria-describedby="inputGroup-sizing-default" placeholder="Fecha" style="color: #000000;" required>
