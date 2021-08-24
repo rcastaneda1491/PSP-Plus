@@ -172,6 +172,20 @@ async function eliminarProyecto(e) {
         if(!isConfirmed){
             return;
         }
+        for(i=0;i<array.length;i++){
+
+            if(array[i] == proyectoid){
+                alertarelacion.style.display = 'block';
+
+                setTimeout(() => {
+                    alertarelacion.style.display = 'none';
+                }, 3000);
+            return;
+            
+            }
+        }
+
+
         const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
         await fetch(url, {
@@ -181,6 +195,9 @@ async function eliminarProyecto(e) {
                 })
             })
             .then(respuesta => respuesta)
+
+        window.location.href = (`./ProyectoDesarrolladorindex.html`);
+        
         Swal.fire('Proyecto Eliminado!')
         
     } catch (error) {

@@ -131,32 +131,6 @@ async function eliminarUsuario(e) {
     const user = e.target.parentElement.parentElement;
     const userid = user.querySelector('button').getAttribute('data-id');
     
-    /*const confirmar = confirm('¿Desea Eliminar Usuario?');
-    if (confirmar) {
-
-
-        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
-
-        const url = `https://localhost:44368/api/ActividadesPSP?idUsuario=${userid}`;
-
-        await fetch(url, {
-            headers: new Headers({
-                'Authorization': 'Bearer ' + stringJWT
-            })
-        })
-            .then(respuesta => respuesta.json())
-            .then(resultado => {
-                validarEliminacion(resultado,userid);
-                
-            })
-
-            
-
-    } else {
-
-        return;
-
-    }*/
 
     try {
         const {isConfirmed} = await Swal.fire({
@@ -171,15 +145,24 @@ async function eliminarUsuario(e) {
         if(!isConfirmed){
             return;
         }
-        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
-        await fetch(urlActualizarUsuario, {
-            method: 'DELETE',
+
+        const url = `https://localhost:44368/api/ActividadesPSP?idUsuario=${userid}`;
+
+        await fetch(url, {
             headers: new Headers({
-            'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
         })
-        Swal.fire('Desarrollador Eliminado!')
-        GetDatos();
+            .then(respuesta => respuesta.json())
+            .then(resultado => {
+                validarEliminacion(resultado,userid);
+                
+            })
+
+ 
+
+      
+
     } catch (error) {
         Swal.fire("Problemas a elminiar desarrollador");
     }
@@ -210,7 +193,7 @@ async function validarEliminacion(resultado,userid){
             .then(respuesta => respuesta)
 
         eliminar = 1;
-
+        Swal.fire('Desarrollador Eliminado!')
         GetDatos();
     }
 }

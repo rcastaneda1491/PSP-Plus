@@ -172,16 +172,35 @@ async function eliminarProyecto(e) {
         if(!isConfirmed){
             return;
         }
-        const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
-
-        await fetch(url, {
-            method: 'DELETE',
-            headers: new Headers({
-                'Authorization': 'Bearer ' + stringJWT
-            })
-        })
-            .then(respuesta => respuesta)
-        Swal.fire('Proyecto Eliminado!')
+        for(i=0;i<array.length;i++){
+           
+    
+                if(array[i] == proyectoid){
+           
+    
+                    alertarelacion.style.display = 'block';
+    
+                    setTimeout(() => {
+                        alertarelacion.style.display = 'none';
+                    }, 3000);
+    
+    
+                return;
+                }
+            }
+    
+            const url = `https://localhost:44368/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+    
+                    await fetch(url, {
+                        method: 'DELETE',
+                        headers: new Headers({
+                            'Authorization': 'Bearer ' + stringJWT
+                        })
+                    })
+                        .then(respuesta => respuesta)
+    
+                    window.location.href = (`./ProyectoAdminindex.html`);
+                    Swal.fire('Proyecto Eliminado!')
         
     } catch (error) {
         Swal.fire("Problemas a eliminiar el proyecto.");
