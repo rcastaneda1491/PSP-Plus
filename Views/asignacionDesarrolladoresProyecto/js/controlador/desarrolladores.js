@@ -4,7 +4,7 @@
   const alerta = document.getElementById("eliminado");
   const titulo = document.getElementById('subtitle');
   let idProyect;
-
+//
   listado.addEventListener("click", confirmacionEliminacion);
   addButton.addEventListener("click", addView);
 
