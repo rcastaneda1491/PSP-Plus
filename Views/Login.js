@@ -2,7 +2,7 @@
     Desarrollador: Rogelio Raúl Castañeda Flores
 */
 
-const URL = `https://localhost:44368/api/Usuarios/SignIn`;const emailInput = document.getElementById("inputEmail");
+const URL = `https://localhost:5001/api/Usuarios/SignIn`;const emailInput = document.getElementById("inputEmail");
 const passwordInput = document.getElementById("inputPassword");
 const form = document.getElementById('signin-form');
 const alerta = document.querySelector('#alert');
@@ -53,9 +53,9 @@ const signIn = async (e) => {
             e.preventDefault()
         } else {
             if (jwt.rol == "administrador") {
-                window.location.href = "./MenuPrincipa-Admin/index.html";
+                window.location.href = "../MenuPrincipa-Admin/index.html";
             } else if (jwt.rol == "desarrollador") {
-                window.location.href = "./MenuPrincipal/Menu.html";
+                window.location.href = "../MenuPrincipal/Menu.html";
             }
         }
     } catch (err) {

@@ -39,7 +39,26 @@ const usuariosProyectoService = {
       method: "POST",
       headers,
       body: JSON.stringify(body),
-    }).then((response) => response.json());
+    }).then((response) => response.json()
+  
+    
+ 
+  ).then(resultado =>  {
+ 
+    const {esta} = resultado;
+    if (esta=="601")
+    {
+      document.querySelector("#relacion").hidden=false;
+      setTimeout(function(){
+        document.querySelector("#relacion").hidden=true}, 3000);
+    }
+    else
+    {
+      
+        window.location.href = `./desarrolladores.html?idProyecto=${idProyecto}` ;
+     
+    }
+  })
   },
 };
 
@@ -69,4 +88,12 @@ const obtenerProyecto = async idProyecto => {
   } catch (error) {
     console.log(error);
   }
+}
+
+function catchError( error  ){
+
+  console.log( error.status );
+   
+    
+
 }
