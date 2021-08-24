@@ -46,7 +46,10 @@ const usuariosProyectoService = {
 
  const obtenerUsuarios = async idProyecto => {
   try {
-    const resultado = await fetch(`${request}/${idProyecto}`);
+    const resultado = await fetch(`${request}/${idProyecto}`, {
+      method: "GET",
+      headers
+    });
     const usuario = await resultado.json();
     //console.log(usuario);
     return usuario;
@@ -57,7 +60,10 @@ const usuariosProyectoService = {
 
 const obtenerProyecto = async idProyecto => {
   try {
-    const resultado = await fetch(`${request}/proyecto/${idProyecto}`);
+    const resultado = await fetch(`${request}/proyecto/${idProyecto}`, {
+      method: "GET",
+      headers
+    });
     const proyecto= await resultado.json();
     return proyecto;
   } catch (error) {

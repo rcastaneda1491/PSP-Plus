@@ -91,7 +91,24 @@ function mostrarDatos(datos) {
     datos.forEach(usuario => {
         var fechaSplit = usuario.fechaNacimiento.split("T");
         var fecha = fechaSplit[0];
-        const card = `
+        let card = null;
+        if(usuario.rol == "administrador"){
+            card = `
+            <tr>
+              <td>${usuario.idUsuario}</td>
+              <td>${usuario.nombres} ${usuario.apellidos}</td>
+              <td>${usuario.email}</td>
+              <td>${fecha}</td>
+              <td>${usuario.nombreEquipo}</td>
+              <td>${usuario.rol}</td>
+              <td><button class="btn edit" id="detalle" data-id="${usuario.idUsuario}" style="background-color: #4F73CF; color:white;"> Editar </button></td>
+              <td><button class="btn delete" id="detalle" data-id="${usuario.idUsuario}" style="background-color: #09254F; color:white;" disabled> Eliminar </button></td>  
+              </tr>
+                
+        `;
+  
+        }else{
+            card = `
             <tr>
               <td>${usuario.idUsuario}</td>
               <td>${usuario.nombres} ${usuario.apellidos}</td>
@@ -103,6 +120,8 @@ function mostrarDatos(datos) {
               <td><button class="btn delete" id="detalle" data-id="${usuario.idUsuario}" style="background-color: #09254F; color:white;"> Eliminar </button></td>
             </tr>
         `;
+        }
+        
         cardListElement.innerHTML += card;
     })
 
