@@ -27,12 +27,21 @@ namespace PSP_.Controllers
                 usuarioP.IdProyecto = modelo.IdProyecto;
                 usuarioP.IdUsuario = modelo.IdUsuario;
 
-                db.UsuarioProyectos.Add(usuarioP);
-                db.SaveChanges();
+               try
+                {
+                    db.UsuarioProyectos.Add(usuarioP);
+                    db.SaveChanges();
+                    return Ok("El usuario se añadio correctamente a un proyecto");
+                }
+                catch(Exception e)
+                {
+                    var datos = new { esta="601" };
+                    return Ok(datos);
+                }
 
             }
 
-            return Ok("El usuario se añadio correctamente a un proyecto");
+           
         }
 
 

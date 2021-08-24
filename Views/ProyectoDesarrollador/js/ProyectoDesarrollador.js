@@ -25,7 +25,7 @@ window.onload = () => {
 }
 
 async function getdatos() {
-    const url = `https://localhost:44368/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
+    const url = `https://localhost:5001/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
 
     await fetch(url, {
             headers: new Headers({
@@ -139,7 +139,7 @@ async function eliminarProyecto(e) {
         }
 
 
-        const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
+        const url = `https://localhost:5001/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
         await fetch(url, {
                 method: 'DELETE',
@@ -186,7 +186,7 @@ async function eliminarProyecto(e) {
         }
 
 
-        const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
+        const url = `https://localhost:5001/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
         await fetch(url, {
                 method: 'DELETE',
@@ -209,7 +209,7 @@ async function eliminarProyecto(e) {
 
 async function validarcascada(){
 
-    const url = `https://localhost:44368/api/GetUsuarioProyecto`;
+    const url = `https://localhost:5001/api/GetUsuarioProyecto`;
 
     await fetch(url, {
         headers: new Headers({
@@ -239,7 +239,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-proyectos").innerHTML = "";
-        const url = `https://localhost:44368/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}&idUsuarios=${jwt.sub}`;
+        const url = `https://localhost:5001/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}&idUsuarios=${jwt.sub}`;
         
         await fetch(url, {
             headers: new Headers({

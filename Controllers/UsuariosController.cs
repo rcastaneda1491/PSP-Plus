@@ -59,6 +59,7 @@ namespace PSP_.Controllers
             DES.IV = GetIV();
             byte[] encryptedBytes = Convert.FromBase64String(Password);
             byte[] decryptedBytes = DES.CreateDecryptor().TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
+           var x = Encoding.UTF8.GetString(decryptedBytes);
             return Encoding.UTF8.GetString(decryptedBytes);
         }
 

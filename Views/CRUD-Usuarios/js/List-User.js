@@ -71,7 +71,7 @@ async function GetDatos() {
 
         eliminar = 0;
     }*/
-    const url = `https://localhost:44368/api/EquipoDesarrolloNombre`;
+    const url = `https://localhost:5001/api/EquipoDesarrolloNombre`;
 
     await fetch(url, {
         headers: new Headers({
@@ -165,8 +165,9 @@ async function eliminarUsuario(e) {
             return;
         }
 
-        const url = `https://localhost:44368/api/ActividadesPSP?idUsuario=${userid}`;
-
+        const url = `https://localhost:5001/api/ActividadesPSP?idUsuario=${userid}`;
+        const url2 = `https://localhost:5001/api/ProyectoDesarrollador?idUsuario=${userid}`;
+let number=0;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT
@@ -174,12 +175,23 @@ async function eliminarUsuario(e) {
         })
             .then(respuesta => respuesta.json())
             .then(resultado => {
-                validarEliminacion(resultado,userid);
                 
+                number= Object.keys(resultado.actividades).length+Object.keys(resultado.errores).length;
             })
-
- 
-
+            await fetch(url2, {
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + stringJWT
+                })
+            })
+                .then(respuesta => respuesta.json())
+                .then(resultado => {
+                    
+                     number=number+resultado.length;
+                
+                    
+                })
+                console.log(number);
+              validarEliminacion(number,userid);
       
 
     } catch (error) {
@@ -190,7 +202,7 @@ async function eliminarUsuario(e) {
 
 
 async function validarEliminacion(resultado,userid){
-    if (Object.keys(resultado.actividades).length != 0 || Object.keys(resultado.errores).length  != 0) {
+    if (resultado>0) {
 
         alertarelacion.style.display = 'block';
 
@@ -201,7 +213,7 @@ async function validarEliminacion(resultado,userid){
         return;
     } else{
 
-        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+        const urlActualizarUsuario = `https://localhost:5001/api/AgregarUsuarios?idUsuario=${userid}`;
 
         await fetch(urlActualizarUsuario, {
             method: 'DELETE',
@@ -228,7 +240,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-usuarios").innerHTML = "";
-        const url = `https://localhost:44368/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
+        const url = `https://localhost:5001/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT
