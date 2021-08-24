@@ -25,7 +25,7 @@ namespace PSP_.Controllers
     {
         [HttpGet]
 
-        public ActionResult Get(string proyecto, int? id)
+        public ActionResult Get(int? proyecto, int? id, int? idUsuario)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
@@ -44,11 +44,12 @@ namespace PSP_.Controllers
                 using (SqlConnection sql = new SqlConnection("Server=DESKTOP-IFKEU1D\\SQLEXPRESS;DATABASE=DBPSPPLUS;user=sa;password=albin123"))
 
                 {
-                    using (SqlCommand cmd = new SqlCommand("reporteActividades_por_proyecto", sql))
+                    using (SqlCommand cmd = new SqlCommand("reporteActividades_por_proyecto_desarrollador", sql))
                     {
 
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.Add(new SqlParameter("@nombreProyecto", proyecto));
+                        cmd.Parameters.Add(new SqlParameter("@idProyecto", proyecto));
+                        cmd.Parameters.Add(   new SqlParameter("@idUsuario", idUsuario));
 
                         sql.Open();
                         using (var reader = cmd.ExecuteReader())

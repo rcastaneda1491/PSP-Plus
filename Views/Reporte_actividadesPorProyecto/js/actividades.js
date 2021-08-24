@@ -153,7 +153,7 @@ function selectProyecto(proyectosList){
         const { nombre, idProyecto } = proyecto;
 
         const option = document.createElement('option');
-        option.value = nombre;
+        option.value = idProyecto;
         option.textContent = nombre;
         inpuntsearch.appendChild(option);
 
@@ -177,7 +177,7 @@ async function searchCursos() {
         document.getElementById("lista-actividades").innerHTML = "";
         if(jwt.rol == "desarrollador"){
             console.log(jwt.rol);
-            url = `https://localhost:44368/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}`;
+            url = `https://localhost:44368/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}&idUsuario=${id}`;
         }else if(jwt.rol == "administrador"){
             console.log(jwt.rol);
             url = `https://localhost:44368/api/ActividadesporProyectoAdmin?proyecto=${inpuntsearch.value}`;

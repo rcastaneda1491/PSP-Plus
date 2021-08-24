@@ -503,16 +503,15 @@ group by ps.idProyecto
 GO
 
 --Débora Chacach
---Proceso almacenado para reporte de Actividades por Proyecto
-create proc reporteActividades_por_proyecto @nombreProyecto varchar(100)
+--Proceso almacenado para reporte de Actividades por Proyecto admin
+create  proc reporteActividades_por_proyecto @idProyecto int
 as
-select TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from Usuario u
-inner join usuarioProyecto up on u.idUsuario= up.idUsuario
-inner join Proyectos p on up.idProyecto=p.idProyecto
-inner join TiemposPSP TpSp on p.idProyecto=TpSp.idProyecto
-left join ErroresPSP EpSp on p.idProyecto=EpSp.idProyecto
-where p.nombre=@nombreProyecto
+Select distinct TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from TiemposPSP tpsp 
+inner join Usuario u on  tpsp.idUsuario=u.idUsuario
+inner join Proyectos p on tpsp.idProyecto=p.idProyecto
+where  tpsp.idProyecto=@idProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
+ 
 --go
 
 
@@ -522,10 +521,22 @@ group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.
 
 
 
+exec reporteActividades_por_proyecto_desarrollador 3,2
+
+--Débora Chacach
+--Proceso almacenado para reporte de Actividades por Proyecto desarrollador
+create proc reporteActividades_por_proyecto_desarrollador @idProyecto int, @idUsuario int
+as
+
+Select distinct TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from TiemposPSP tpsp 
+inner join Usuario u on  tpsp.idUsuario=u.idUsuario
+inner join Proyectos p on tpsp.idProyecto=p.idProyecto
+where tpsp.idUsuario=@idUsuario and tpsp.idProyecto=@idProyecto
+group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
 
 
-
-
+INSERT INTO UsuarioProyecto(idUsuario,idProyecto)
+    VALUES(3,3);
 
 
 
