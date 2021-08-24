@@ -509,15 +509,33 @@ as
 select TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from Usuario u
 inner join usuarioProyecto up on u.idUsuario= up.idUsuario
 inner join Proyectos p on up.idProyecto=p.idProyecto
-inner join TiemposPSP TpSp on u.idUsuario=TpSp.idUsuario
-left join ErroresPSP EpSp on u.idUsuario=EpSp.idUsuario
+inner join TiemposPSP TpSp on p.idProyecto=TpSp.idProyecto
+left join ErroresPSP EpSp on p.idProyecto=EpSp.idProyecto
 where p.nombre=@nombreProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
-go
+--go
 
-select * from Usuario;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 select * from TiemposPSP;
-select * from UsuarioProyecto;
+
 select * from EquipoDesarrollo
 select * from Recordatorios;
 select * from ErroresPSP;
+select * from Usuario;
+select * from Proyectos;
+select * from UsuarioProyecto;
