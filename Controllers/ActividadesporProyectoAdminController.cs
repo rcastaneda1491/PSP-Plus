@@ -17,7 +17,7 @@ namespace PSP_.Controllers
     {
         [HttpGet]
 
-        public ActionResult Get(string proyecto, int? id)
+        public ActionResult Get(int? proyecto, int? id)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
@@ -37,7 +37,7 @@ namespace PSP_.Controllers
                     {
 
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.Add(new SqlParameter("@nombreProyecto", proyecto));
+                        cmd.Parameters.Add(new SqlParameter("@idProyecto", proyecto));
 
                         sql.Open();
                         using (var reader = cmd.ExecuteReader())
