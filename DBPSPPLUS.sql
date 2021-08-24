@@ -1,5 +1,5 @@
 --USE CRUD;
-DROP DATABASE DBPSPPLUS;
+--DROP DATABASE DBPSPPLUS;
 
 CREATE DATABASE DBPSPPLUS;
 GO
@@ -18,8 +18,7 @@ CREATE TABLE Proyectos(
 	totalHorasTrabajadas decimal(8,2) DEFAULT(0.0), -- Manejarlo en Horas | Se completara con Trigger
 );
 GO
-insert into  Proyectos(nombre, descripcion,cliente,fechaInicioEsperada,fechaFinalEsperada,dev) values('Beca','psp','fass','2021/06/07','2021/07/07','1')
-insert into  Proyectos(nombre, descripcion,cliente,fechaInicioEsperada,fechaFinalEsperada,dev) values('Beca2','psp','fass','2021/06/07','2021/07/07','1')
+
 CREATE TABLE EquipoDesarrollo(
 	idEquipoDesarrollo	int  IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	nombre				varchar(100) NOT NULL,
@@ -44,9 +43,9 @@ CREATE TABLE Usuario(
 );
 GO
 INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
-	values('admin', 'admin', 'admin@admin.com', '12345', '2001/09/14', 1, 'administrador');
+	values('admin', 'admin', 'admin@admin.com', 'x+L90ZdAVcs=', '2001/09/14', 1, 'administrador');
 INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
-	values('dev', 'dev', 'dev@dev.com', '12345', '2001/10/14', 1, 'desarrollador');
+	values('dev', 'dev', 'dev@dev.com', 'x+L90ZdAVcs=', '2001/10/14', 1, 'desarrollador');
 GO
 CREATE TABLE UsuarioProyecto( -- Varios desarrolladores podrán tener varios proyectos
 	idUsuario		int NOT NULL,
@@ -477,14 +476,8 @@ as begin
 
 end
 
-select * from Usuario;
-select * from Proyectos;
-select * from UsuarioProyecto;
---Débora Chacach
-go
-
 /*Albin Cordero PROC*/
-USE [DBPSPPLUS]
+
 GO
 /****** Object:  StoredProcedure [dbo].[Analisis]    Script Date: 11/08/2021 14:56:28 ******/
 SET ANSI_NULLS ON
@@ -512,16 +505,8 @@ inner join Proyectos p on tpsp.idProyecto=p.idProyecto
 where  tpsp.idProyecto=@idProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
  
---go
 
-
-
-
-
-
-
-
-exec reporteActividades_por_proyecto_desarrollador 3,2
+go
 
 --Débora Chacach
 --Proceso almacenado para reporte de Actividades por Proyecto desarrollador
@@ -535,8 +520,6 @@ where tpsp.idUsuario=@idUsuario and tpsp.idProyecto=@idProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
 
 
-INSERT INTO UsuarioProyecto(idUsuario,idProyecto)
-    VALUES(3,3);
 
 
 
