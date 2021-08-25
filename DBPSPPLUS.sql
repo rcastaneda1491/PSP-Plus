@@ -19,6 +19,7 @@ CREATE TABLE Proyectos(
 );
 GO
 
+
 CREATE TABLE EquipoDesarrollo(
 	idEquipoDesarrollo	int  IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	nombre				varchar(100) NOT NULL,
@@ -118,6 +119,18 @@ CREATE TABLE Recordatorios(
 		REFERENCES Usuario(idUsuario)
 );
 GO
+
+CREATE TABLE Parametros(
+	idParametro int IDENTITY(1,1) primary key not null,
+	inactividad int,
+	correo varchar(100),
+	clave varchar(100)
+);
+GO
+
+INSERT INTO Parametros(inactividad, correo, clave) VALUES (5, 'pspplusti@gmail.com', '12345');
+GO
+Select * from Parametros
 ----- Erick Echeverria/Debora Chacach 12/08/2021
 -- ############################################################################################
 -- #######################   TRIGGERS | TiemposPSP   ##########################################
@@ -533,3 +546,4 @@ select * from ErroresPSP;
 select * from Usuario;
 select * from Proyectos;
 select * from UsuarioProyecto;
+select * from Parametros;
