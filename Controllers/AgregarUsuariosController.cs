@@ -46,8 +46,8 @@ namespace PSP_.Controllers
                 usuario.Email = email;
                 usuario.Clave = EncryptPassword(clave);
                 usuario.FechaNacimiento = fechaNacimiento;
-                usuario.IdEquipoDesarrollo = 1;
-                usuario.Rol = "desarrollador";
+                usuario.IdEquipoDesarrollo = idEquipo;
+                usuario.Rol = rol;
                 
                 db.Usuarios.Add(usuario);
                 db.SaveChanges();

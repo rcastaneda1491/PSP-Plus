@@ -26,7 +26,7 @@ window.onload = () => {
 }
 
 async function getdatos() {
-    const url = `https://localhost:5001/api/ProyectoAdmin`;
+    const url = `https://172.30.236.13:8082/api/ProyectoAdmin`;
 
     await fetch(url, {
         headers: new Headers({
@@ -126,7 +126,7 @@ async function eliminarProyecto(e) {
 
 
     for(i=0;i<array.length;i++){
-        const url = `https://localhost:5001/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+        const url = `https://172.30.236.13:8082/api/ProyectoAdmin?idproyecto=${proyectoid}`;
 
             if(array[i] == proyectoid){
        
@@ -142,7 +142,7 @@ async function eliminarProyecto(e) {
             }
         }
 
-        const url = `https://localhost:5001/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+        const url = `https://172.30.236.13:8082/api/ProyectoAdmin?idproyecto=${proyectoid}`;
 
                 await fetch(url, {
                     method: 'DELETE',
@@ -189,7 +189,7 @@ async function eliminarProyecto(e) {
                 }
             }
     
-            const url = `https://localhost:5001/api/ProyectoAdmin?idproyecto=${proyectoid}`;
+            const url = `https://172.30.236.13:8082/api/ProyectoAdmin?idproyecto=${proyectoid}`;
     
                     await fetch(url, {
                         method: 'DELETE',
@@ -211,7 +211,7 @@ async function eliminarProyecto(e) {
 
 async function validarcascada(){
 
-    const url = `https://localhost:5001/api/GetUsuarioProyecto`;
+    const url = `https://172.30.236.13:8082/api/GetUsuarioProyecto`;
 
     await fetch(url, {
         headers: new Headers({
@@ -249,7 +249,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-proyectos").innerHTML = "";
-        const url = `https://localhost:5001/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}`;
+        const url = `https://172.30.236.13:8082/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT
