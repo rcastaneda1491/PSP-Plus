@@ -2,17 +2,18 @@
     Desarrollador: Rogelio Raúl Castañeda Flores
 */
 
-const inputNombre = document.querySelector('#nombre');
-const inputDescripcion = document.querySelector('#descripcion');
+const inputInactividad = document.querySelector('#inactividad');
+const inputCorreo = document.querySelector('#correo');
+const inputClave = document.querySelector('#clave');
 const alerta = document.querySelector('#alert');
 
 const urlParams = new URLSearchParams(window.location.search);
-const idEquipo = urlParams.get('idEquipo');
+const idParametro = urlParams.get('idParametro');
 
 var editar = 0;
 
 window.onload = () =>{
-    getEquipo();
+    getParams();
 }
 
 function parseJwt(token) {
@@ -31,8 +32,8 @@ if (stringJWT) {
 }
 
 
-async function getEquipo(){
-    const url = `https://172.30.236.13:8082/api/GetEquiposDesarrollo?idEquipo=${idEquipo}`;
+async function getParams(){
+    const url = `https://172.30.236.13:8082/api/Parametros`;
 
     await fetch(url, {
         headers: new Headers({
@@ -42,17 +43,17 @@ async function getEquipo(){
         .then(respuesta => respuesta.json())
         .then(resultado => {
             mostrarDatos(resultado);
-            console.log(resultado);
         })
 }
 
 function mostrarDatos(datos){
-        inputNombre.value = datos.nombre;
-        inputDescripcion.value = datos.descripcion; 
+        inputInactividad.value = datos.inactividad;
+        inputCorreo.value = datos.correo; 
+        inputClave.value = datos.clave;
 }
 
 function validar(){
-    if(inputNombre.value == ""||inputDescripcion.value == ""){
+    if(inputInactividad.value == ""|| inputCorreo.value == "" || inputClave.value == "") {
         alerta.style.display = 'block';
 
         setTimeout(() => {
@@ -67,7 +68,7 @@ function validar(){
 }
 
 async function editUser(){
-    const url = `https://172.30.236.13:8082/api/GetEquiposDesarrollo?idEquipo=${idEquipo}&nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}`;
+    const url = `https://172.30.236.13:8082/api/Parametros?inactividad=${inputInactividad.value}&correo=${inputCorreo.value}&clave=${inputClave.value}`;
 
     await fetch(url, {
         method: 'PUT',
@@ -79,6 +80,6 @@ async function editUser(){
 
 
     editar = 2;
-    window.location.href = (`./equiposList.html?validar=${editar}`);
+    window.location.href = (`./parametros.html?validar=${editar}`);
  
 }

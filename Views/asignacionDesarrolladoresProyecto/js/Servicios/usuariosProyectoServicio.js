@@ -39,14 +39,36 @@ const usuariosProyectoService = {
       method: "POST",
       headers,
       body: JSON.stringify(body),
-    }).then((response) => response.json());
+    }).then((response) => response.json()
+  
+    
+ 
+  ).then(resultado =>  {
+ 
+    const {esta} = resultado;
+    if (esta=="601")
+    {
+      document.querySelector("#relacion").hidden=false;
+      setTimeout(function(){
+        document.querySelector("#relacion").hidden=true}, 3000);
+    }
+    else
+    {
+      
+        window.location.href = `./desarrolladores.html?idProyecto=${idProyecto}` ;
+     
+    }
+  })
   },
 };
 
 
  const obtenerUsuarios = async idProyecto => {
   try {
-    const resultado = await fetch(`${request}/${idProyecto}`);
+    const resultado = await fetch(`${request}/${idProyecto}`, {
+      method: "GET",
+      headers
+    });
     const usuario = await resultado.json();
     //console.log(usuario);
     return usuario;
@@ -57,10 +79,21 @@ const usuariosProyectoService = {
 
 const obtenerProyecto = async idProyecto => {
   try {
-    const resultado = await fetch(`${request}/proyecto/${idProyecto}`);
+    const resultado = await fetch(`${request}/proyecto/${idProyecto}`, {
+      method: "GET",
+      headers
+    });
     const proyecto= await resultado.json();
     return proyecto;
   } catch (error) {
     console.log(error);
   }
+}
+
+function catchError( error  ){
+
+  console.log( error.status );
+   
+    
+
 }

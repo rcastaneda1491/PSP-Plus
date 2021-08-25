@@ -1,5 +1,5 @@
 --USE CRUD;
-DROP DATABASE DBPSPPLUS;
+--DROP DATABASE DBPSPPLUS;
 
 CREATE DATABASE DBPSPPLUS;
 GO
@@ -18,8 +18,8 @@ CREATE TABLE Proyectos(
 	totalHorasTrabajadas decimal(8,2) DEFAULT(0.0), -- Manejarlo en Horas | Se completara con Trigger
 );
 GO
-insert into  Proyectos(nombre, descripcion,cliente,fechaInicioEsperada,fechaFinalEsperada,dev) values('Beca','psp','fass','2021/06/07','2021/07/07','1')
-insert into  Proyectos(nombre, descripcion,cliente,fechaInicioEsperada,fechaFinalEsperada,dev) values('Beca2','psp','fass','2021/06/07','2021/07/07','1')
+
+
 CREATE TABLE EquipoDesarrollo(
 	idEquipoDesarrollo	int  IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	nombre				varchar(100) NOT NULL,
@@ -44,9 +44,9 @@ CREATE TABLE Usuario(
 );
 GO
 INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
-	values('admin', 'admin', 'admin@admin.com', '12345', '2001/09/14', 1, 'administrador');
+	values('admin', 'admin', 'admin@admin.com', 'x+L90ZdAVcs=', '2001/09/14', 1, 'administrador');
 INSERT INTO Usuario (nombres, apellidos, email, clave, fechaNacimiento, idEquipoDesarrollo, rol)
-	values('dev', 'dev', 'dev@dev.com', '12345', '2001/10/14', 1, 'desarrollador');
+	values('dev', 'dev', 'dev@dev.com', 'x+L90ZdAVcs=', '2001/10/14', 1, 'desarrollador');
 GO
 CREATE TABLE UsuarioProyecto( -- Varios desarrolladores podrán tener varios proyectos
 	idUsuario		int NOT NULL,
@@ -119,6 +119,18 @@ CREATE TABLE Recordatorios(
 		REFERENCES Usuario(idUsuario)
 );
 GO
+
+CREATE TABLE Parametros(
+	idParametro int IDENTITY(1,1) primary key not null,
+	inactividad int,
+	correo varchar(100),
+	clave varchar(100)
+);
+GO
+
+INSERT INTO Parametros(inactividad, correo, clave) VALUES (5, 'pspplusti@gmail.com', 'PruebaProyecto1914');
+GO
+
 ----- Erick Echeverria/Debora Chacach 12/08/2021
 -- ############################################################################################
 -- #######################   TRIGGERS | TiemposPSP   ##########################################
@@ -477,14 +489,8 @@ as begin
 
 end
 
-select * from Usuario;
-select * from Proyectos;
-select * from UsuarioProyecto;
---Débora Chacach
-go
-
 /*Albin Cordero PROC*/
-USE [DBPSPPLUS]
+
 GO
 /****** Object:  StoredProcedure [dbo].[Analisis]    Script Date: 11/08/2021 14:56:28 ******/
 SET ANSI_NULLS ON
@@ -503,23 +509,42 @@ group by ps.idProyecto
 GO
 
 --Débora Chacach
---Proceso almacenado para reporte de Actividades por Proyecto
-create proc reporteActividades_por_proyecto @nombreProyecto varchar(100)
+--Proceso almacenado para reporte de Actividades por Proyecto admin
+create  proc reporteActividades_por_proyecto @idProyecto int
 as
-select TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from Usuario u
-inner join usuarioProyecto up on u.idUsuario= up.idUsuario
-inner join Proyectos p on up.idProyecto=p.idProyecto
-inner join TiemposPSP TpSp on u.idUsuario=TpSp.idUsuario
-left join ErroresPSP EpSp on u.idUsuario=EpSp.idUsuario
-where p.nombre=@nombreProyecto
+Select distinct TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from TiemposPSP tpsp 
+inner join Usuario u on  tpsp.idUsuario=u.idUsuario
+inner join Proyectos p on tpsp.idProyecto=p.idProyecto
+where  tpsp.idProyecto=@idProyecto
 group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
+ 
+
 go
 
-select * from Usuario;
+--Débora Chacach
+--Proceso almacenado para reporte de Actividades por Proyecto desarrollador
+create proc reporteActividades_por_proyecto_desarrollador @idProyecto int, @idUsuario int
+as
+
+Select distinct TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,Cast((TpSp.fechaHoraFinal - TpSp.fechaHoraInicio) as Float) * 24.0 as horas,u.nombres,p.nombre from TiemposPSP tpsp 
+inner join Usuario u on  tpsp.idUsuario=u.idUsuario
+inner join Proyectos p on tpsp.idProyecto=p.idProyecto
+where tpsp.idUsuario=@idUsuario and tpsp.idProyecto=@idProyecto
+group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.nombre  
+
+
+
+
+
+
+
 select * from TiemposPSP;
-select * from UsuarioProyecto;
+select * from Parametros;
 select * from EquipoDesarrollo
 select * from Recordatorios;
 select * from ErroresPSP;
 
-insert into Usuario(nombres, apellidos, email, clave, fechaNacimiento, rol, idEquipoDesarrollo) values ('tito', 'a','tito@gmail.com','12345','2001-09-14','administrador', 1)
+select * from Usuario;
+select * from Proyectos;
+select * from UsuarioProyecto;
+select * from Parametros;

@@ -30,14 +30,19 @@ const guardarUsuario = (e) => {
     idUsuario: Number(select.value),
     idProyecto,
   };
+  
   usuariosProyectoService.saveUsuariosProyecto(usuarioP);
-  window.location.href = `./desarrolladores.html?idProyecto=${idProyecto}`;
+  
+ 
+ 
 };
 
 
 const onLoaded = () => {
     const parametrosURL = new URLSearchParams(window.location.search);
     idProyecto = parametrosURL.get('idProyecto');
+    document.querySelector("#relacion").hidden=true;
+
     fillSelect();
 }
 document.addEventListener("DOMContentLoaded", onLoaded);

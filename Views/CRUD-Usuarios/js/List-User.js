@@ -71,7 +71,7 @@ async function GetDatos() {
 
         eliminar = 0;
     }*/
-    const url = `https://localhost:44368/api/EquipoDesarrolloNombre`;
+    const url = `https://172.30.236.13:8082/api/EquipoDesarrolloNombre`;
 
     await fetch(url, {
         headers: new Headers({
@@ -91,7 +91,24 @@ function mostrarDatos(datos) {
     datos.forEach(usuario => {
         var fechaSplit = usuario.fechaNacimiento.split("T");
         var fecha = fechaSplit[0];
-        const card = `
+        let card = null;
+        if(usuario.rol == "administrador"){
+            card = `
+            <tr>
+              <td>${usuario.idUsuario}</td>
+              <td>${usuario.nombres} ${usuario.apellidos}</td>
+              <td>${usuario.email}</td>
+              <td>${fecha}</td>
+              <td>${usuario.nombreEquipo}</td>
+              <td>${usuario.rol}</td>
+              <td><button class="btn edit" id="detalle" data-id="${usuario.idUsuario}" style="background-color: #4F73CF; color:white;"> Editar </button></td>
+              <td><button class="btn delete" id="detalle" data-id="${usuario.idUsuario}" style="background-color: #09254F; color:white;" disabled> Eliminar </button></td>  
+              </tr>
+                
+        `;
+  
+        }else{
+            card = `
             <tr>
               <td>${usuario.idUsuario}</td>
               <td>${usuario.nombres} ${usuario.apellidos}</td>
@@ -103,6 +120,8 @@ function mostrarDatos(datos) {
               <td><button class="btn delete" id="detalle" data-id="${usuario.idUsuario}" style="background-color: #09254F; color:white;"> Eliminar </button></td>
             </tr>
         `;
+        }
+        
         cardListElement.innerHTML += card;
     })
 
@@ -131,32 +150,6 @@ async function eliminarUsuario(e) {
     const user = e.target.parentElement.parentElement;
     const userid = user.querySelector('button').getAttribute('data-id');
     
-    /*const confirmar = confirm('¿Desea Eliminar Usuario?');
-    if (confirmar) {
-
-
-        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
-
-        const url = `https://localhost:44368/api/ActividadesPSP?idUsuario=${userid}`;
-
-        await fetch(url, {
-            headers: new Headers({
-                'Authorization': 'Bearer ' + stringJWT
-            })
-        })
-            .then(respuesta => respuesta.json())
-            .then(resultado => {
-                validarEliminacion(resultado,userid);
-                
-            })
-
-            
-
-    } else {
-
-        return;
-
-    }*/
 
     try {
         const {isConfirmed} = await Swal.fire({
@@ -171,15 +164,36 @@ async function eliminarUsuario(e) {
         if(!isConfirmed){
             return;
         }
-        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
-        await fetch(urlActualizarUsuario, {
-            method: 'DELETE',
+
+        const url = `https://172.30.236.13:8082/api/ActividadesPSP?idUsuario=${userid}`;
+        const url2 = `https://172.30.236.13:8082/api/ProyectoDesarrollador?idUsuario=${userid}`;
+let number=0;
+        await fetch(url, {
             headers: new Headers({
-            'Authorization': 'Bearer ' + stringJWT
+                'Authorization': 'Bearer ' + stringJWT
             })
         })
-        Swal.fire('Desarrollador Eliminado!')
-        GetDatos();
+            .then(respuesta => respuesta.json())
+            .then(resultado => {
+                
+                number= Object.keys(resultado.actividades).length+Object.keys(resultado.errores).length;
+            })
+            await fetch(url2, {
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + stringJWT
+                })
+            })
+                .then(respuesta => respuesta.json())
+                .then(resultado => {
+                    
+                     number=number+resultado.length;
+                
+                    
+                })
+                console.log(number);
+              validarEliminacion(number,userid);
+      
+
     } catch (error) {
         Swal.fire("Problemas a elminiar desarrollador");
     }
@@ -188,7 +202,7 @@ async function eliminarUsuario(e) {
 
 
 async function validarEliminacion(resultado,userid){
-    if (Object.keys(resultado.actividades).length != 0 || Object.keys(resultado.errores).length  != 0) {
+    if (resultado>0) {
 
         alertarelacion.style.display = 'block';
 
@@ -199,7 +213,7 @@ async function validarEliminacion(resultado,userid){
         return;
     } else{
 
-        const urlActualizarUsuario = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${userid}`;
+        const urlActualizarUsuario = `https://172.30.236.13:8082/api/AgregarUsuarios?idUsuario=${userid}`;
 
         await fetch(urlActualizarUsuario, {
             method: 'DELETE',
@@ -210,7 +224,7 @@ async function validarEliminacion(resultado,userid){
             .then(respuesta => respuesta)
 
         eliminar = 1;
-
+        Swal.fire('Desarrollador Eliminado!')
         GetDatos();
     }
 }
@@ -226,7 +240,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-usuarios").innerHTML = "";
-        const url = `https://localhost:44368/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
+        const url = `https://172.30.236.13:8082/api/EquipoDesarrolloNombre?correo=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT

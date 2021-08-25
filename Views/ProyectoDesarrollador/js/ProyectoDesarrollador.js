@@ -25,7 +25,7 @@ window.onload = () => {
 }
 
 async function getdatos() {
-    const url = `https://localhost:44368/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
+    const url = `https://172.30.236.13:8082/api/ProyectoDesarrollador?idUsuario=${jwt.sub}`;
 
     await fetch(url, {
             headers: new Headers({
@@ -139,7 +139,7 @@ async function eliminarProyecto(e) {
         }
 
 
-        const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
+        const url = `https://172.30.236.13:8082/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
         await fetch(url, {
                 method: 'DELETE',
@@ -172,7 +172,21 @@ async function eliminarProyecto(e) {
         if(!isConfirmed){
             return;
         }
-        const url = `https://localhost:44368/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
+        for(i=0;i<array.length;i++){
+
+            if(array[i] == proyectoid){
+                alertarelacion.style.display = 'block';
+
+                setTimeout(() => {
+                    alertarelacion.style.display = 'none';
+                }, 3000);
+            return;
+            
+            }
+        }
+
+
+        const url = `https://172.30.236.13:8082/api/ProyectoDesarrollador?idproyecto=${proyectoid}`;
 
         await fetch(url, {
                 method: 'DELETE',
@@ -181,6 +195,9 @@ async function eliminarProyecto(e) {
                 })
             })
             .then(respuesta => respuesta)
+
+        window.location.href = (`./ProyectoDesarrolladorindex.html`);
+        
         Swal.fire('Proyecto Eliminado!')
         
     } catch (error) {
@@ -192,7 +209,7 @@ async function eliminarProyecto(e) {
 
 async function validarcascada(){
 
-    const url = `https://localhost:44368/api/GetUsuarioProyecto`;
+    const url = `https://172.30.236.13:8082/api/GetUsuarioProyecto`;
 
     await fetch(url, {
         headers: new Headers({
@@ -222,7 +239,7 @@ async function searchCursos() {
     }
     else {
         document.getElementById("lista-proyectos").innerHTML = "";
-        const url = `https://localhost:44368/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}&idUsuarios=${jwt.sub}`;
+        const url = `https://172.30.236.13:8082/api/GetProyectosBusqueda?nombreProyecto=${inpuntsearch.value}&idUsuarios=${jwt.sub}`;
         
         await fetch(url, {
             headers: new Headers({

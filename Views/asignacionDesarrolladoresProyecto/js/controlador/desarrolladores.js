@@ -1,11 +1,13 @@
 (function () {
   const listado = document.getElementById("lista-usuarios");
+  
   const addButton = document.getElementById("buttonAdd");
   const alerta = document.getElementById("eliminado");
   const titulo = document.getElementById('subtitle');
   let idProyect;
+//
 
-  listado.addEventListener("click", confirmacionEliminacion);
+ 
   addButton.addEventListener("click", addView);
 
   async function mostrarProyecto() {
@@ -30,10 +32,20 @@
       row.innerHTML += `
               <td>${nombre} ${apellido}</td>
               <td>${correo}</td>
-              <td><button class="btn delete eliminar" data-id="${idUsuario}" data-usuario="${idProyecto}" style="background-color: #09254F; color:white;"> Eliminar </button></td>`;
+              <td id="delete"><button class="btn delete eliminar" data-id="${idUsuario}" data-usuario="${idProyecto}" style="background-color: #09254F; color:white;"> Eliminar </button></td>`;
+
+             
 
       listado.appendChild(row);
+
+      
     });
+
+    var td =  document.getElementsByClassName("eliminar");
+
+      for (var i = 0; i < td.length; i++) {
+        td[i].addEventListener('click', confirmacionEliminacion);
+      }
   }
 
   function addView() {
@@ -91,4 +103,10 @@
     mostrarProyecto();
   };
   document.addEventListener("DOMContentLoaded", onLoaded);
+
+
+  
 })();
+
+
+

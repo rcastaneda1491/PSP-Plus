@@ -1,6 +1,7 @@
 
 //Albin Cordero 
 
+
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -21,6 +22,7 @@ const bt = document.querySelector("#btn");
     const inicio = document.querySelector("#inicio")
     const fn = document.querySelector("#fin")
      const pdf= document.querySelector("#pdf")
+     
      
      const ex = document.querySelector("#xlsx")
      const msg = document.querySelector("#alert")
@@ -95,7 +97,7 @@ const bt = document.querySelector("#btn");
         
             
             
-            const url = `https://localhost:44368/api/Reporte_Analisis/${sel.value},${fnn},${inn}`;
+            const url = `https://172.30.236.13:8082/api/Reporte_Analisis/${sel.value},${fnn},${inn}`;
             cargar(url);
         
          
@@ -124,7 +126,7 @@ setTimeout(() => {
    
    
      
-        const url = `https://localhost:44368/api/Reporte_Analisis/${jwt.sub},${fnn},${inn}`;
+        const url = `https://172.30.236.13:8082/api/Reporte_Analisis/${jwt.sub},${fnn},${inn}`;
         cargar(url);
      
      
@@ -137,12 +139,15 @@ setTimeout(() => {
 } )
 })
 
-
+const headers = {
+    'Accept' : "application/json",
+    "Content-Type": "application/json",
+    'Authorization': 'Bearer ' + stringJWT
+  };
+  
 async function  cargar(url) {
     await fetch(url, {
-        headers: new Headers({
-            'Authorization': 'Bearer ' + stringJWT
-        })
+        headers,
     })
         .then(respuesta => respuesta.json())
         .then(resultado => {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System;
@@ -6,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// Débora Chacach 11/08/2021
 namespace PSP_.Controllers
+
 {
-    partial class Datos
+    partial class Datos2
     {
         public string descripcion { get; set; }
         public DateTime fechaHoraInicio { get; set; }
@@ -18,45 +19,43 @@ namespace PSP_.Controllers
         public string nombreUsuario { get; set; }
         public string nombreProyecto { get; set; }
     }
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ReporteActividadesporProyectoController : Controller
+    [EnableCors("permitir")]
+    public class ActividadesporProyectoAdminController : Controller
     {
         [HttpGet]
 
-        public ActionResult Get(int? proyecto, int? id, int? idUsuario)
+        public ActionResult Get(int? proyecto, int? id)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                
-
-                if (id != null)
+               if (id != null)
                 {
-                    var proyectos = (from p in db.Proyectos join d in db.UsuarioProyectos on p.IdProyecto equals d.IdProyecto where d.IdUsuario == id select p).ToList();
+                    var proyectos = (from p in db.Proyectos select p).Distinct().ToList();
                     return Ok(proyectos);
                 }
-             
-              
 
-                var dt = new List<Datos>();
+
+                var dt = new List<Datos2>();
+
 
                 using (SqlConnection sql = new SqlConnection("Server=DESKTOP-IFKEU1D\\SQLEXPRESS;DATABASE=DBPSPPLUS;user=sa;password=albin123"))
-
                 {
-                    using (SqlCommand cmd = new SqlCommand("reporteActividades_por_proyecto_desarrollador", sql))
+                    using (SqlCommand cmd = new SqlCommand("reporteActividades_por_proyecto", sql))
                     {
 
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.Add(new SqlParameter("@idProyecto", proyecto));
-                        cmd.Parameters.Add(   new SqlParameter("@idUsuario", idUsuario));
 
                         sql.Open();
                         using (var reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                var temp = new Datos();
+                                var temp = new Datos2();
                                 temp.descripcion = reader.GetString(0);
                                 temp.fechaHoraInicio = reader.GetDateTime(1);
                                 temp.fechaHoraFin = reader.GetDateTime(2);
@@ -74,7 +73,5 @@ namespace PSP_.Controllers
             }
         }
 
-
     }
-
 }

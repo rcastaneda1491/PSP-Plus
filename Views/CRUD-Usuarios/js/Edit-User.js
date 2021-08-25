@@ -6,12 +6,36 @@ const inputEmail = document.querySelector('#email');
 const inputClave = document.querySelector('#clave');
 const inputFecha = document.querySelector('#fecha');
 const inputEquipo = document.querySelector('#equipo');
+const passwordText = document.querySelector('#passstrength');
 
 const alerta = document.querySelector('#alert');
 
 
 const urlParams = new URLSearchParams(window.location.search);
 const idUsuario = urlParams.get('Userid');
+
+$('#clave').keyup(function(e) {
+    var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+    var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+    var enoughRegex = new RegExp("(?=.{6,}).*", "g");
+    if (false == enoughRegex.test($(this).val())) {
+            $('#passstrength').html('Más caracteres.');
+            inputClave.style.borderBottom = "2px solid red";
+    } else if (strongRegex.test($(this).val())) {
+            $('#passstrength').className = 'ok';
+            $('#passstrength').html('Contraseña Segura!');
+            inputClave.style.borderBottom = "2px solid green";
+    } else if (mediumRegex.test($(this).val())) {
+            $('#passstrength').className = 'alert';
+            $('#passstrength').html('Contraseña Media!');
+            inputClave.style.borderBottom = "2px solid yellow";
+    } else {
+            $('#passstrength').className = 'error';
+            $('#passstrength').html('Contraseña Débil!');
+            inputClave.style.borderBottom = "2px solid orange";
+    }
+    return true;
+});
 
 const array = [];
 const array2 = [];
@@ -38,7 +62,7 @@ if (stringJWT) {
 }
 
 async function getEquipos(){
-    const url = `https://localhost:44368/api/GetEquiposDesarrollo`;
+    const url = `https://172.30.236.13:8082/api/GetEquiposDesarrollo`;
 
     await fetch(url, {
         headers: new Headers({
@@ -76,7 +100,7 @@ function cargar(){
 
 
 async function getUser(){
-    const url = `https://localhost:44368/api/EquipoDesarrolloNombre?idUsuario=${idUsuario}`;
+    const url = `https://172.30.236.13:8082/api/EquipoDesarrolloNombre?idUsuario=${idUsuario}`;
 
     await fetch(url, {
         headers: new Headers({
@@ -120,14 +144,22 @@ function validar(){
         return;
     }else{
         
-        editUser();
+        if(passwordText.textContent != "Contraseña Segura!"){
+            alerta.textContent = 'Necesita contraseña segura';
+            alerta.style.display = 'block';
+            setTimeout(() => {
+                alerta.style.display = 'none';
+            }, 3000);
+        }else{
+            editUser();
+        }
 
 
     }
 }
 
 async function editUser(){
-    const url = `https://localhost:44368/api/AgregarUsuarios?idUsuario=${idUsuario}&nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}`;
+    const url = `https://172.30.236.13:8082/api/AgregarUsuarios?idUsuario=${idUsuario}&nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}`;
 
     await fetch(url, {
         method: 'PUT',
