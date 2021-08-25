@@ -73,7 +73,7 @@ function validarCorreos(usuarios) {
 }
 
 async function getEquipos() {
-    const url = `https://172.30.236.13:8082/api/GetEquiposDesarrollo`;
+    const url = `https://localhost:44368/api/GetEquiposDesarrollo`;
 
     await fetch(url, {
         headers: new Headers({
@@ -111,7 +111,7 @@ function cargar() {
 async function agregarUser() {
 
 
-    const usarios = `https://172.30.236.13:8082/api/EquipoDesarrolloNombre`;
+    const usarios = `https://localhost:44368/api/EquipoDesarrolloNombre`;
 
     await fetch(usarios, {
         headers: new Headers({
@@ -137,7 +137,7 @@ async function agregarUser() {
         return;
     }
 
-    const url = `https://172.30.236.13:8082/api/AgregarUsuarios?nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}&rol=${inputRol.value}`;
+    const url = `https://localhost:44368/api/AgregarUsuarios?nombre=${inputNombre.value}&apellido=${inputApellido.value}&email=${inputEmail.value}&clave=${inputClave.value}&fechaNacimiento=${inputFecha.value}&idEquipo=${inputEquipo.value}&rol=${inputRol.value}`;
 
     await fetch(url, {
         method: 'POST',

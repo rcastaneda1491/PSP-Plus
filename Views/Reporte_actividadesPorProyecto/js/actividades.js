@@ -133,10 +133,10 @@ function mostrarDatos(datos) {
 async function llenarSelect(){
     if(jwt.rol == "desarrollador"){
         console.log(jwt.rol);
-        url= `https://172.30.236.13:8082/api/ReporteActividadesporProyecto?id=${id}`;
+        url= `https://localhost:44368/api/ReporteActividadesporProyecto?id=${id}`;
     }else if(jwt.rol == "administrador"){
         console.log(jwt.rol);
-        url = `https://172.30.236.13:8082/api/ActividadesporProyectoAdmin?id=${id}`;
+        url = `https://localhost:44368/api/ActividadesporProyectoAdmin?id=${id}`;
     }
     
     await fetch(url, {
@@ -177,10 +177,10 @@ async function searchCursos() {
         document.getElementById("lista-actividades").innerHTML = "";
         if(jwt.rol == "desarrollador"){
             console.log(jwt.rol);
-            url = `https://172.30.236.13:8082/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}&idUsuario=${id}`;
+            url = `https://localhost:44368/api/ReporteActividadesporProyecto?proyecto=${inpuntsearch.value}&idUsuario=${id}`;
         }else if(jwt.rol == "administrador"){
             console.log(jwt.rol);
-            url = `https://172.30.236.13:8082/api/ActividadesporProyectoAdmin?proyecto=${inpuntsearch.value}`;
+            url = `https://localhost:44368/api/ActividadesporProyectoAdmin?proyecto=${inpuntsearch.value}`;
         }
 
 

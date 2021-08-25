@@ -41,7 +41,7 @@ namespace PSP_.Models
                 var dt = new List<Datos>();
 
 
-                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-IFKEU1D\\SQLEXPRESS;DATABASE=DBPSPPLUS;user=sa;password=albin123"))
+                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-DF943KT;DATABASE=DBPSPPLUS;user=tito1;password=1234"))
                 {
                     using (SqlCommand cmd = new SqlCommand("Analisis", sql))
                     {

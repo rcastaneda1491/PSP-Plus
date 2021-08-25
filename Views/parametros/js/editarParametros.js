@@ -33,7 +33,7 @@ if (stringJWT) {
 
 
 async function getParams(){
-    const url = `https://172.30.236.13:8082/api/Parametros`;
+    const url = `https://localhost:44368/api/Parametros`;
 
     await fetch(url, {
         headers: new Headers({
@@ -68,7 +68,7 @@ function validar(){
 }
 
 async function editUser(){
-    const url = `https://172.30.236.13:8082/api/Parametros?inactividad=${inputInactividad.value}&correo=${inputCorreo.value}&clave=${inputClave.value}`;
+    const url = `https://localhost:44368/api/Parametros?inactividad=${inputInactividad.value}&correo=${inputCorreo.value}&clave=${inputClave.value}`;
 
     await fetch(url, {
         method: 'PUT',

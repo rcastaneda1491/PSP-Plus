@@ -65,9 +65,9 @@ window.onload = () => {
 async function getProyectos() {
     var url;
     if(jwt.rol == "desarrollador"){
-        url = `https://172.30.236.13:8082/api/ReporteErroresProyecto?idUsuario=${jwt.sub}`;
+        url = `https://localhost:44368/api/ReporteErroresProyecto?idUsuario=${jwt.sub}`;
     }else if(jwt.rol == "administrador"){
-        url = `https://172.30.236.13:8082/api/ReporteErroresProyecto`;
+        url = `https://localhost:44368/api/ReporteErroresProyecto`;
     }
     
 
@@ -115,7 +115,7 @@ async function GetDatos() {
             alerta.style.display = 'none';
         }, 3000);
     }else{
-    const url = `https://172.30.236.13:8082/api/ReporteErroresProyectoTabla?idProyecto=${inputproyecto.value}`;
+    const url = `https://localhost:44368/api/ReporteErroresProyectoTabla?idProyecto=${inputproyecto.value}`;
 
     await fetch(url, {
         headers: new Headers({
@@ -133,6 +133,9 @@ async function GetDatos() {
 function mostrarDatos(datos) {
     document.getElementById("lista-erroesp").innerHTML = "";
 
+
+    if(datos.length>0)
+  {
     datos.forEach(proyectos => {
         //var fechaSplit = proyectos.fechaNacimiento.split("T");
         //var fecha = fechaSplit[0];
@@ -146,5 +149,12 @@ function mostrarDatos(datos) {
         `;
         cardListElement.innerHTML += card;
     })
+    
+}
+else
+{
+    cardListElement.innerHTML +=`<tr> <td colspan="4"> Sin Resultados entre las fechas seleccionadas </td> </tr>`;
+
+}
 
 }

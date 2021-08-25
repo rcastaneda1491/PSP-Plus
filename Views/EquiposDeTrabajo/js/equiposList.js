@@ -72,7 +72,7 @@ async function GetDatos() {
 
         eliminar = 0;
     }
-    const url = `https://172.30.236.13:8082/api/GetEquiposDesarrollo`;
+    const url = `https://localhost:44368/api/GetEquiposDesarrollo`;
 
     await fetch(url, {
         headers: new Headers({
@@ -158,7 +158,7 @@ async function eliminarEquipo(e) {
             }
         }
 
-        const urlEliminarEquipo = `https://172.30.236.13:8082/api/GetEquiposDesarrollo?idEquipo=${equipoId}`;
+        const urlEliminarEquipo = `https://localhost:44368/api/GetEquiposDesarrollo?idEquipo=${equipoId}`;
 
         await fetch(urlEliminarEquipo, {
             method: 'DELETE',
@@ -179,7 +179,7 @@ async function eliminarEquipo(e) {
 
 async function validarcascada(){
 
-    const url = `https://172.30.236.13:8082/api/AgregarUsuarios`;
+    const url = `https://localhost:44368/api/AgregarUsuarios`;
 
     await fetch(url, {
         headers: new Headers({
@@ -210,7 +210,7 @@ async function searchProyectos() {
     }
     else {
         document.getElementById("lista-equipos").innerHTML = "";
-        const url = `https://172.30.236.13:8082/api/equiposTrabajoBusqueda?nombre=${inpuntsearch.value}`;
+        const url = `https://localhost:44368/api/equiposTrabajoBusqueda?nombre=${inpuntsearch.value}`;
         await fetch(url, {
             headers: new Headers({
                 'Authorization': 'Bearer ' + stringJWT

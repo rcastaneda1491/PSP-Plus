@@ -50,7 +50,7 @@ function validacion() {
 
 
 async function GetDatos() {
-    const url = `https://172.30.236.13:8082/api/Parametros`;
+    const url = `https://localhost:44368/api/Parametros`;
 
     await fetch(url, {
         headers: new Headers({

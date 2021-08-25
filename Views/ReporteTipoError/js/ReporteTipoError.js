@@ -74,7 +74,7 @@ window.onload = () => {
  
 
 async function getProyectos() {
-    const url = `https://172.30.236.13:8082/api/ReporteTipoError`;
+    const url = `https://localhost:44368/api/ReporteTipoError`;
 
  
 
@@ -95,10 +95,11 @@ async function getProyectos() {
 function mostrarDatos(datos) {
     document.getElementById("lista-erroesp").innerHTML = "";
 
- 
-
+    
+  if(datos.length>0)
+  {
     datos.forEach(proyectos => {
-         
+         console.log(proyectos)
         
         const card = `
             <tr>
@@ -112,7 +113,14 @@ function mostrarDatos(datos) {
             </tr>
         `;
         cardListElement.innerHTML += card;
+        
     })
+}
+else
+{
+    cardListElement.innerHTML +=`<tr> <td colspan="7"> Sin Resultados entre las fechas seleccionadas </td> </tr>`;
+
+}
 
  
 
@@ -127,7 +135,7 @@ async function GetDatos() {
             alerta.style.display = 'none';
         }, 3000);
     }else{
-    const url = `https://172.30.236.13:8082/api/ReporteTipoError?tipoerror=${inputproyecto.value}`;
+    const url = `https://localhost:44368/api/ReporteTipoError?tipoerror=${inputproyecto.value}`;
 
  
 
