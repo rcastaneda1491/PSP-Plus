@@ -521,3 +521,5 @@ select * from UsuarioProyecto;
 select * from EquipoDesarrollo
 select * from Recordatorios;
 select * from ErroresPSP;
+
+insert into Usuario(nombres, apellidos, email, clave, fechaNacimiento, rol, idEquipoDesarrollo) values ('tito', 'a','tito@gmail.com','12345','2001-09-14','administrador', 1)
