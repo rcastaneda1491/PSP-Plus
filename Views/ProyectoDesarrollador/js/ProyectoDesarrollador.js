@@ -41,11 +41,12 @@ async function getdatos() {
 function mostrardatos(datos) {
     
     datos.forEach(proyecto => {
+        
         var fechaSplit1 = proyecto.fechaInicioEsperada.split("T");
         var fechainicioesperada = fechaSplit1[0];
         var fechaSplit2 = proyecto.fechaFinalEsperada.split("T");
         var fechafinalesperada = fechaSplit2[0];
-
+ 
         if (proyecto.fechaInicioReal == null) {
             var fechainicioreal = "";
         } else {
@@ -56,9 +57,9 @@ function mostrardatos(datos) {
             var fechafinalreal = "";
         } else {
             var fechaSplit4 = proyecto.fechaFinalReal.split("T");
-            var fechainicioreal = fechaSplit4[0];
+            var fechafinalreal = fechaSplit4[0];
         }
-
+        
         const card = `
 
 
@@ -68,8 +69,9 @@ function mostrardatos(datos) {
               <td>${proyecto.cliente}</td>
               <td>${fechainicioesperada}</td>
               <td>${fechainicioreal}</td>
-              <td>${fechafinalesperada}</td>
+              
               <td>${fechafinalreal}</td>
+              <td>${fechafinalesperada}</td>
               <td>${proyecto.dev}</td>
               <td>${proyecto.totalHorasTrabajadas}</td>
               

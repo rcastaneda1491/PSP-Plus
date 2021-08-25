@@ -19,8 +19,8 @@ namespace PSP_.Controllers
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                var usuario = db.Usuarios.Find(idUsuario);
-
+                var usuario = db.Usuarios.Where(g => g.IdUsuario ==idUsuario).Select( g=> new {nombres=g.Nombres,apellidos=g.Apellidos,email=g.Email, clave=g.Clave, fechaNacimiento = g.FechaNacimiento, idEquipoDesarrollo = g.IdEquipoDesarrolloNavigation.Nombre});
+                
                 return Ok(usuario);
             }
         }
