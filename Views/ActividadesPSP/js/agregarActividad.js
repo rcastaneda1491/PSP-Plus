@@ -18,9 +18,7 @@ if (stringJWT) {
     jwt = parseJwt(stringJWT);
 }
 
-function CerrarSesion() {
-    Cookies.remove('jwt');
-};
+
 
 const idUsuario = jwt.sub;
 
