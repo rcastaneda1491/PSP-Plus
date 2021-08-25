@@ -2,7 +2,11 @@
     Desarrollador: Rogelio Raúl Castañeda Flores
 */
 
+<<<<<<< HEAD
 const URL = `https://172.30.236.13:8082/api/Usuarios/SignIn`;const emailInput = document.getElementById("inputEmail");
+=======
+const URL = `https://localhost:44368/api/Usuarios/SignIn`;const emailInput = document.getElementById("inputEmail");
+>>>>>>> 992853c0c7a49b0bd05c344359468e4cae6e1423
 const passwordInput = document.getElementById("inputPassword");
 const form = document.getElementById('signin-form');
 const alerta = document.querySelector('#alert');
