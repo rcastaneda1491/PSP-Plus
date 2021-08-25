@@ -128,9 +128,9 @@ CREATE TABLE Parametros(
 );
 GO
 
-INSERT INTO Parametros(inactividad, correo, clave) VALUES (5, 'pspplusti@gmail.com', '12345');
+INSERT INTO Parametros(inactividad, correo, clave) VALUES (5, 'pspplusti@gmail.com', 'PruebaProyecto1914');
 GO
-Select * from Parametros
+
 ----- Erick Echeverria/Debora Chacach 12/08/2021
 -- ############################################################################################
 -- #######################   TRIGGERS | TiemposPSP   ##########################################
@@ -539,7 +539,7 @@ group by TpSp.descripcion, TpSp.fechaHoraInicio,TpSp.fechaHoraFinal,u.nombres,p.
 
 
 select * from TiemposPSP;
-
+select * from Parametros;
 select * from EquipoDesarrollo
 select * from Recordatorios;
 select * from ErroresPSP;
