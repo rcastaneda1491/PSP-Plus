@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System;
@@ -9,10 +10,20 @@ using System.Threading.Tasks;
 namespace PSP_.Controllers
 
 {
-  
+    partial class Datos2
+    {
+        public string descripcion { get; set; }
+        public DateTime fechaHoraInicio { get; set; }
+        public DateTime fechaHoraFin { get; set; }
+        public double horas { get; set; }
+        public string nombreUsuario { get; set; }
+        public string nombreProyecto { get; set; }
+    }
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [EnableCors("permitir")]
     public class ActividadesporProyectoAdminController : Controller
     {
         [HttpGet]
@@ -28,10 +39,10 @@ namespace PSP_.Controllers
                 }
 
 
-                var dt = new List<Datos>();
+                var dt = new List<Datos2>();
 
 
-                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-FGBRIH1;DATABASE=DBPSPPLUS;user=capacitacion;password=12345"))
+                using (SqlConnection sql = new SqlConnection("Server=DESKTOP-IFKEU1D\\SQLEXPRESS;DATABASE=DBPSPPLUS;user=sa;password=albin123"))
                 {
                     using (SqlCommand cmd = new SqlCommand("reporteActividades_por_proyecto", sql))
                     {
@@ -44,7 +55,7 @@ namespace PSP_.Controllers
                         {
                             while (reader.Read())
                             {
-                                var temp = new Datos();
+                                var temp = new Datos2();
                                 temp.descripcion = reader.GetString(0);
                                 temp.fechaHoraInicio = reader.GetDateTime(1);
                                 temp.fechaHoraFin = reader.GetDateTime(2);

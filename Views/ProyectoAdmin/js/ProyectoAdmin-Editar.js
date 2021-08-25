@@ -32,7 +32,7 @@ window.onload = () => {
 }
 
 async function getProyecto() {
-    const url = `https://localhost:5001/api/EditarProyecto?IdProyecto=${idProyecto}`;
+    const url = `https://172.30.236.13:8082/api/EditarProyecto?IdProyecto=${idProyecto}`;
 
     await fetch(url, {
             headers: new Headers({
@@ -82,7 +82,7 @@ function validar() {
 }
 
 async function editProyecto() {
-    const url = `https://localhost:5001/api/ProyectoAdmin?idproyecto=${idProyecto}&nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
+    const url = `https://172.30.236.13:8082/api/ProyectoAdmin?idproyecto=${idProyecto}&nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
 
     await fetch(url, {
             method: 'PUT',
