@@ -68,26 +68,8 @@ window.onload = () => {
  
 
     })
-    getProyectos();
 }
 
- 
-
-async function getProyectos() {
-    const url = `https://localhost:44368/api/ReporteTipoError`;
-    
- 
-
-    await fetch(url, {
-        headers: new Headers({
-            'Authorization': 'Bearer ' + stringJWT
-        })
-    })
-        .then(respuesta => respuesta.json())
-        .then(resultado => {
-            mostrarDatos(resultado);
-        })
-}
 
  
 
@@ -135,7 +117,14 @@ async function GetDatos() {
             alerta.style.display = 'none';
         }, 3000);
     }else{
-        const url = `https://localhost:44368/api/ReporteTipoError?tipoerror=${inputproyecto.value}`;
+        
+        var url;
+    if(jwt.rol == "desarrollador"){        
+         url = `https://172.30.236.13:8082/api/ReporteTipoError?tipoerror=${inputproyecto.value}&idUsuario=${jwt.sub}`;
+
+    }else if(jwt.rol == "administrador"){
+        url = `https://172.30.236.13:8082/api/ReporteTipoError?tipoerror=${inputproyecto.value}`;
+    }
 
  
 

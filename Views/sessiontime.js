@@ -3,7 +3,7 @@ var time;
 let restante=200000;
 
 document.addEventListener('DOMContentLoaded', () => {
-    const url = `https://localhost:44368/api/Parametros`;
+    const url = `https://172.30.236.13:8082/api/Parametros`;
 
     fetch(url, {
          headers: new Headers({

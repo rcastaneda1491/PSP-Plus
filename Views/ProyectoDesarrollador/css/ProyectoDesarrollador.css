@@ -40,6 +40,9 @@ body{
 #editar:hover{
     cursor: pointer;
 }
+#eliminar:hover{
+    cursor: pointer;
+}
 
 #imgProyecto {
     margin-bottom: 45px;

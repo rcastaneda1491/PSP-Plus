@@ -20,6 +20,10 @@ body{
     cursor: pointer;
 }
 
+#eliminar:hover{
+    cursor: pointer;
+}
+
 .form-control {
     background-color: #CACACA;
 }

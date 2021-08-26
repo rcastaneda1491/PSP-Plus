@@ -25,7 +25,7 @@ if (stringJWT) {
 
 
 async function agregarProyecto() {
-    const url = `https://localhost:44368/api/ProyectoAdmin?nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
+    const url = `https://172.30.236.13:8082/api/ProyectoAdmin?nombre=${inputNombre.value}&descripcion=${inputDescripcion.value}&cliente=${inputCliente.value}&fechainicioesperada=${inputFechaInicioEsperada.value}&fechafinalesperada=${inputFechaFinalEsperada.value}&dev=${inputDev.value}`;
 
     await fetch(url, {
             method: 'POST',
