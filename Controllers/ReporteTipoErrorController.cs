@@ -14,13 +14,59 @@ namespace PSP_.Controllers
     public class ReporteTipoErrorController : ControllerBase
     {
         [HttpGet]
-        public ActionResult Get(string tipoerror)
+        public ActionResult Get(string tipoerror, int? idUsuario)
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                var reporte = (from e in db.ErroresPsps where e.TipoError == tipoerror select e).ToList();
 
-                return Ok(reporte);
+
+                if (idUsuario == null)
+                {
+
+                    var reporte = db.Proyectos.Join(
+                    db.ErroresPsps, u => u.IdProyecto, e => e.IdProyecto,
+                    (u, e) => new
+                    {
+                        solucion = e.Solucion,
+                        tipoError = e.TipoError,
+                        introducido = e.Introducido,
+                        eliminado = e.Eliminado,
+                        fechaHoraInicio = e.FechaHoraInicio,
+                        fechaHoraFinal = e.FechaHoraFinal,
+                        nombreProyecto = u.Nombre
+                    }
+
+                ).Where(errores => errores.tipoError == tipoerror).Distinct().ToList();
+
+
+                    return Ok(reporte);
+
+
+                }
+                else
+                {
+
+
+
+                    var reporte = db.Proyectos.Join(
+                        db.ErroresPsps, u => u.IdProyecto, e => e.IdProyecto,
+                        (u, e) => new
+                        {
+                            idusuario = e.IdUsuario,
+                            solucion = e.Solucion,
+                            tipoError = e.TipoError,
+                            introducido = e.Introducido,
+                            eliminado = e.Eliminado,
+                            fechaHoraInicio = e.FechaHoraInicio,
+                            fechaHoraFinal = e.FechaHoraFinal,
+                            nombreProyecto = u.Nombre
+                        }
+
+                    ).Where(errores => errores.tipoError == tipoerror && errores.idusuario == idUsuario).Distinct().ToList();
+
+
+                    return Ok(reporte);
+                }
             }
         }
     }
