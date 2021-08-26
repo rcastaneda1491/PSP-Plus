@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using PSP_.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,14 +24,10 @@ namespace PSP_.Controllers
     [Authorize]
     public class UsuariosController : ControllerBase
     {
-        private readonly IJwtAuthenticationManager jwtAuthenticationManager;
         static string desKey = "m/ti5TXBWPOigPCSqBy0Kg==";
         protected static SymmetricAlgorithm DES = null;
+        private readonly string key;
 
-        public UsuariosController(IJwtAuthenticationManager jwtAuthenticationManager)
-        {
-            this.jwtAuthenticationManager = jwtAuthenticationManager;
-        }
 
 
         [AllowAnonymous]
@@ -41,7 +41,7 @@ namespace PSP_.Controllers
 
                 if (DecryptPassword(usuario.Clave) == credentials.Clave)
                 {
-                    var token = jwtAuthenticationManager.Authenticate(usuario);
+                    var token =  Authenticate(usuario);
                     return Ok(token);
                 }
                 else
@@ -51,7 +51,28 @@ namespace PSP_.Controllers
                 }
             }
         }
+        public string Authenticate(Usuario usuario)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenKey = Encoding.ASCII.GetBytes("abcdefghijklmnopqrstuv");
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[] {
+                    new Claim("sub", usuario.IdUsuario.ToString()),
+                    new Claim("rol", usuario.Rol.ToString()),
+                    new Claim("email", usuario.Email.ToString()),
+                    new Claim("nombre", usuario.Nombres.ToString()),
+                    new Claim("apellidos", usuario.Apellidos.ToString())
 
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+      
         public static string DecryptPassword(string Password)
         {
             DES = new TripleDESCryptoServiceProvider();

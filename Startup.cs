@@ -63,7 +63,6 @@ namespace PSP_
                     });
             });
 
-            services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(Configuration.GetValue<string>("Secret")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
