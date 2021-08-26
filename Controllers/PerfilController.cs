@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace PSP_.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("permitir")]
     [Authorize]
     public class PerfilController : ControllerBase
     {
@@ -19,9 +21,22 @@ namespace PSP_.Controllers
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                var usuario = db.Usuarios.Find(idUsuario);
+                var reporteProyectos = db.Usuarios.Join(
+                         db.EquipoDesarrollos, u => u.IdEquipoDesarrollo, e => e.IdEquipoDesarrollo,
+                         (u, e) => new
+                         {
+                             idusuario = u.IdUsuario,
+                             nombres = u.Nombres,
+                             apellidos = u.Apellidos,
+                             email = u.Email,
+                             clave = u.Clave,
+                             fechaNacimiento = u.FechaNacimiento,
+                             idEquipoDesarrollo = e.Nombre
+                         }
 
-                return Ok(usuario);
+                     ).Where(er => er.idusuario == idUsuario).Distinct().First();
+
+                return Ok(reporteProyectos);
             }
         }
 
