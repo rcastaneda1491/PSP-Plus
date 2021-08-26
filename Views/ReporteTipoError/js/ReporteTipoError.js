@@ -75,7 +75,7 @@ window.onload = () => {
 
 async function getProyectos() {
     const url = `https://localhost:44368/api/ReporteTipoError`;
-
+    
  
 
     await fetch(url, {
@@ -109,7 +109,7 @@ function mostrarDatos(datos) {
               <td>${proyectos.eliminado}</td>
               <td>${proyectos.fechaHoraInicio.split("T")[0]}</td>
               <td>${proyectos.fechaHoraFinal.split("T")[0]}</td>
-              <td>${proyectos.idProyecto}</td>
+              <td>${proyectos.nombreProyecto}</td>
             </tr>
         `;
         cardListElement.innerHTML += card;
@@ -118,7 +118,7 @@ function mostrarDatos(datos) {
 }
 else
 {
-    cardListElement.innerHTML +=`<tr> <td colspan="7"> Sin Resultados entre las fechas seleccionadas </td> </tr>`;
+    cardListElement.innerHTML +=`<tr> <td colspan="7"> Sin Resultados en el error seleccionado </td> </tr>`;
 
 }
 
@@ -135,7 +135,7 @@ async function GetDatos() {
             alerta.style.display = 'none';
         }, 3000);
     }else{
-    const url = `https://localhost:44368/api/ReporteTipoError?tipoerror=${inputproyecto.value}`;
+        const url = `https://localhost:44368/api/ReporteTipoError?tipoerror=${inputproyecto.value}`;
 
  
 

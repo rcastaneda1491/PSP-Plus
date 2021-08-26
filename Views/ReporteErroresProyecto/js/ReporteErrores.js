@@ -153,7 +153,7 @@ function mostrarDatos(datos) {
 }
 else
 {
-    cardListElement.innerHTML +=`<tr> <td colspan="4"> Sin Resultados entre las fechas seleccionadas </td> </tr>`;
+    cardListElement.innerHTML +=`<tr> <td colspan="4"> Sin Resultados el proyecto </td> </tr>`;
 
 }
 

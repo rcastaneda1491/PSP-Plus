@@ -18,9 +18,25 @@ namespace PSP_.Controllers
         {
             using (Models.DBPSPPLUSContext db = new Models.DBPSPPLUSContext())
             {
-                var reporte = (from e in db.ErroresPsps where e.TipoError == tipoerror select e).ToList();
+                
+
+                var reporte = db.Proyectos.Join(
+                        db.ErroresPsps, u => u.IdProyecto, e => e.IdUsuario,
+                        (u, e) => new
+                        {
+                            solucion = e.Solucion,
+                            tipoError = e.TipoError,
+                            introducido = e.Introducido,
+                            eliminado = e.Eliminado,
+                            fechaHoraInicio = e.FechaHoraInicio,
+                            fechaHoraFinal = e.FechaHoraFinal,
+                            nombreProyecto = u.Nombre
+                        }
+
+                    ).Where(errores => errores.tipoError == tipoerror).Distinct().ToList();
 
                 return Ok(reporte);
+
             }
         }
     }
